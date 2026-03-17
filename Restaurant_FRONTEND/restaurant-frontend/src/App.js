@@ -1,11 +1,12 @@
-import './App.css';
+import './App.css'
+import Navbar from './components/Navbar/Navbar'
 
 function App() {
   return (
     <div>
-      <h1 className="title">RESTAURANT A LA ANA'S</h1>
+      <Navbar />
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
