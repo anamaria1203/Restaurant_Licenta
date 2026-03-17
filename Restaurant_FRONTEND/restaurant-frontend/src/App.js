@@ -3,6 +3,8 @@ import Navbar from './components/Navbar/Navbar'
 import PaginaPrincipala from './components/PaginaPrincipala/PaginaPrincipala'
 import StatisticiBar from './components/StatisticiBar/StatisticiBar'
 import PreviewMeniu from './components/PreviewMeniu/PreviewMeniu'
+import MancareaSaptamanii from './components/MancareaSaptamanii/MancareaSaptamanii'
+
 
 function App() {
   return (
@@ -11,6 +13,8 @@ function App() {
       <PaginaPrincipala />
       <StatisticiBar />
       <PreviewMeniu />
+      <MancareaSaptamanii />
+      
     </div>
   )
 }
