@@ -1,0 +1,139 @@
+.hero {
+  height: 100vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: #1e2d1f;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 70% 50%, rgba(45,74,47,0.8) 0%, rgba(26,18,9,0.95) 60%);
+}
+
+.hero-img {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 52%;
+  background: url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=900') center/cover;
+  opacity: 0.55;
+}
+
+.hero-img-overlay {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 52%;
+  background: linear-gradient(to right, #1e2d1f 0%, transparent 40%);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  padding: 0 4rem;
+  max-width: 620px;
+}
+
+.hero-tag {
+  font-size: 0.72rem;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: #c9a84c;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  animation: fadeUp 0.6s ease 0.2s both;
+}
+
+.hero-tag::before {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 1px;
+  background: #c9a84c;
+}
+
+.hero-content h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.8rem, 5vw, 4.2rem);
+  line-height: 1.15;
+  font-weight: 400;
+  margin-bottom: 1.5rem;
+  animation: fadeUp 0.6s ease 0.4s both;
+  color: #f5f0e8;
+}
+
+.hero-content h1 em {
+  font-style: italic;
+  color: #e8c97a;
+}
+
+.hero-content p {
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: rgba(245,240,232,0.7);
+  margin-bottom: 2.5rem;
+  max-width: 420px;
+  font-weight: 300;
+  animation: fadeUp 0.6s ease 0.55s both;
+}
+
+.hero-btns {
+  display: flex;
+  gap: 1rem;
+  animation: fadeUp 0.6s ease 0.7s both;
+}
+
+.btn-primary {
+  padding: 0.9rem 2.2rem;
+  background: #c9a84c;
+  color: #1a1209;
+  border: none;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.82rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 2px;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+.btn-primary:hover {
+  background: #e8c97a;
+}
+
+.btn-outline {
+  padding: 0.9rem 2.2rem;
+  background: transparent;
+  color: #f5f0e8;
+  border: 1px solid rgba(245,240,232,0.4);
+  font-family: 'Jost', sans-serif;
+  font-size: 0.82rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: border-color 0.2s;
+}
+
+.btn-outline:hover {
+  border-color: #f5f0e8;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

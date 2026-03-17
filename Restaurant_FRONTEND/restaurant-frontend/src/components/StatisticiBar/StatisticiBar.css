@@ -1,0 +1,31 @@
+.stats-bar {
+  background: #c9a84c;
+  padding: 1.2rem 4rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.stat {
+  text-align: center;
+}
+
+.stat-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  color: #1a1209;
+  font-weight: 600;
+}
+
+.stat-label {
+  font-size: 0.72rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(26,18,9,0.65);
+}
+
+.stat-divider {
+  width: 1px;
+  height: 40px;
+  background: rgba(26,18,9,0.2);
+}
