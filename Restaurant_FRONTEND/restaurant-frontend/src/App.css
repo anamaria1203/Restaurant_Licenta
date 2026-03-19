@@ -1,13 +1,24 @@
-body {
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Jost:wght@300;400;500&display=swap');
+
+* {
   margin: 0;
   padding: 0;
-  background-color: white;
+  box-sizing: border-box;
 }
 
-.title {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  font-size: 36px;
-  font-weight: bold;
+:root {
+  --dark: #1a1209;
+  --gold: #c9a84c;
+  --gold-light: #e8c97a;
+  --cream: #f5f0e8;
+  --text-muted: #8a7a5a;
+  --green-dark: #1e2d1f;
+  --green-mid: #2d4a2f;
+}
+
+body {
+  font-family: 'Jost', sans-serif;
+  background: var(--dark);
+  color: var(--cream);
+  overflow-x: hidden;
 }

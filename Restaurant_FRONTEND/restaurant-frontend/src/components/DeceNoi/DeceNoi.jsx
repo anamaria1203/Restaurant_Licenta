@@ -1,6 +1,6 @@
 import './DeceNoi.css'
 
-const DEceNoi = () => {
+const DeceNoi = () => {
   return (
     <section className="dece-noi-section">
       <div className="dece-noi-header">
@@ -37,4 +37,4 @@ const DEceNoi = () => {
   )
 }
 
-export default DEceNoi
+export default DeceNoi
