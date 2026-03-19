@@ -11,10 +11,10 @@ const PaginaPrincipala = () => {
         <div className="hero-tag">Where Every Meal Tells a Story</div>
         <h1>Savurează <em>arta</em> culinară autentică</h1>
         <p>Vă invităm să descoperiți o lume a gusturilor rafinate, unde fiecare preparat este o poveste spusă cu pasiune și ingrediente alese cu grijă.</p>
-        <div className="hero-btns">
-          <button className="btn-primary">Rezervă o Masă</button>
-          <button className="btn-outline">Vezi Meniul</button>
-        </div>
+      </div>
+      <div className="scroll-indicator">
+        <span>Scroll</span>
+        <div className="scroll-line"></div>
       </div>
     </section>
   )

@@ -1,0 +1,90 @@
+.cta-section {
+  position: relative;
+  padding: 8rem 4rem;
+  background: #1a1209;
+  text-align: center;
+  overflow: hidden;
+}
+
+.cta-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, rgba(201,168,76,0.12) 0%, transparent 70%);
+}
+
+.cta-content {
+  position: relative;
+  z-index: 2;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.cta-content .section-tag {
+  font-size: 0.72rem;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: #c9a84c;
+  margin-bottom: 1.5rem;
+  display: block;
+}
+
+.cta-content h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 3rem;
+  font-weight: 400;
+  color: #f5f0e8;
+  line-height: 1.2;
+  margin-bottom: 1.5rem;
+}
+
+.cta-content p {
+  font-size: 1rem;
+  line-height: 1.9;
+  color: rgba(245,240,232,0.65);
+  font-weight: 300;
+  margin-bottom: 3rem;
+}
+
+.cta-butoane {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+.cta-btn-primary {
+  padding: 1.1rem 3rem;
+  background: #c9a84c;
+  color: #1a1209;
+  border: none;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.85rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 2px;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+.cta-btn-primary:hover {
+  background: #e8c97a;
+}
+
+.cta-btn-outline {
+  padding: 1.1rem 3rem;
+  background: transparent;
+  color: #f5f0e8;
+  border: 1px solid rgba(245,240,232,0.4);
+  font-family: 'Jost', sans-serif;
+  font-size: 0.85rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all 0.2s;
+}
+
+.cta-btn-outline:hover {
+  border-color: #c9a84c;
+  color: #c9a84c;
+}

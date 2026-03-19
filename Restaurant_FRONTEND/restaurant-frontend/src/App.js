@@ -4,9 +4,10 @@ import PaginaPrincipala from './components/PaginaPrincipala/PaginaPrincipala'
 import StatisticiBar from './components/StatisticiBar/StatisticiBar'
 import PreviewMeniu from './components/PreviewMeniu/PreviewMeniu'
 import MancareaSaptamanii from './components/MancareaSaptamanii/MancareaSaptamanii'
+import DeceNoi from './components/DeceNoi/DeceNoi'
 import Echipa from './components/Echipa/Echipa'
 import Recenzii from './components/Recenzii/Recenzii'
-import DeceNoi from './components/DeceNoi/DeceNoi'
+import CallToAction from './components/CallToAction/CallToAction'
 import Footer from './components/Footer/Footer'
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
       <DeceNoi />
       <Recenzii />
       <Echipa />
+      <CallToAction />
       <Footer />
     </div>
   )
