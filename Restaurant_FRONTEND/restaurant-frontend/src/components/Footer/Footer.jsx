@@ -34,7 +34,7 @@ const Footer = () => {
       </div>
 
       <div className="footer-bottom">
-        <p>© 2026 Ana's Restaurant. Toate drepturile rezervate.</p>
+        <p>© 2026 Villa Ana Ristorante. Toate drepturile rezervate.</p>
       </div>
     </footer>
   )

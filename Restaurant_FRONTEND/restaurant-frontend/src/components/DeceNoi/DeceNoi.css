@@ -1,0 +1,60 @@
+.dece-noi-section {
+  padding: 6rem 4rem;
+  background: #120e07;
+}
+
+.dece-noi-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.dece-noi-header h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.4rem;
+  font-weight: 400;
+  color: #f5f0e8;
+}
+
+.dece-noi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.dece-card {
+  background: rgba(201,168,76,0.05);
+  border: 1px solid rgba(201,168,76,0.15);
+  padding: 2.5rem 2rem;
+  border-radius: 2px;
+  text-align: center;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.dece-card:hover {
+  background: rgba(201,168,76,0.1);
+  border-color: rgba(201,168,76,0.4);
+  transform: translateY(-6px);
+}
+
+.dece-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.dece-card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: #f5f0e8;
+  margin-bottom: 1rem;
+}
+
+.dece-card p {
+  font-size: 0.88rem;
+  line-height: 1.8;
+  color: rgba(245,240,232,0.6);
+  font-weight: 300;
+}
