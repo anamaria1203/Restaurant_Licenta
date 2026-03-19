@@ -58,6 +58,7 @@
   cursor: pointer;
   transition: all 0.25s;
   border-radius: 2px;
+  vertical-align: middle;
 }
 
 .btn-login:hover {
@@ -82,4 +83,72 @@
 .btn-admin:hover {
   border-color: rgba(255,255,255,0.5);
   color: white;
+}
+
+.signin-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.signin-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  padding-top: 0.5rem;
+  background: #1e2d1f;
+  border: 1px solid rgba(201,168,76,0.3);
+  min-width: 220px;
+  z-index: 200;
+  animation: fadeUp 0.2s ease both;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.2rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.dropdown-item:hover {
+  background: rgba(201,168,76,0.1);
+}
+
+.dropdown-icon {
+  font-size: 1rem;
+  color: #c9a84c;
+  width: 20px;
+  text-align: center;
+}
+
+.dropdown-title {
+  font-size: 0.88rem;
+  color: #f5f0e8;
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+
+.dropdown-desc {
+  font-size: 0.75rem;
+  color: rgba(245,240,232,0.5);
+  margin-top: 0.2rem;
+}
+
+.dropdown-divider {
+  height: 1px;
+  background: rgba(201,168,76,0.15);
+  margin: 0 1.2rem;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
