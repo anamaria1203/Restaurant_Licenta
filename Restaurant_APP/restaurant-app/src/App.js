@@ -12,6 +12,8 @@ import CallToAction from './components/CallToAction/CallToAction'
 import Footer from './components/Footer/Footer'
 import Login from './components/Login/Login'
 import ResetParola from './components/ResetParola/ResetParola'
+import AdminLogin from './components/AdminLogin/AdminLogin'
+import AdminDashboard from './components/AdminDashboard/AdminDashboard'
 
 function App() {
   return (
@@ -33,6 +35,8 @@ function App() {
         } />
         <Route path='/login' element={<Login />} />
         <Route path='/reset-parola' element={<ResetParola />} />
+        <Route path='/admin-login' element={<AdminLogin />} />
+        <Route path='/admin-dashboard' element={<AdminDashboard />} />
       </Routes>
     </Router>
   )

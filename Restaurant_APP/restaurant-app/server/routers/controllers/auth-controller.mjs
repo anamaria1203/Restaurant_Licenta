@@ -6,7 +6,7 @@ const SECRET = process.env.JWT_SECRET || 'villa-ana-secret'
 
 const register = async (req, res, next) => {
   try {
-    const { nume, email, password } = req.body
+    const { nume, email, password, tip } = req.body
 
     if (!nume || !email || !password) {
       return res.status(400).json({ error: 'Toate campurile sunt obligatorii' })
@@ -20,10 +20,10 @@ const register = async (req, res, next) => {
     const passwordHash = await bcrypt.hash(password, 10)
 
     const user = await db.User.create({
-      nume,
+       nume,
       email,
       passwordHash,
-      tip: 'client'
+      tip: tip || 'client'
     })
 
     const token = jwt.sign(

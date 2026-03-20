@@ -1,8 +1,8 @@
-import './Login.css'
+import './AdminLogin.css'
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-const Login = () => {
+const AdminLogin = () => {
   const [mod, setMod] = useState('signup')
   const [nume, setNume] = useState('')
   const [email, setEmail] = useState('')
@@ -23,14 +23,6 @@ const Login = () => {
     }
   }, [])
 
-  useEffect(() => {
-  const params = new URLSearchParams(window.location.search)
-  const modParam = params.get('mod')
-  if (!modParam) {
-    navigate('/')
-  }
-  }, [navigate])
-
   const resetCampuri = () => {
     setNume('')
     setEmail('')
@@ -43,7 +35,13 @@ const Login = () => {
   }
 
   const validateEmail = (email) => {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      return 'Te rugam sa introduci un email valid!'
+    }
+    if (!email.toLowerCase().includes('admin')) {
+      return 'Emailul trebuie sa contina "admin" pentru a accesa aceasta sectiune!'
+    }
+    return null
   }
 
   const handleSubmit = async (e) => {
@@ -53,8 +51,9 @@ const Login = () => {
     setEroareParola('')
     setSucces('')
 
-    if (!validateEmail(email)) {
-      setEroareEmail('Te rugam sa introduci un email valid!')
+    const emailError = validateEmail(email)
+    if (emailError) {
+      setEroareEmail(emailError)
       return
     }
 
@@ -65,7 +64,7 @@ const Login = () => {
       : 'http://localhost:8080/auth/login'
 
     const body = mod === 'signup'
-      ? { nume, email, password: parola }
+      ? { nume, email, password: parola, tip: 'manager' }
       : { email, password: parola }
 
     try {
@@ -79,24 +78,31 @@ const Login = () => {
 
       if (!response.ok) {
         if (data.error && data.error.includes('deja')) {
-          setEroareEmail('Exista deja un cont cu acest email!')
+          setEroareEmail('Exista deja un cont admin cu acest email!')
         } else if (data.error && (data.error.includes('parola') || data.error.includes('incorect'))) {
           setEroareParola('Parola introdusa este gresita!')
         } else {
           setEroare(data.error)
         }
       } else {
+        if (data.user.tip !== 'manager') {
+          setEroare('Acest cont nu are drepturi de administrator!')
+          localStorage.removeItem('token')
+          localStorage.removeItem('user')
+          return
+        }
+
         localStorage.setItem('token', data.token)
         localStorage.setItem('user', JSON.stringify(data.user))
 
         if (mod === 'signup') {
-          setSucces('Cont creat cu succes! Va redirectionam...')
+          setSucces('Cont admin creat cu succes! Va redirectionam...')
         } else {
-          setSucces('Bine ati revenit! Conectare reusita!')
+          setSucces('Bine ati revenit, Administrator! Va redirectionam...')
         }
 
         setTimeout(() => {
-          navigate('/')
+          navigate('/admin-dashboard')
         }, 2000)
       }
     } catch (err) {
@@ -107,26 +113,26 @@ const Login = () => {
   }
 
   return (
-    <div className="login-page">
-      <div className="login-overlay"></div>
-      <div className="login-container">
-        <div className="login-logo">Villa Ana Ristorante</div>
-        <div className="login-tagline">Where Every Meal Tells a Story</div>
+    <div className="admin-login-page">
+      <div className="admin-login-overlay"></div>
+      <div className="admin-login-container">
+        <div className="admin-login-logo">Villa Ana Ristorante</div>
+        <div className="admin-login-tagline">Panou de Administrare</div>
 
-        <h2 className="login-title">
-          {mod === 'signup' ? 'Creeaza un cont' : 'Bine ai revenit'}
+        <h2 className="admin-login-title">
+          {mod === 'signup' ? 'Cont Administrator Nou' : 'Acces Administrator'}
         </h2>
-        <p className="login-subtitle">
-          {mod === 'signup' ? 'Inregistreaza-te pentru a continua' : 'Conecteaza-te pentru a continua'}
+        <p className="admin-login-subtitle">
+          {mod === 'signup' ? 'Creeaza un cont de administrator' : 'Conecteaza-te ca administrator'}
         </p>
 
-        <form className="login-form" onSubmit={handleSubmit} noValidate>
+        <form className="admin-login-form" onSubmit={handleSubmit} noValidate>
           {mod === 'signup' && (
-            <div className="login-field">
+            <div className="admin-login-field">
               <label>Nume complet</label>
               <input
                 type="text"
-                placeholder="Ex: Ana Popescu"
+                placeholder="Ex: Manager Restaurant"
                 value={nume}
                 onChange={(e) => setNume(e.target.value)}
                 required
@@ -134,11 +140,11 @@ const Login = () => {
             </div>
           )}
 
-          <div className="login-field">
-            <label>Email</label>
+          <div className="admin-login-field">
+            <label>Email Admin</label>
             <input
               type="email"
-              placeholder="exemplu@email.com"
+              placeholder="admin@villaana.ro"
               value={email}
               onChange={(e) => { setEmail(e.target.value); setEroareEmail('') }}
               className={eroareEmail ? 'input-eroare' : ''}
@@ -150,7 +156,7 @@ const Login = () => {
             )}
           </div>
 
-          <div className="login-field">
+          <div className="admin-login-field">
             <label>Parola</label>
             <div className="parola-wrapper">
               <input
@@ -175,35 +181,35 @@ const Login = () => {
             )}
           </div>
 
-          {eroare && <div className="login-eroare">{eroare}</div>}
-          {succes && <div className="login-succes">{succes}</div>}
+          {eroare && <div className="admin-login-eroare">{eroare}</div>}
+          {succes && <div className="admin-login-succes">{succes}</div>}
 
-          <button type="submit" className="login-btn" disabled={loading}>
-            {loading ? 'Se proceseaza...' : mod === 'signup' ? 'Sign In' : 'Log In'}
+          <button type="submit" className="admin-login-btn" disabled={loading}>
+            {loading ? 'Se proceseaza...' : mod === 'signup' ? 'Become Admin' : 'Admin Login'}
           </button>
         </form>
 
-        <div className="login-switch">
+        <div className="admin-login-switch">
           {mod === 'signup' ? (
             <span onClick={() => { setMod('login'); resetCampuri() }}>
-              Ai deja un cont? → <strong>Log In</strong>
+              Ai deja cont admin? → <strong>Admin Login</strong>
             </span>
           ) : (
             <span onClick={() => { setMod('signup'); resetCampuri() }}>
-              Nu ai cont? → <strong>Sign In</strong>
+              Cont admin nou? → <strong>Become Admin</strong>
             </span>
           )}
         </div>
 
         {mod === 'login' && (
-          <div className="login-forgot" onClick={() => navigate('/reset-parola')}>
+          <div className="admin-login-forgot" onClick={() => navigate('/reset-parola')}>
             <span>
               🔑 Ai uitat parola? <strong>Reseteaz-o aici</strong>
             </span>
           </div>
         )}
 
-        <div className="login-back">
+        <div className="admin-login-back">
           <a href="/">← Inapoi la pagina principala</a>
         </div>
       </div>
@@ -211,4 +217,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default AdminLogin

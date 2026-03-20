@@ -1,0 +1,182 @@
+.dashboard-page {
+  min-height: 100vh;
+  background: #0d0a05;
+  color: #f5f0e8;
+  font-family: 'Jost', sans-serif;
+}
+
+.dashboard-navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.2rem 4rem;
+  background: rgba(26,18,9,0.95);
+  border-bottom: 1px solid rgba(201,168,76,0.2);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.dashboard-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  color: #c9a84c;
+  letter-spacing: 2px;
+}
+
+.dashboard-tag {
+  font-size: 0.72rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(201,168,76,0.6);
+  border: 1px solid rgba(201,168,76,0.2);
+  padding: 0.4rem 1rem;
+  border-radius: 2px;
+}
+
+.dashboard-logout {
+  padding: 0.5rem 1.2rem;
+  background: transparent;
+  border: 1px solid rgba(245,240,232,0.3);
+  color: rgba(245,240,232,0.6);
+  font-family: 'Jost', sans-serif;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all 0.2s;
+}
+
+.dashboard-logout:hover {
+  border-color: #c9a84c;
+  color: #c9a84c;
+}
+
+.dashboard-content {
+  padding: 3rem 4rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.dashboard-header {
+  margin-bottom: 3rem;
+}
+
+.dashboard-header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 400;
+  color: #f5f0e8;
+  margin-bottom: 0.5rem;
+}
+
+.dashboard-header p {
+  font-size: 0.9rem;
+  color: rgba(245,240,232,0.5);
+}
+
+.dashboard-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.stat-card {
+  background: rgba(201,168,76,0.05);
+  border: 1px solid rgba(201,168,76,0.15);
+  padding: 2rem 1.5rem;
+  border-radius: 2px;
+  text-align: center;
+  transition: all 0.3s;
+}
+
+.stat-card:hover {
+  background: rgba(201,168,76,0.1);
+  border-color: rgba(201,168,76,0.3);
+}
+
+.stat-number {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  color: #c9a84c;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.stat-label {
+  font-size: 0.78rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(245,240,232,0.5);
+}
+
+.dashboard-section {
+  background: rgba(201,168,76,0.03);
+  border: 1px solid rgba(201,168,76,0.15);
+  padding: 2rem;
+  border-radius: 2px;
+}
+
+.dashboard-section h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: #f5f0e8;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(201,168,76,0.15);
+}
+
+.dashboard-loading {
+  color: rgba(245,240,232,0.5);
+  text-align: center;
+  padding: 2rem;
+}
+
+.useri-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+.useri-table th {
+  text-align: left;
+  padding: 0.8rem 1rem;
+  font-size: 0.72rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #c9a84c;
+  border-bottom: 1px solid rgba(201,168,76,0.2);
+}
+
+.useri-table td {
+  padding: 0.9rem 1rem;
+  color: rgba(245,240,232,0.8);
+  border-bottom: 1px solid rgba(201,168,76,0.08);
+}
+
+.useri-table tr:hover td {
+  background: rgba(201,168,76,0.05);
+}
+
+.tip-badge {
+  padding: 0.3rem 0.8rem;
+  border-radius: 2px;
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.tip-badge.client {
+  background: rgba(50,150,255,0.15);
+  color: #80b4ff;
+  border: 1px solid rgba(50,150,255,0.2);
+}
+
+.tip-badge.manager {
+  background: rgba(201,168,76,0.15);
+  color: #c9a84c;
+  border: 1px solid rgba(201,168,76,0.3);
+}

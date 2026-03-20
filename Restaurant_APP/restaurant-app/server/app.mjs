@@ -16,5 +16,6 @@ app.use(express.json())
 app.use('/auth', routers.auth)
 
 app.use(middleware.genericError)
+app.use('/api', routers.api)
 
 export default app
