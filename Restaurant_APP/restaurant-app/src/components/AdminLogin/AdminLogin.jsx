@@ -79,7 +79,9 @@ const AdminLogin = () => {
       if (!response.ok) {
         if (data.error && data.error.includes('deja')) {
           setEroareEmail('Exista deja un cont admin cu acest email!')
-        } else if (data.error && (data.error.includes('parola') || data.error.includes('incorect'))) {
+        } else if (data.error && data.error.includes('Cod administrator')) {
+          setEroare('Codul de administrator este incorect!')
+        } else if (data.error && data.error.toLowerCase().includes('parola')) {
           setEroareParola('Parola introdusa este gresita!')
         } else {
           setEroare(data.error)

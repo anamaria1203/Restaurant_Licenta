@@ -65,6 +65,10 @@ const login = async (req, res, next) => {
       return res.status(401).json({ error: 'Email sau parola incorecta' })
     }
 
+    if (user.deletedAt !== null) {
+      return res.status(403).json({ error: 'Acest cont a fost dezactivat!' })
+    }
+
     const passwordCorect = await bcrypt.compare(password, user.passwordHash)
     if (!passwordCorect) {
       return res.status(401).json({ error: 'Parola incorecta!' })
@@ -95,7 +99,7 @@ const adminLogin = async (req, res, next) => {
       return res.status(400).json({ error: 'Email si parola sunt obligatorii' })
     }
 
-    const user = await db.User.findOne({ where: { email } })
+    const user = await db.User.findOne({ where: { email, deletedAt: null } })
     if (!user) {
       return res.status(401).json({ error: 'Email sau parola incorecta' })
     }
@@ -152,6 +156,9 @@ const verificaEmail = async (req, res, next) => {
     if (!user) {
       return res.status(404).json({ error: 'Nu exista niciun cont cu acest email!' })
     }
+    if (user.deletedAt !== null) {
+      return res.status(403).json({ error: 'Acest cont a fost dezactivat. Resetarea parolei nu este posibila.' })
+    }
     res.json({ message: 'Email gasit!' })
   } catch (err) {
     next(err)
@@ -164,6 +171,9 @@ const resetParola = async (req, res, next) => {
     const user = await db.User.findOne({ where: { email } })
     if (!user) {
       return res.status(404).json({ error: 'Nu exista niciun cont cu acest email!' })
+    }
+    if (user.deletedAt !== null) {
+      return res.status(403).json({ error: 'Acest cont a fost dezactivat. Resetarea parolei nu este posibila.' })
     }
     const passwordHash = await bcrypt.hash(parolaNoua, 10)
     await user.update({ passwordHash })

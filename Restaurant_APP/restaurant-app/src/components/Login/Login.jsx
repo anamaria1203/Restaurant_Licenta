@@ -77,6 +77,8 @@ const Login = () => {
       if (!response.ok) {
         if (data.error && data.error.includes('deja')) {
           setEroareEmail('Exista deja un cont cu acest email!')
+        } else if (data.error && data.error.includes('dezactivat')) {
+          setEroare('Acest cont a fost dezactivat. Contactati administratorul.')
         } else if (data.error && (data.error.includes('parola') || data.error.includes('incorect'))) {
           setEroareParola('Parola introdusa este gresita!')
         } else {
