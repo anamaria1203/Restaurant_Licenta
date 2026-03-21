@@ -16,21 +16,10 @@ const AdminDashboard = () => {
   const clienti = useri.filter(u => u.tip === 'client')
   const manageri = useri.filter(u => u.tip === 'manager')
 
-  useEffect(() => {
-    const user = JSON.parse(localStorage.getItem('user'))
-    if (!user || user.tip !== 'manager') {
-      navigate('/')
-      return
-    }
-    fetchUseri()
-    fetchUseriStersi()
-  }, [navigate])
-
   const fetchUseri = async () => {
     try {
-      const token = localStorage.getItem('token')
       const response = await fetch('http://localhost:8080/api/useri', {
-        headers: { 'Authorization': `Bearer ${token}` }
+        credentials: 'include'
       })
       const data = await response.json()
       setUseri(data)
@@ -43,9 +32,8 @@ const AdminDashboard = () => {
 
   const fetchUseriStersi = async () => {
     try {
-      const token = localStorage.getItem('token')
       const response = await fetch('http://localhost:8080/api/useri/stersi', {
-        headers: { 'Authorization': `Bearer ${token}` }
+        credentials: 'include'
       })
       const data = await response.json()
       setUseriStersi(data)
@@ -61,10 +49,9 @@ const AdminDashboard = () => {
 
   const handleConfirmaStergere = async () => {
     try {
-      const token = localStorage.getItem('token')
       await fetch(`http://localhost:8080/api/useri/${userDesters.id}`, {
         method: 'DELETE',
-        headers: { 'Authorization': `Bearer ${token}` }
+        credentials: 'include'
       })
       setShowModalStergere(false)
       setUserDesters(null)
@@ -77,10 +64,9 @@ const AdminDashboard = () => {
 
   const handleRestaureaza = async (id) => {
     try {
-      const token = localStorage.getItem('token')
       await fetch(`http://localhost:8080/api/useri/${id}/restaurare`, {
         method: 'POST',
-        headers: { 'Authorization': `Bearer ${token}` }
+        credentials: 'include'
       })
       fetchUseri()
       fetchUseriStersi()
@@ -89,11 +75,24 @@ const AdminDashboard = () => {
     }
   }
 
-  const handleLogout = () => {
-    localStorage.removeItem('token')
+  const handleLogout = async () => {
+    await fetch('http://localhost:8080/auth/logout', {
+      method: 'POST',
+      credentials: 'include'
+    })
     localStorage.removeItem('user')
     navigate('/')
   }
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'))
+    if (!user || user.tip !== 'manager') {
+      navigate('/')
+      return
+    }
+    fetchUseri()
+    fetchUseriStersi()
+  }, [navigate])
 
   return (
     <div className="dashboard-page">
@@ -108,7 +107,6 @@ const AdminDashboard = () => {
             ← Pagina Principala
           </button>
 
-          {/* Dropdown manageri */}
           <div style={{position: 'relative'}}>
             <button
               className="dashboard-manageri-btn"
@@ -133,7 +131,6 @@ const AdminDashboard = () => {
             )}
           </div>
 
-          {/* Dropdown deconectare */}
           <div style={{position: 'relative'}}>
             <button
               className="dashboard-logout"
@@ -180,7 +177,6 @@ const AdminDashboard = () => {
           </div>
         </div>
 
-        {/* Tabel clienti */}
         <div className="dashboard-section">
           <h2>Clienti inregistrati</h2>
           {loading ? (
@@ -218,7 +214,6 @@ const AdminDashboard = () => {
           )}
         </div>
 
-        {/* Sectiunea clienti stersi */}
         <div className="dashboard-section" style={{marginTop: '2rem'}}>
           <div className="sectiune-header">
             <h2>Clienti stersi</h2>
@@ -268,7 +263,6 @@ const AdminDashboard = () => {
         </div>
       </div>
 
-      {/* Modal confirmare stergere */}
       {showModalStergere && (
         <div className="modal-overlay">
           <div className="modal-box">

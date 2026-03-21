@@ -14,11 +14,15 @@ const Navbar = () => {
     }
   }, [])
 
-  const handleDeconectare = () => {
-    localStorage.removeItem('token')
-    localStorage.removeItem('user')
-    window.location.href = '/'
-  }
+  const handleDeconectare = async () => {
+  await fetch('http://localhost:8080/auth/logout', {
+    method: 'POST',
+    credentials: 'include'
+  })
+  localStorage.removeItem('user')
+  window.location.href = '/'
+}
+
 
   return (
     <nav className="navbar">

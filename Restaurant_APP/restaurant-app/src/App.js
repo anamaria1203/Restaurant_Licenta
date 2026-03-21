@@ -15,6 +15,7 @@ import ResetParola from './components/ResetParola/ResetParola'
 import AdminLogin from './components/AdminLogin/AdminLogin'
 import AdminDashboard from './components/AdminDashboard/AdminDashboard'
 import Meniu from './components/Meniu/Meniu'
+import { ProtectedRoute, AdminRoute } from './components/ProtectedRoute'
 
 function App() {
   return (
@@ -37,8 +38,13 @@ function App() {
         <Route path='/login' element={<Login />} />
         <Route path='/reset-parola' element={<ResetParola />} />
         <Route path='/admin-login' element={<AdminLogin />} />
-        <Route path='/admin-dashboard' element={<AdminDashboard />} />
         <Route path='/meniu' element={<Meniu />} />
+
+        <Route path='/admin-dashboard' element={
+          <AdminRoute>
+            <AdminDashboard />
+          </AdminRoute>
+        } />
       </Routes>
     </Router>
   )

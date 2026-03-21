@@ -38,9 +38,6 @@ const Login = () => {
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return 'Te rugam sa introduci un email valid!'
     }
-    if (!email.toLowerCase().endsWith('@gmail.com')) {
-      return 'Emailul trebuie sa fie de forma exemplu@gmail.com!'
-    }
     return null
   }
 
@@ -71,6 +68,7 @@ const Login = () => {
       const response = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify(body)
       })
 
@@ -88,7 +86,6 @@ const Login = () => {
         return
       }
 
-      localStorage.setItem('token', data.token)
       localStorage.setItem('user', JSON.stringify(data.user))
 
       if (mod === 'signup') {
@@ -141,7 +138,7 @@ const Login = () => {
             <label>Email</label>
             <input
               type="email"
-              placeholder="exemplu@gmail.com"
+              placeholder="adresa@email.com"
               value={email}
               onChange={(e) => { setEmail(e.target.value); setEroareEmail('') }}
               className={eroareEmail ? 'input-eroare' : ''}

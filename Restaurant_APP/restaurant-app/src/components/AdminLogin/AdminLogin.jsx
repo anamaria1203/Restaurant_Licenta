@@ -7,6 +7,7 @@ const AdminLogin = () => {
   const [nume, setNume] = useState('')
   const [email, setEmail] = useState('')
   const [parola, setParola] = useState('')
+  const [codAdmin, setCodAdmin] = useState('')
   const [eroare, setEroare] = useState('')
   const [eroareEmail, setEroareEmail] = useState('')
   const [eroareParola, setEroareParola] = useState('')
@@ -27,6 +28,7 @@ const AdminLogin = () => {
     setNume('')
     setEmail('')
     setParola('')
+    setCodAdmin('')
     setEroare('')
     setEroareEmail('')
     setEroareParola('')
@@ -37,9 +39,6 @@ const AdminLogin = () => {
   const validateEmail = (email) => {
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return 'Te rugam sa introduci un email valid!'
-    }
-    if (!email.toLowerCase().endsWith('@admin.com')) {
-      return 'Emailul trebuie sa fie de forma exemplu@admin.com!'
     }
     return null
   }
@@ -61,16 +60,17 @@ const AdminLogin = () => {
 
     const url = mod === 'signup'
       ? 'http://localhost:8080/auth/register'
-      : 'http://localhost:8080/auth/login'
+      : 'http://localhost:8080/auth/admin-login'
 
     const body = mod === 'signup'
-      ? { nume, email, password: parola, tip: 'manager' }
+      ? { nume, email, password: parola, codAdmin }
       : { email, password: parola }
 
     try {
       const response = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify(body)
       })
 
@@ -88,15 +88,6 @@ const AdminLogin = () => {
         return
       }
 
-      if (data.user.tip !== 'manager') {
-        setEroare('Acest cont nu are drepturi de administrator!')
-        localStorage.removeItem('token')
-        localStorage.removeItem('user')
-        setLoading(false)
-        return
-      }
-
-      localStorage.setItem('token', data.token)
       localStorage.setItem('user', JSON.stringify(data.user))
 
       if (mod === 'signup') {
@@ -146,10 +137,10 @@ const AdminLogin = () => {
           )}
 
           <div className="admin-login-field">
-            <label>Email Admin</label>
+            <label>Email</label>
             <input
               type="email"
-              placeholder="exemplu@admin.com"
+              placeholder="adresa@email.com"
               value={email}
               onChange={(e) => { setEmail(e.target.value); setEroareEmail('') }}
               className={eroareEmail ? 'input-eroare' : ''}
@@ -185,6 +176,19 @@ const AdminLogin = () => {
               </div>
             )}
           </div>
+
+          {mod === 'signup' && (
+            <div className="admin-login-field">
+              <label>Cod Administrator</label>
+              <input
+                type="password"
+                placeholder="Codul secret de administrator"
+                value={codAdmin}
+                onChange={(e) => setCodAdmin(e.target.value)}
+                required
+              />
+            </div>
+          )}
 
           {eroare && <div className="admin-login-eroare">{eroare}</div>}
           {succes && <div className="admin-login-succes">{succes}</div>}

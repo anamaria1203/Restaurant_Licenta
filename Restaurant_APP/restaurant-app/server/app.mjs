@@ -1,20 +1,19 @@
 import express from 'express'
 import cors from 'cors'
+import cookieParser from 'cookie-parser'
 import routers from './routers/index.mjs'
 import middleware from './middleware/index.mjs'
 
 const app = express()
 
-const corsOptions = {
-  origin: process.env.FRONTEND_ORIGIN || 'http://localhost:3000',
-  optionsSuccessStatus: 200
-}
-
-app.use(cors(corsOptions))
+app.use(cors({
+  origin: ['http://localhost:3000', 'http://localhost:5173'],
+  credentials: true
+}))
 app.use(express.json())
+app.use(cookieParser())
 
 app.use('/auth', routers.auth)
-
 app.use(middleware.genericError)
 app.use('/api', routers.api)
 app.use('/meniu', routers.meniu)
