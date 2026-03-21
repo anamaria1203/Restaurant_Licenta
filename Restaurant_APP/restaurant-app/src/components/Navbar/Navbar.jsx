@@ -5,6 +5,7 @@ const Navbar = () => {
   const [showDropdown, setShowDropdown] = useState(false)
   const [showAdminDropdown, setShowAdminDropdown] = useState(false)
   const [userLogat, setUserLogat] = useState(null)
+  const [showConfirmare, setShowConfirmare] = useState(false)
 
   useEffect(() => {
     const user = localStorage.getItem('user')
@@ -45,9 +46,23 @@ const Navbar = () => {
               Hello, <strong>{userLogat.nume}</strong>
             </div>
             {userLogat.tip === 'client' && (
-              <button className="btn-deconectare" onClick={handleDeconectare}>
-                Deconectare
-              </button>
+              <div className="deconectare-wrapper">
+                <button
+                  className="btn-deconectare"
+                  onClick={() => setShowConfirmare(!showConfirmare)}
+                >
+                  Deconectare
+                </button>
+                {showConfirmare && (
+                  <div className="confirmare-dropdown">
+                    <p>Esti sigur ca vrei sa te deconectezi?</p>
+                    <div className="confirmare-butoane">
+                      <button className="btn-da" onClick={handleDeconectare}>Da</button>
+                      <button className="btn-nu" onClick={() => setShowConfirmare(false)}>Nu</button>
+                    </div>
+                  </div>
+                )}
+              </div>
             )}
           </div>
         ) : (
