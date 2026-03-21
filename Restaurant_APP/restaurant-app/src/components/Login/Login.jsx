@@ -23,14 +23,6 @@ const Login = () => {
     }
   }, [])
 
-  useEffect(() => {
-  const params = new URLSearchParams(window.location.search)
-  const modParam = params.get('mod')
-  if (!modParam) {
-    navigate('/')
-  }
-  }, [navigate])
-
   const resetCampuri = () => {
     setNume('')
     setEmail('')
@@ -43,7 +35,13 @@ const Login = () => {
   }
 
   const validateEmail = (email) => {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      return 'Te rugam sa introduci un email valid!'
+    }
+    if (!email.toLowerCase().endsWith('@gmail.com')) {
+      return 'Emailul trebuie sa fie de forma exemplu@gmail.com!'
+    }
+    return null
   }
 
   const handleSubmit = async (e) => {
@@ -53,8 +51,9 @@ const Login = () => {
     setEroareParola('')
     setSucces('')
 
-    if (!validateEmail(email)) {
-      setEroareEmail('Te rugam sa introduci un email valid!')
+    const emailError = validateEmail(email)
+    if (emailError) {
+      setEroareEmail(emailError)
       return
     }
 
@@ -85,23 +84,27 @@ const Login = () => {
         } else {
           setEroare(data.error)
         }
-      } else {
-        localStorage.setItem('token', data.token)
-        localStorage.setItem('user', JSON.stringify(data.user))
-
-        if (mod === 'signup') {
-          setSucces('Cont creat cu succes! Va redirectionam...')
-        } else {
-          setSucces('Bine ati revenit! Conectare reusita!')
-        }
-
-        setTimeout(() => {
-          navigate('/')
-        }, 2000)
+        setLoading(false)
+        return
       }
+
+      localStorage.setItem('token', data.token)
+      localStorage.setItem('user', JSON.stringify(data.user))
+
+      if (mod === 'signup') {
+        setSucces('Cont creat cu succes! Va redirectionam...')
+      } else {
+        setSucces('Bine ati revenit! Conectare reusita!')
+      }
+
+      setLoading(false)
+
+      setTimeout(() => {
+        navigate('/')
+      }, 2000)
+
     } catch (err) {
       setEroare('Eroare de conexiune cu serverul')
-    } finally {
       setLoading(false)
     }
   }
@@ -138,7 +141,7 @@ const Login = () => {
             <label>Email</label>
             <input
               type="email"
-              placeholder="exemplu@email.com"
+              placeholder="exemplu@gmail.com"
               value={email}
               onChange={(e) => { setEmail(e.target.value); setEroareEmail('') }}
               className={eroareEmail ? 'input-eroare' : ''}

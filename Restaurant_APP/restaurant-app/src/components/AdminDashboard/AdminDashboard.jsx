@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 const AdminDashboard = () => {
   const [useri, setUseri] = useState([])
   const [loading, setLoading] = useState(true)
+  const [showConfirmare, setShowConfirmare] = useState(false)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -44,9 +45,28 @@ const AdminDashboard = () => {
         <div className="dashboard-nav-links">
           <span className="dashboard-tag">Panou Administrator</span>
         </div>
-        <button className="dashboard-logout" onClick={handleLogout}>
-          Deconectare
-        </button>
+        <div style={{display: 'flex', gap: '1rem', alignItems: 'center'}}>
+          <button className="dashboard-home" onClick={() => navigate('/')}>
+            ← Pagina Principala
+          </button>
+          <div style={{position: 'relative'}}>
+            <button
+              className="dashboard-logout"
+              onClick={() => setShowConfirmare(!showConfirmare)}
+            >
+              Deconectare
+            </button>
+            {showConfirmare && (
+              <div className="confirmare-dropdown">
+                <p>Esti sigur ca vrei sa te deconectezi?</p>
+                <div className="confirmare-butoane">
+                  <button className="btn-da" onClick={handleLogout}>Da</button>
+                  <button className="btn-nu" onClick={() => setShowConfirmare(false)}>Nu</button>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
       </div>
 
       <div className="dashboard-content">

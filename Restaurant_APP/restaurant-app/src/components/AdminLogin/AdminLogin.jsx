@@ -38,8 +38,8 @@ const AdminLogin = () => {
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return 'Te rugam sa introduci un email valid!'
     }
-    if (!email.toLowerCase().includes('admin')) {
-      return 'Emailul trebuie sa contina "admin" pentru a accesa aceasta sectiune!'
+    if (!email.toLowerCase().endsWith('@admin.com')) {
+      return 'Emailul trebuie sa fie de forma exemplu@admin.com!'
     }
     return null
   }
@@ -84,30 +84,35 @@ const AdminLogin = () => {
         } else {
           setEroare(data.error)
         }
-      } else {
-        if (data.user.tip !== 'manager') {
-          setEroare('Acest cont nu are drepturi de administrator!')
-          localStorage.removeItem('token')
-          localStorage.removeItem('user')
-          return
-        }
-
-        localStorage.setItem('token', data.token)
-        localStorage.setItem('user', JSON.stringify(data.user))
-
-        if (mod === 'signup') {
-          setSucces('Cont admin creat cu succes! Va redirectionam...')
-        } else {
-          setSucces('Bine ati revenit, Administrator! Va redirectionam...')
-        }
-
-        setTimeout(() => {
-          navigate('/admin-dashboard')
-        }, 2000)
+        setLoading(false)
+        return
       }
+
+      if (data.user.tip !== 'manager') {
+        setEroare('Acest cont nu are drepturi de administrator!')
+        localStorage.removeItem('token')
+        localStorage.removeItem('user')
+        setLoading(false)
+        return
+      }
+
+      localStorage.setItem('token', data.token)
+      localStorage.setItem('user', JSON.stringify(data.user))
+
+      if (mod === 'signup') {
+        setSucces('Cont admin creat cu succes! Va redirectionam...')
+      } else {
+        setSucces('Bine ati revenit, Administrator! Va redirectionam...')
+      }
+
+      setLoading(false)
+
+      setTimeout(() => {
+        navigate('/admin-dashboard')
+      }, 2000)
+
     } catch (err) {
       setEroare('Eroare de conexiune cu serverul')
-    } finally {
       setLoading(false)
     }
   }
@@ -144,7 +149,7 @@ const AdminLogin = () => {
             <label>Email Admin</label>
             <input
               type="email"
-              placeholder="admin@villaana.ro"
+              placeholder="exemplu@admin.com"
               value={email}
               onChange={(e) => { setEmail(e.target.value); setEroareEmail('') }}
               className={eroareEmail ? 'input-eroare' : ''}

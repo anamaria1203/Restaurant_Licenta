@@ -180,3 +180,78 @@
   color: #c9a84c;
   border: 1px solid rgba(201,168,76,0.3);
 }
+
+.dashboard-home {
+  padding: 0.5rem 1.2rem;
+  background: transparent;
+  border: 1px solid rgba(201,168,76,0.3);
+  color: #c9a84c;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all 0.2s;
+}
+
+.dashboard-home:hover {
+  background: rgba(201,168,76,0.1);
+}
+
+.confirmare-dropdown {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  background: #1e2d1f;
+  border: 1px solid rgba(201,168,76,0.3);
+  padding: 1rem 1.2rem;
+  min-width: 220px;
+  z-index: 200;
+  border-radius: 2px;
+}
+
+.confirmare-dropdown p {
+  font-size: 0.85rem;
+  color: rgba(245,240,232,0.8);
+  margin-bottom: 0.8rem;
+  text-align: center;
+}
+
+.confirmare-butoane {
+  display: flex;
+  gap: 0.8rem;
+  justify-content: center;
+}
+
+.btn-da {
+  padding: 0.4rem 1.2rem;
+  background: rgba(200,50,50,0.2);
+  border: 1px solid rgba(200,50,50,0.4);
+  color: #ff8080;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.8rem;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all 0.2s;
+}
+
+.btn-da:hover {
+  background: rgba(200,50,50,0.4);
+}
+
+.btn-nu {
+  padding: 0.4rem 1.2rem;
+  background: rgba(201,168,76,0.1);
+  border: 1px solid rgba(201,168,76,0.3);
+  color: #c9a84c;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.8rem;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all 0.2s;
+}
+
+.btn-nu:hover {
+  background: rgba(201,168,76,0.2);
+}
