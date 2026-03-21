@@ -1,5 +1,6 @@
 import { Sequelize, DataTypes } from 'sequelize'
 import userModel from './user.mjs'
+import preparatModel from './preparat.mjs'
 
 const sequelize = new Sequelize({
   dialect: 'sqlite',
@@ -8,10 +9,12 @@ const sequelize = new Sequelize({
 })
 
 const User = userModel(sequelize, DataTypes)
+const Preparat = preparatModel(sequelize, DataTypes)
 
 const db = {
   sequelize,
-  User
+  User,
+  Preparat
 }
 
 export default db

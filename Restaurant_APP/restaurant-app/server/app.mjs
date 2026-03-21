@@ -17,5 +17,6 @@ app.use('/auth', routers.auth)
 
 app.use(middleware.genericError)
 app.use('/api', routers.api)
+app.use('/meniu', routers.meniu)
 
 export default app
