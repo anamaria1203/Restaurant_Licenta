@@ -3,7 +3,7 @@ import db from './models/index.mjs'
 
 const PORT = process.env.PORT || 8080
 
-db.sequelize.sync({ force: false }).then(() => {
+db.sequelize.sync({ alter: true }).then(() => {
   console.log('Baza de date sincronizata!')
   app.listen(PORT, () => {
     console.log(`Server ruleaza pe portul ${PORT}`)
