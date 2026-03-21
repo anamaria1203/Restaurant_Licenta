@@ -37,6 +37,9 @@ const Navbar = () => {
         <a href="/rezervari">Rezervări</a>
         <a href="/despre">Despre noi</a>
         <a href="/contact">Contact</a>
+        {userLogat && userLogat.tip === 'client' && (
+          <a href="/comenzile-mele">Comenzile Mele</a>
+        )}
       </div>
 
       <div className="nav-right">

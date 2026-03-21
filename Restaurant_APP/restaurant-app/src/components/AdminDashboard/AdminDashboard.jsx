@@ -4,9 +4,17 @@ import { useNavigate } from 'react-router-dom'
 
 const AdminDashboard = () => {
   const [useri, setUseri] = useState([])
+  const [useriStersi, setUseriStersi] = useState([])
   const [loading, setLoading] = useState(true)
   const [showConfirmare, setShowConfirmare] = useState(false)
+  const [showModalStergere, setShowModalStergere] = useState(false)
+  const [userDesters, setUserDesters] = useState(null)
+  const [showStersi, setShowStersi] = useState(false)
+  const [showManageri, setShowManageri] = useState(false)
   const navigate = useNavigate()
+
+  const clienti = useri.filter(u => u.tip === 'client')
+  const manageri = useri.filter(u => u.tip === 'manager')
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'))
@@ -15,6 +23,7 @@ const AdminDashboard = () => {
       return
     }
     fetchUseri()
+    fetchUseriStersi()
   }, [navigate])
 
   const fetchUseri = async () => {
@@ -32,6 +41,54 @@ const AdminDashboard = () => {
     }
   }
 
+  const fetchUseriStersi = async () => {
+    try {
+      const token = localStorage.getItem('token')
+      const response = await fetch('http://localhost:8080/api/useri/stersi', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      })
+      const data = await response.json()
+      setUseriStersi(data)
+    } catch (err) {
+      console.error('Eroare la incarcarea userilor stersi:', err)
+    }
+  }
+
+  const handleStergeClick = (user) => {
+    setUserDesters(user)
+    setShowModalStergere(true)
+  }
+
+  const handleConfirmaStergere = async () => {
+    try {
+      const token = localStorage.getItem('token')
+      await fetch(`http://localhost:8080/api/useri/${userDesters.id}`, {
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${token}` }
+      })
+      setShowModalStergere(false)
+      setUserDesters(null)
+      fetchUseri()
+      fetchUseriStersi()
+    } catch (err) {
+      console.error('Eroare la stergere:', err)
+    }
+  }
+
+  const handleRestaureaza = async (id) => {
+    try {
+      const token = localStorage.getItem('token')
+      await fetch(`http://localhost:8080/api/useri/${id}/restaurare`, {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}` }
+      })
+      fetchUseri()
+      fetchUseriStersi()
+    } catch (err) {
+      console.error('Eroare la restaurare:', err)
+    }
+  }
+
   const handleLogout = () => {
     localStorage.removeItem('token')
     localStorage.removeItem('user')
@@ -46,13 +103,41 @@ const AdminDashboard = () => {
           <span className="dashboard-tag">Panou Administrator</span>
         </div>
         <div style={{display: 'flex', gap: '1rem', alignItems: 'center'}}>
+
           <button className="dashboard-home" onClick={() => navigate('/')}>
             ← Pagina Principala
           </button>
+
+          {/* Dropdown manageri */}
+          <div style={{position: 'relative'}}>
+            <button
+              className="dashboard-manageri-btn"
+              onClick={() => { setShowManageri(!showManageri); setShowConfirmare(false) }}
+            >
+              Manageri ({manageri.length})
+            </button>
+            {showManageri && (
+              <div className="manageri-dropdown">
+                <p className="manageri-dropdown-titlu">Conturi Manager</p>
+                {manageri.length === 0 ? (
+                  <p className="manageri-gol">Nu exista manageri.</p>
+                ) : (
+                  manageri.map(m => (
+                    <div key={m.id} className="manager-row">
+                      <span className="manager-nume">{m.nume}</span>
+                      <span className="manager-email">{m.email}</span>
+                    </div>
+                  ))
+                )}
+              </div>
+            )}
+          </div>
+
+          {/* Dropdown deconectare */}
           <div style={{position: 'relative'}}>
             <button
               className="dashboard-logout"
-              onClick={() => setShowConfirmare(!showConfirmare)}
+              onClick={() => { setShowConfirmare(!showConfirmare); setShowManageri(false) }}
             >
               Deconectare
             </button>
@@ -66,6 +151,7 @@ const AdminDashboard = () => {
               </div>
             )}
           </div>
+
         </div>
       </div>
 
@@ -77,8 +163,12 @@ const AdminDashboard = () => {
 
         <div className="dashboard-stats">
           <div className="stat-card">
-            <div className="stat-number">{useri.length}</div>
+            <div className="stat-number">{clienti.length}</div>
             <div className="stat-label">Clienti inregistrati</div>
+          </div>
+          <div className="stat-card">
+            <div className="stat-number">{useriStersi.length}</div>
+            <div className="stat-label">Clienti stersi</div>
           </div>
           <div className="stat-card">
             <div className="stat-number">0</div>
@@ -88,12 +178,9 @@ const AdminDashboard = () => {
             <div className="stat-number">0</div>
             <div className="stat-label">Comenzi active</div>
           </div>
-          <div className="stat-card">
-            <div className="stat-number">0</div>
-            <div className="stat-label">Preparate in meniu</div>
-          </div>
         </div>
 
+        {/* Tabel clienti */}
         <div className="dashboard-section">
           <h2>Clienti inregistrati</h2>
           {loading ? (
@@ -105,29 +192,98 @@ const AdminDashboard = () => {
                   <th>ID</th>
                   <th>Nume</th>
                   <th>Email</th>
-                  <th>Tip cont</th>
                   <th>Data inregistrarii</th>
+                  <th>Actiuni</th>
                 </tr>
               </thead>
               <tbody>
-                {useri.map(user => (
+                {clienti.map(user => (
                   <tr key={user.id}>
                     <td>{user.id}</td>
                     <td>{user.nume}</td>
                     <td>{user.email}</td>
-                    <td>
-                      <span className={`tip-badge ${user.tip}`}>
-                        {user.tip === 'client' ? 'Client' : 'Manager'}
-                      </span>
-                    </td>
                     <td>{new Date(user.createdAt).toLocaleDateString('ro-RO')}</td>
+                    <td>
+                      <button
+                        className="btn-sterge"
+                        onClick={() => handleStergeClick(user)}
+                      >
+                        Sterge
+                      </button>
+                    </td>
                   </tr>
                 ))}
               </tbody>
             </table>
           )}
         </div>
+
+        {/* Sectiunea clienti stersi */}
+        <div className="dashboard-section" style={{marginTop: '2rem'}}>
+          <div className="sectiune-header">
+            <h2>Clienti stersi</h2>
+            <button
+              className="btn-toggle-stersi"
+              onClick={() => setShowStersi(!showStersi)}
+            >
+              {showStersi ? 'Ascunde' : `Arata (${useriStersi.length})`}
+            </button>
+          </div>
+
+          {showStersi && (
+            useriStersi.length === 0 ? (
+              <p className="dashboard-loading">Nu exista clienti stersi.</p>
+            ) : (
+              <table className="useri-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Nume</th>
+                    <th>Email</th>
+                    <th>Data stergerii</th>
+                    <th>Actiuni</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {useriStersi.map(user => (
+                    <tr key={user.id} className="rand-sters">
+                      <td>{user.id}</td>
+                      <td>{user.nume}</td>
+                      <td>{user.email}</td>
+                      <td>{new Date(user.deletedAt).toLocaleDateString('ro-RO')}</td>
+                      <td>
+                        <button
+                          className="btn-restaureaza"
+                          onClick={() => handleRestaureaza(user.id)}
+                        >
+                          Restaureaza
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )
+          )}
+        </div>
       </div>
+
+      {/* Modal confirmare stergere */}
+      {showModalStergere && (
+        <div className="modal-overlay">
+          <div className="modal-box">
+            <div className="modal-icon">⚠</div>
+            <h3>Confirmare stergere</h3>
+            <p>Esti sigur ca doriti sa stergeti clientul</p>
+            <p className="modal-nume">"{userDesters?.nume}"?</p>
+            <p className="modal-sub">Clientul va putea fi restaurat ulterior.</p>
+            <div className="modal-butoane">
+              <button className="btn-da" onClick={handleConfirmaStergere}>Da, sterge</button>
+              <button className="btn-nu" onClick={() => setShowModalStergere(false)}>Anuleaza</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
