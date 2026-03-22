@@ -188,16 +188,15 @@ const Meniu = () => {
                 preparateFiltrate.map(p => (
                   <div key={p.id} className="preparat-card">
                     <div className="preparat-imagine-wrapper">
-                      <div className="preparat-imagine-placeholder">
-                        {p.imagine ? (
-                          <img
-                            src={`/images/meniu/${p.imagine}`}
-                            alt={p.nume}
-                            onError={e => { e.target.style.display = 'none' }}
-                          />
-                        ) : null}
+                      {p.imagine ? (
+                        <img
+                          src={`/images/meniu/${p.imagine}`}
+                          alt={p.nume}
+                          onError={e => { e.target.style.display = 'none' }}
+                        />
+                      ) : (
                         <div className="imagine-icon">🍽</div>
-                      </div>
+                      )}
                       {p.badge && (
                         <span className={`preparat-badge ${BADGE_CULORI[p.badge] || ''}`}>
                           {p.badge}
