@@ -37,7 +37,7 @@ const Echipa = () => {
               <div className="echipa-stat-label">Clienti multumiti</div>
             </div>
             <div className="echipa-stat">
-              <div className="echipa-stat-num">12+</div>
+              <div className="echipa-stat-num">18+</div>
               <div className="echipa-stat-label">Ani de experienta</div>
             </div>
           </div>

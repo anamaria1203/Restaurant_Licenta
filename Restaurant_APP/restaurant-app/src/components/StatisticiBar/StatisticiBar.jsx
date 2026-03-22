@@ -4,7 +4,7 @@ const StatisticiBar = () => {
   return (
     <div className="stats-bar">
       <div className="stat">
-        <div className="stat-num">12+</div>
+        <div className="stat-num">18+</div>
         <div className="stat-label">Ani de experiență</div>
       </div>
 
@@ -25,7 +25,7 @@ const StatisticiBar = () => {
       <div className="stat-divider"></div>
 
       <div className="stat">
-        <div className="stat-num">5K+</div>
+        <div className="stat-num">50K+</div>
         <div className="stat-label">Clienți fericiți</div>
       </div>
     </div>

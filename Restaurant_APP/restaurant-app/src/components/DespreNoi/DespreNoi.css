@@ -1,0 +1,465 @@
+.despre-page {
+  min-height: 100vh;
+  background: #0d0a05;
+  color: #f5f0e8;
+  font-family: 'Jost', sans-serif;
+}
+
+/* ── Hero ── */
+.despre-hero {
+  position: relative;
+  height: 100vh;
+  min-height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(13,10,5,0.55) 0%,
+    rgba(13,10,5,0.4) 40%,
+    rgba(13,10,5,0.85) 100%
+  );
+}
+
+.despre-hero-content {
+  position: relative;
+  z-index: 2;
+}
+
+.despre-tag {
+  font-size: 0.72rem;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: #c9a84c;
+  margin-bottom: 1.5rem;
+}
+
+.despre-hero-content h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 4.5rem;
+  font-weight: 400;
+  color: #f5f0e8;
+  margin-bottom: 1rem;
+}
+
+.despre-hero-content p {
+  font-size: 1.05rem;
+  color: rgba(245,240,232,0.65);
+  max-width: 500px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+.despre-ornament {
+  margin-top: 2rem;
+  color: rgba(201,168,76,0.5);
+  letter-spacing: 8px;
+  font-size: 0.85rem;
+}
+
+/* ── Body ── */
+.despre-body {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 4rem 6rem;
+}
+
+.section-label {
+  font-size: 0.7rem;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: #c9a84c;
+  margin-bottom: 0.8rem;
+}
+
+/* ── Povestea ── */
+.poveste-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: center;
+  padding: 7rem 0 6rem;
+  border-bottom: 1px solid rgba(201,168,76,0.1);
+}
+
+.poveste-text h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.2rem;
+  font-weight: 400;
+  color: #f5f0e8;
+  margin-bottom: 2rem;
+  line-height: 1.3;
+}
+
+.poveste-text p {
+  font-size: 0.92rem;
+  color: rgba(245,240,232,0.65);
+  line-height: 1.85;
+  margin-bottom: 1.2rem;
+}
+
+.poveste-text p em {
+  color: #c9a84c;
+  font-style: normal;
+}
+
+.poveste-stats {
+  display: flex;
+  gap: 2.5rem;
+  margin-top: 2.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(201,168,76,0.15);
+}
+
+.pstat-num {
+  display: block;
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  color: #c9a84c;
+}
+
+.pstat-label {
+  font-size: 0.72rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(245,240,232,0.4);
+}
+
+.poveste-imagine {
+  position: relative;
+}
+
+.poveste-imagine img {
+  width: 100%;
+  height: 520px;
+  object-fit: cover;
+  border: 1px solid rgba(201,168,76,0.15);
+}
+
+.poveste-quote {
+  position: absolute;
+  bottom: -1.5rem;
+  left: -2rem;
+  background: #0d0a05;
+  border: 1px solid rgba(201,168,76,0.25);
+  padding: 1.5rem 2rem;
+  max-width: 320px;
+  font-family: 'Playfair Display', serif;
+  font-size: 0.9rem;
+  color: rgba(245,240,232,0.75);
+  line-height: 1.6;
+  font-style: italic;
+}
+
+.quote-ghilimele {
+  display: block;
+  font-size: 2.5rem;
+  color: #c9a84c;
+  line-height: 0.5;
+  margin-bottom: 0.8rem;
+  font-style: normal;
+}
+
+.quote-autor {
+  display: block;
+  margin-top: 0.8rem;
+  font-size: 0.7rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #c9a84c;
+  font-style: normal;
+}
+
+/* ── Filozofie ── */
+.filozofie-section {
+  padding: 6rem 0;
+  border-bottom: 1px solid rgba(201,168,76,0.1);
+}
+
+.filozofie-header {
+  text-align: center;
+  margin-bottom: 3.5rem;
+}
+
+.filozofie-header h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.2rem;
+  font-weight: 400;
+  color: #f5f0e8;
+}
+
+.filozofie-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
+.fcard {
+  padding: 2rem 1.5rem;
+  background: rgba(201,168,76,0.03);
+  border: 1px solid rgba(201,168,76,0.12);
+  border-radius: 2px;
+  transition: all 0.3s;
+}
+
+.fcard:hover {
+  background: rgba(201,168,76,0.07);
+  border-color: rgba(201,168,76,0.3);
+  transform: translateY(-4px);
+}
+
+.fcard-icon {
+  font-size: 1.8rem;
+  margin-bottom: 1.2rem;
+}
+
+.fcard h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  font-weight: 400;
+  color: #f5f0e8;
+  margin-bottom: 0.8rem;
+}
+
+.fcard p {
+  font-size: 0.82rem;
+  color: rgba(245,240,232,0.5);
+  line-height: 1.7;
+}
+
+/* ── Echipa ── */
+.echipa-section {
+  padding: 6rem 0;
+  border-bottom: 1px solid rgba(201,168,76,0.1);
+}
+
+.echipa-header {
+  text-align: center;
+  margin-bottom: 3.5rem;
+}
+
+.echipa-header h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.2rem;
+  font-weight: 400;
+  color: #f5f0e8;
+  margin-bottom: 0.5rem;
+}
+
+.echipa-header p {
+  font-size: 0.88rem;
+  color: rgba(245,240,232,0.45);
+  letter-spacing: 0.5px;
+}
+
+.echipa-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
+.mcard {
+  background: rgba(201,168,76,0.03);
+  border: 1px solid rgba(201,168,76,0.12);
+  border-radius: 2px;
+  overflow: hidden;
+  transition: all 0.3s;
+}
+
+.mcard:hover {
+  border-color: rgba(201,168,76,0.35);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+}
+
+.mcard-img-wrapper {
+  position: relative;
+  height: 280px;
+  overflow: hidden;
+}
+
+.mcard-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  transition: transform 0.5s;
+}
+
+.mcard:hover .mcard-img-wrapper img {
+  transform: scale(1.05);
+}
+
+.mcard-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(13,10,5,0.6) 0%, transparent 60%);
+}
+
+.mcard-info {
+  padding: 1.4rem;
+}
+
+.mcard-rol {
+  font-size: 0.65rem;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: #c9a84c;
+  margin-bottom: 0.4rem;
+}
+
+.mcard-info h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem;
+  font-weight: 400;
+  color: #f5f0e8;
+  margin-bottom: 0.7rem;
+}
+
+.mcard-info p {
+  font-size: 0.78rem;
+  color: rgba(245,240,232,0.5);
+  line-height: 1.65;
+}
+
+/* ── Galerie ── */
+.galerie-section {
+  padding: 6rem 0 2rem;
+}
+
+.galerie-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.galerie-header h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.2rem;
+  font-weight: 400;
+  color: #f5f0e8;
+}
+
+.galerie-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 280px 480px;
+  gap: 0.8rem;
+}
+
+.gitem-0 {
+  grid-column: 1 / 2;
+  grid-row: 1;
+}
+
+.gitem-1 {
+  grid-column: 2 / 3;
+  grid-row: 1;
+}
+
+.gitem-2 {
+  grid-column: 3 / 5;
+  grid-row: 1;
+}
+
+.gitem-3 {
+  grid-column: 1 / 5;
+  grid-row: 2;
+}
+
+
+.gitem {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.gitem img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s;
+}
+
+.gitem:hover img {
+  transform: scale(1.06);
+}
+
+.gitem-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(13,10,5,0);
+  display: flex;
+  align-items: flex-end;
+  padding: 1.2rem;
+  transition: background 0.3s;
+}
+
+.gitem:hover .gitem-overlay {
+  background: rgba(13,10,5,0.45);
+}
+
+.gitem-overlay span {
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(245,240,232,0);
+  transition: color 0.3s;
+}
+
+.gitem:hover .gitem-overlay span {
+  color: #c9a84c;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  .filozofie-grid,
+  .echipa-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .poveste-section {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .galerie-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 220px);
+  }
+
+  .gitem-0, .gitem-1, .gitem-2, .gitem-3 {
+    grid-column: auto;
+    grid-row: auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .despre-hero-content h1 {
+    font-size: 2.8rem;
+  }
+
+  .filozofie-grid,
+  .echipa-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .despre-body {
+    padding: 0 1.5rem 4rem;
+  }
+}

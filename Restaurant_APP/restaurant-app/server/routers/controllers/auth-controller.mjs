@@ -139,7 +139,7 @@ const logout = async (req, res, next) => {
         const user = await db.User.findByPk(decoded.id)
         if (user) await user.update({ token: null })
       } catch {
-        // token expirat sau invalid, continuam oricum
+        
       }
     }
     res.clearCookie('token')
