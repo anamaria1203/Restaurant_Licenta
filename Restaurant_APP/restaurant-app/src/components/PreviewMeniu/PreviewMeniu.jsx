@@ -42,7 +42,7 @@ const PreviewMeniu = () => {
       </div>
 
       <div className="menu-btn-container">
-        <button className="btn-outline-dark">Vezi Meniul Complet</button>
+       <a href="/meniu" className="btn-outline-dark" style={{textDecoration: 'none'}}>Vezi Meniul Complet</a>
       </div>
     </section>
   )

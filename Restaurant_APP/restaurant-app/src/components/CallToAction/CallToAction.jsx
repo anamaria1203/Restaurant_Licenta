@@ -12,9 +12,8 @@ const CallToAction = () => {
           pe care nu o vei uita. Where Every Meal Tells a Story.
         </p>
         <div className="cta-butoane">
-          <button className="cta-btn-primary">Rezerva Acum</button>
-          <button className="cta-btn-outline">Vezi Meniul</button>
-        </div>
+     <button className="cta-btn-primary">Rezerva Acum</button>
+    </div>
       </div>
     </section>
   )
