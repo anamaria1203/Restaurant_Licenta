@@ -210,72 +210,72 @@ await db.Preparat.bulkCreate([
 
   // BĂUTURI — ROM (10)
  
-  { categorie: 'Bauturi', subcategorie: 'Rom', nume: 'Diplomatico Reserva Exclusiva', descriere: 'Rom venezuelean de 12 ani — caramel, ciocolată și fructe tropicale coapte', pret: 72, badge: 'Signature', alergeni: null, imagine: 'rom_diplomatico.jpg' },
-  { categorie: 'Bauturi', subcategorie: 'Rom', nume: 'Appleton Estate 21 Years', descriere: 'Jamaica rum de excepție — complex, cu note de stejar, stafide și portocale', pret: 115, badge: "Chef's Choice", alergeni: null, imagine: 'rom_appleton.jpg' },
-  { categorie: 'Bauturi', subcategorie: 'Rom', nume: 'Zacapa Centenario 23', descriere: 'Sistema solera din Guatemala — vanilie, caramel, miere și scorțișoară', pret: 88, badge: null, alergeni: null, imagine: 'rom_zacapa.jpg' },
-  { categorie: 'Bauturi', subcategorie: 'Rom', nume: 'Plantation XO 20th Anniversary', descriere: 'Blend de Barbados și Trinidad maturat în butoaie de cognac — rafinat și complex', pret: 95, badge: null, alergeni: null, imagine: 'rom_plantation_xo.jpg' },
-  { categorie: 'Bauturi', subcategorie: 'Rom', nume: 'Havana Club 7 Years', descriere: 'Rom cubanez clasic — tutun blând, miere și lemn fin de cedru cuban', pret: 55, badge: null, alergeni: null, imagine: 'rom_havana.jpg' },
-  { categorie: 'Bauturi', subcategorie: 'Rom', nume: 'El Dorado 15 Years — Demerara', descriere: 'Rom guyanez din distileria Demerara — zahăr brun, prune, ananas și piper negru', pret: 85, badge: null, alergeni: null, imagine: 'rom_el_dorado.jpg' },
-  { categorie: 'Bauturi', subcategorie: 'Rom', nume: 'Mount Gay XO — Barbados', descriere: 'Cel mai vechi brand de rom — complex, cu fructe uscate, cacao și ienibahar', pret: 78, badge: null, alergeni: null, imagine: 'rom_mount_gay.jpg' },
-  { categorie: 'Bauturi', subcategorie: 'Rom', nume: 'Botucal Reserva Exclusiva', descriere: 'Rom venezuelean artizanal din hacienda privată — elegant, cu ciocolată și trufe', pret: 82, badge: null, alergeni: null, imagine: 'rom_botucal.jpg' },
-  { categorie: 'Bauturi', subcategorie: 'Rom', nume: 'Ron Abuelo 12 Years — Panama', descriere: 'Maturat în butoaie de bourbon american — caramel, vanilie și mirodenii fine', pret: 68, badge: null, alergeni: null, imagine: 'rom_abuelo.jpg' },
-  { categorie: 'Bauturi', subcategorie: 'Rom', nume: 'Bacardi Ocho 8 Years', descriere: 'Rom alb maturat 8 ani — fructe de padure, caramel și vanilie fină', pret: 52, badge: null, alergeni: null, imagine: 'rom_bacardi_ocho.jpg' },
+  { categorie: 'Bauturi', subcategorie: 'Rom', nume: 'Diplomatico Reserva Exclusiva', descriere: 'Rom venezuelean de 12 ani — caramel, ciocolată și fructe tropicale coapte', pret: 72, badge: 'Signature', alergeni: null, imagine: 'diplomatico.jpg' },
+  { categorie: 'Bauturi', subcategorie: 'Rom', nume: 'Appleton Estate 21 Years', descriere: 'Jamaica rum de excepție — complex, cu note de stejar, stafide și portocale', pret: 115, badge: "Chef's Choice", alergeni: null, imagine: 'appleton.jpg' },
+  { categorie: 'Bauturi', subcategorie: 'Rom', nume: 'Zacapa Centenario 23', descriere: 'Sistema solera din Guatemala — vanilie, caramel, miere și scorțișoară', pret: 88, badge: null, alergeni: null, imagine: 'zacapa.jpg' },
+  { categorie: 'Bauturi', subcategorie: 'Rom', nume: 'Plantation XO 20th Anniversary', descriere: 'Blend de Barbados și Trinidad maturat în butoaie de cognac — rafinat și complex', pret: 95, badge: null, alergeni: null, imagine: 'plantation.jpg' },
+  { categorie: 'Bauturi', subcategorie: 'Rom', nume: 'Havana Club 7 Years', descriere: 'Rom cubanez clasic — tutun blând, miere și lemn fin de cedru cuban', pret: 55, badge: null, alergeni: null, imagine: 'havana.jpg' },
+  { categorie: 'Bauturi', subcategorie: 'Rom', nume: 'El Dorado 15 Years — Demerara', descriere: 'Rom guyanez din distileria Demerara — zahăr brun, prune, ananas și piper negru', pret: 85, badge: null, alergeni: null, imagine: 'elDorado.jpg' },
+  { categorie: 'Bauturi', subcategorie: 'Rom', nume: 'Mount Gay XO — Barbados', descriere: 'Cel mai vechi brand de rom — complex, cu fructe uscate, cacao și ienibahar', pret: 78, badge: null, alergeni: null, imagine: 'mountGay.jpg' },
+  { categorie: 'Bauturi', subcategorie: 'Rom', nume: 'Botucal Reserva Exclusiva', descriere: 'Rom venezuelean artizanal din hacienda privată — elegant, cu ciocolată și trufe', pret: 82, badge: null, alergeni: null, imagine: 'botucal.jpg' },
+  { categorie: 'Bauturi', subcategorie: 'Rom', nume: 'Ron Abuelo 12 Years — Panama', descriere: 'Maturat în butoaie de bourbon american — caramel, vanilie și mirodenii fine', pret: 68, badge: null, alergeni: null, imagine: 'abuelo.jpg' },
+  { categorie: 'Bauturi', subcategorie: 'Rom', nume: 'Bacardi Ocho 8 Years', descriere: 'Rom alb maturat 8 ani — fructe de padure, caramel și vanilie fină', pret: 52, badge: null, alergeni: null, imagine: 'bacardi.jpg' },
 
   
   // BĂUTURI — SUCURI (10)
  
-  { categorie: 'Bauturi', subcategorie: 'Sucuri', nume: 'Suc de Portocale Proaspăt', descriere: 'Portocale siciliene stoarse la comandă, nefiltre', pret: 22, badge: null, alergeni: null, imagine: 'suc_portocale.jpg' },
-  { categorie: 'Bauturi', subcategorie: 'Sucuri', nume: 'Limonadă Artizanală cu Mentă', descriere: 'Lămâi Amalfi, zahăr de trestie, apă carbogazoasă și mentă proaspătă', pret: 25, badge: null, alergeni: null, imagine: 'suc_limonada.jpg' },
-  { categorie: 'Bauturi', subcategorie: 'Sucuri', nume: 'Suc de Mere cu Ghimbir', descriere: 'Mere Fuji presate la rece, cu ghimbir proaspăt și puțin lime', pret: 22, badge: null, alergeni: null, imagine: 'suc_mere_ghimbir.jpg' },
-  { categorie: 'Bauturi', subcategorie: 'Sucuri', nume: 'Smoothie Mango & Ananas', descriere: 'Mango alphonso și ananas prăjit, cu lapte de cocos și lime', pret: 28, badge: null, alergeni: null, imagine: 'suc_mango_ananas.jpg' },
-  { categorie: 'Bauturi', subcategorie: 'Sucuri', nume: 'Suc de Rodie Proaspăt', descriere: 'Rodie iraniana stoarsă la comandă cu puțin lime și miere de flori', pret: 28, badge: null, alergeni: null, imagine: 'suc_rodie.jpg' },
-  { categorie: 'Bauturi', subcategorie: 'Sucuri', nume: 'Virgin Mojito', descriere: 'Lime proaspăt, mentă, zahăr de trestie și apă minerală carbogazoasă', pret: 25, badge: null, alergeni: null, imagine: 'suc_virgin_mojito.jpg' },
-  { categorie: 'Bauturi', subcategorie: 'Sucuri', nume: 'Suc de Sfeclă cu Lămâie', descriere: 'Sfeclă roșie, morcovi, ghimbir și lămâie presate la rece', pret: 25, badge: null, alergeni: null, imagine: 'suc_sfecla.jpg' },
-  { categorie: 'Bauturi', subcategorie: 'Sucuri', nume: 'Lemonade cu Lavandă', descriere: 'Sirop de lavandă, lămâi presate, apă arteziană — proaspăt și floral', pret: 25, badge: 'Sezonier', alergeni: null, imagine: 'suc_lavanda.jpg' },
-  { categorie: 'Bauturi', subcategorie: 'Sucuri', nume: 'Suc de Pepene Verde cu Mentă', descriere: 'Pepene roșu fără semințe, mentă proaspătă și puțin sare de Himalaya', pret: 22, badge: 'Sezonier', alergeni: null, imagine: 'suc_pepene.jpg' },
-  { categorie: 'Bauturi', subcategorie: 'Sucuri', nume: 'Suc de Morcovi și Grepfrut', descriere: 'Morcovi biologici, grepfrut roz și curcuma — detox natural', pret: 22, badge: null, alergeni: null, imagine: 'suc_morcov_grepfrut.jpg' },
+  { categorie: 'Bauturi', subcategorie: 'Sucuri', nume: 'Suc de Portocale Proaspăt', descriere: 'Portocale siciliene stoarse la comandă, nefiltre', pret: 22, badge: null, alergeni: null, imagine: 'sucPortocale.jpg' },
+  { categorie: 'Bauturi', subcategorie: 'Sucuri', nume: 'Limonadă Artizanală cu Mentă', descriere: 'Lămâi Amalfi, zahăr de trestie, apă carbogazoasă și mentă proaspătă', pret: 25, badge: null, alergeni: null, imagine: 'limonadaMenta.jpg' },
+  { categorie: 'Bauturi', subcategorie: 'Sucuri', nume: 'Suc de Mere cu Ghimbir', descriere: 'Mere Fuji presate la rece, cu ghimbir proaspăt și puțin lime', pret: 22, badge: null, alergeni: null, imagine: 'mereGhimbir.jpg' },
+  { categorie: 'Bauturi', subcategorie: 'Sucuri', nume: 'Smoothie Mango & Ananas', descriere: 'Mango alphonso și ananas prăjit, cu lapte de cocos și lime', pret: 28, badge: null, alergeni: null, imagine: 'mangoAnanas.jpg' },
+  { categorie: 'Bauturi', subcategorie: 'Sucuri', nume: 'Suc de Rodie Proaspăt', descriere: 'Rodie iraniana stoarsă la comandă cu puțin lime și miere de flori', pret: 28, badge: null, alergeni: null, imagine: 'sucRodie.jpg' },
+  { categorie: 'Bauturi', subcategorie: 'Sucuri', nume: 'Virgin Mojito', descriere: 'Lime proaspăt, mentă, zahăr de trestie și apă minerală carbogazoasă', pret: 25, badge: null, alergeni: null, imagine: 'virgin.jpg' },
+  { categorie: 'Bauturi', subcategorie: 'Sucuri', nume: 'Suc de Sfeclă cu Lămâie', descriere: 'Sfeclă roșie, morcovi, ghimbir și lămâie presate la rece', pret: 25, badge: null, alergeni: null, imagine: 'sfeclaLmaaie.jpg' },
+  { categorie: 'Bauturi', subcategorie: 'Sucuri', nume: 'Lemonade cu Lavandă', descriere: 'Sirop de lavandă, lămâi presate, apă arteziană — proaspăt și floral', pret: 25, badge: 'Sezonier', alergeni: null, imagine: 'limonadaLavanda.jpg' },
+  { categorie: 'Bauturi', subcategorie: 'Sucuri', nume: 'Suc de Pepene Verde cu Mentă', descriere: 'Pepene roșu fără semințe, mentă proaspătă și puțin sare de Himalaya', pret: 22, badge: 'Sezonier', alergeni: null, imagine: 'limonadaPepene.jpg' },
+  { categorie: 'Bauturi', subcategorie: 'Sucuri', nume: 'Suc de Morcovi și Grepfrut', descriere: 'Morcovi biologici, grepfrut roz și curcuma — detox natural', pret: 22, badge: null, alergeni: null, imagine: 'sucMorcov.jpg' },
 
   
   // BĂUTURI — CEAIURI (10)
  
-  { categorie: 'Bauturi', subcategorie: 'Ceaiuri', nume: 'Earl Grey Imperial', descriere: 'Ceai negru Ceylon cu bergamot natural — clasic și elegant, servit cu lapte', pret: 22, badge: null, alergeni: 'lactate', imagine: 'ceai_earl_grey.jpg' },
-  { categorie: 'Bauturi', subcategorie: 'Ceaiuri', nume: 'Darjeeling First Flush', descriere: 'Prima recoltă din Darjeeling, delicată și florală — numită și Champagne-ul ceaiurilor', pret: 28, badge: 'Signature', alergeni: null, imagine: 'ceai_darjeeling.jpg' },
-  { categorie: 'Bauturi', subcategorie: 'Ceaiuri', nume: 'Matcha Ceremonial Grade', descriere: 'Matcha japonez de calitate superioară, preparat tradițional cu chasen', pret: 32, badge: null, alergeni: null, imagine: 'ceai_matcha.jpg' },
-  { categorie: 'Bauturi', subcategorie: 'Ceaiuri', nume: 'Oolong Milk Tea', descriere: 'Oolong taiwanez cu note de piersică și miere, servit cu lapte de ovăz', pret: 28, badge: null, alergeni: null, imagine: 'ceai_oolong.jpg' },
-  { categorie: 'Bauturi', subcategorie: 'Ceaiuri', nume: 'Jasmine Pearl', descriere: 'Muguri de ceai verde rulați înfloriți cu flori de iasomie — parfumat și delicat', pret: 28, badge: null, alergeni: null, imagine: 'ceai_jasmine.jpg' },
-  { categorie: 'Bauturi', subcategorie: 'Ceaiuri', nume: 'Ceai de Mentă Morocan', descriere: 'Ceai verde gunpowder cu mentă proaspătă și zahăr din trestie — servit la ibric', pret: 22, badge: null, alergeni: null, imagine: 'ceai_menta.jpg' },
-  { categorie: 'Bauturi', subcategorie: 'Ceaiuri', nume: 'Rooibos Vanilie', descriere: 'Rooibos sud-african fără cofeină cu vanilie naturală și note de caramel', pret: 22, badge: null, alergeni: null, imagine: 'ceai_rooibos.jpg' },
-  { categorie: 'Bauturi', subcategorie: 'Ceaiuri', nume: 'Chai Masala Indian', descriere: 'Amestec de ceai negru, cardamom, scorțișoară, ghimbir și piper — servit cu lapte', pret: 25, badge: null, alergeni: 'lactate', imagine: 'ceai_chai.jpg' },
-  { categorie: 'Bauturi', subcategorie: 'Ceaiuri', nume: 'Sencha Kyoto', descriere: 'Ceai verde japonez de calitate, cu gust de iarbă proaspătă și note marine', pret: 25, badge: null, alergeni: null, imagine: 'ceai_sencha.jpg' },
-  { categorie: 'Bauturi', subcategorie: 'Ceaiuri', nume: 'Ceai de Hibiscus cu Trandafir', descriere: 'Petale de hibiscus și trandafir de damasc, servit cald sau rece cu miere', pret: 22, badge: 'Sezonier', alergeni: null, imagine: 'ceai_hibiscus.jpg' },
+  { categorie: 'Bauturi', subcategorie: 'Ceaiuri', nume: 'Earl Grey Imperial', descriere: 'Ceai negru Ceylon cu bergamot natural — clasic și elegant, servit cu lapte', pret: 22, badge: null, alergeni: 'lactate', imagine: 'earl.jpg' },
+  { categorie: 'Bauturi', subcategorie: 'Ceaiuri', nume: 'Darjeeling First Flush', descriere: 'Prima recoltă din Darjeeling, delicată și florală — numită și Champagne-ul ceaiurilor', pret: 28, badge: 'Signature', alergeni: null, imagine: 'Darjeeling.jpg' },
+  { categorie: 'Bauturi', subcategorie: 'Ceaiuri', nume: 'Matcha Ceremonial Grade', descriere: 'Matcha japonez de calitate superioară, preparat tradițional cu chasen', pret: 32, badge: null, alergeni: null, imagine: 'matcha.jpg' },
+  { categorie: 'Bauturi', subcategorie: 'Ceaiuri', nume: 'Oolong Milk Tea', descriere: 'Oolong taiwanez cu note de piersică și miere, servit cu lapte de ovăz', pret: 28, badge: null, alergeni: null, imagine: 'oolong.jpg' },
+  { categorie: 'Bauturi', subcategorie: 'Ceaiuri', nume: 'Jasmine Pearl', descriere: 'Muguri de ceai verde rulați înfloriți cu flori de iasomie — parfumat și delicat', pret: 28, badge: null, alergeni: null, imagine: 'iasomie.jpg' },
+  { categorie: 'Bauturi', subcategorie: 'Ceaiuri', nume: 'Ceai de Mentă Morocan', descriere: 'Ceai verde gunpowder cu mentă proaspătă și zahăr din trestie — servit la ibric', pret: 22, badge: null, alergeni: null, imagine: 'morocan.jpg' },
+  { categorie: 'Bauturi', subcategorie: 'Ceaiuri', nume: 'Rooibos Vanilie', descriere: 'Rooibos sud-african fără cofeină cu vanilie naturală și note de caramel', pret: 22, badge: null, alergeni: null, imagine: 'Rooibos.jpg' },
+  { categorie: 'Bauturi', subcategorie: 'Ceaiuri', nume: 'Chai Masala Indian', descriere: 'Amestec de ceai negru, cardamom, scorțișoară, ghimbir și piper — servit cu lapte', pret: 25, badge: null, alergeni: 'lactate', imagine: 'masala.jpg' },
+  { categorie: 'Bauturi', subcategorie: 'Ceaiuri', nume: 'Sencha Kyoto', descriere: 'Ceai verde japonez de calitate, cu gust de iarbă proaspătă și note marine', pret: 25, badge: null, alergeni: null, imagine: 'sencha.jpg' },
+  { categorie: 'Bauturi', subcategorie: 'Ceaiuri', nume: 'Ceai de Hibiscus cu Trandafir', descriere: 'Petale de hibiscus și trandafir de damasc, servit cald sau rece cu miere', pret: 22, badge: 'Sezonier', alergeni: null, imagine: 'hibiscus.jpg' },
 
  
   // BĂUTURI — COCKTAILURI (10)
 
-  { categorie: 'Bauturi', subcategorie: 'Cocktailuri', nume: 'Negroni Clasic', descriere: 'Campari, gin London Dry, Vermouth Rosso — servit pe gheată cu coajă de portocală', pret: 55, badge: null, alergeni: null, imagine: 'cocktail_negroni.jpg' },
-  { categorie: 'Bauturi', subcategorie: 'Cocktailuri', nume: 'Aperol Spritz', descriere: 'Aperol, Prosecco, apă minerală și o felie de portocală proaspătă', pret: 48, badge: null, alergeni: null, imagine: 'cocktail_aperol.jpg' },
-  { categorie: 'Bauturi', subcategorie: 'Cocktailuri', nume: 'Old Fashioned cu Bourbon', descriere: 'Bourbon Maker\'s Mark, zahăr brun, Angostura bitters și coajă de portocală', pret: 62, badge: 'Signature', alergeni: null, imagine: 'cocktail_old_fashioned.jpg' },
-  { categorie: 'Bauturi', subcategorie: 'Cocktailuri', nume: 'Espresso Martini', descriere: 'Vodka Belvedere, Kahlua, espresso proaspăt — shaked ușor și espumos', pret: 65, badge: "Chef's Choice", alergeni: null, imagine: 'cocktail_espresso_martini.jpg' },
-  { categorie: 'Bauturi', subcategorie: 'Cocktailuri', nume: 'Mojito Clasic', descriere: 'Havana Club 3 ani, lime proaspăt, mentă, zahăr de trestie și soda', pret: 52, badge: null, alergeni: null, imagine: 'cocktail_mojito.jpg' },
-  { categorie: 'Bauturi', subcategorie: 'Cocktailuri', nume: 'Margarita cu Lime', descriere: 'Tequila Patron Silver, Cointreau, lime proaspăt — cu margine de sare', pret: 58, badge: null, alergeni: null, imagine: 'cocktail_margarita.jpg' },
-  { categorie: 'Bauturi', subcategorie: 'Cocktailuri', nume: 'Manhattan cu Rye', descriere: 'Bulleit Rye, Vermouth Rosso, Angostura bitters, cireașă maraschino', pret: 65, badge: null, alergeni: null, imagine: 'cocktail_manhattan.jpg' },
-  { categorie: 'Bauturi', subcategorie: 'Cocktailuri', nume: 'Hugo Spritz', descriere: 'Prosecco, Elderflower, mentă, lime și apă minerală — floral și răcoritor', pret: 48, badge: 'Sezonier', alergeni: null, imagine: 'cocktail_hugo.jpg' },
-  { categorie: 'Bauturi', subcategorie: 'Cocktailuri', nume: 'Amaretto Sour', descriere: 'Disaronno, suc de lămâie proaspăt, sirop, albuș de ou și bitter Angostura', pret: 55, badge: null, alergeni: 'ou', imagine: 'cocktail_amaretto_sour.jpg' },
-  { categorie: 'Bauturi', subcategorie: 'Cocktailuri', nume: 'Cosmopolitan', descriere: 'Vodka Ciroc, Cointreau, suc de merișor, lime — servit în cupă Martini', pret: 58, badge: null, alergeni: null, imagine: 'cocktail_cosmopolitan.jpg' },
+  { categorie: 'Bauturi', subcategorie: 'Cocktailuri', nume: 'Negroni Clasic', descriere: 'Campari, gin London Dry, Vermouth Rosso — servit pe gheată cu coajă de portocală', pret: 55, badge: null, alergeni: null, imagine: 'negroni.jpg' },
+  { categorie: 'Bauturi', subcategorie: 'Cocktailuri', nume: 'Aperol Spritz', descriere: 'Aperol, Prosecco, apă minerală și o felie de portocală proaspătă', pret: 48, badge: null, alergeni: null, imagine: 'aperol.jpg' },
+  { categorie: 'Bauturi', subcategorie: 'Cocktailuri', nume: 'Old Fashioned cu Bourbon', descriere: 'Bourbon Maker\'s Mark, zahăr brun, Angostura bitters și coajă de portocală', pret: 62, badge: 'Signature', alergeni: null, imagine: 'bourboun.jpg' },
+  { categorie: 'Bauturi', subcategorie: 'Cocktailuri', nume: 'Espresso Martini', descriere: 'Vodka Belvedere, Kahlua, espresso proaspăt — shaked ușor și espumos', pret: 65, badge: "Chef's Choice", alergeni: null, imagine: 'espresssoMartini.jpg' },
+  { categorie: 'Bauturi', subcategorie: 'Cocktailuri', nume: 'Mojito Clasic', descriere: 'Havana Club 3 ani, lime proaspăt, mentă, zahăr de trestie și soda', pret: 52, badge: null, alergeni: null, imagine: 'mojito.jpg' },
+  { categorie: 'Bauturi', subcategorie: 'Cocktailuri', nume: 'Margarita cu Lime', descriere: 'Tequila Patron Silver, Cointreau, lime proaspăt — cu margine de sare', pret: 58, badge: null, alergeni: null, imagine: 'margherita.jpg' },
+  { categorie: 'Bauturi', subcategorie: 'Cocktailuri', nume: 'Manhattan cu Rye', descriere: 'Bulleit Rye, Vermouth Rosso, Angostura bitters, cireașă maraschino', pret: 65, badge: null, alergeni: null, imagine: 'Manhattan.jpg' },
+  { categorie: 'Bauturi', subcategorie: 'Cocktailuri', nume: 'Hugo Spritz', descriere: 'Prosecco, Elderflower, mentă, lime și apă minerală — floral și răcoritor', pret: 48, badge: 'Sezonier', alergeni: null, imagine: 'hugo.jpg' },
+  { categorie: 'Bauturi', subcategorie: 'Cocktailuri', nume: 'Amaretto Sour', descriere: 'Disaronno, suc de lămâie proaspăt, sirop, albuș de ou și bitter Angostura', pret: 55, badge: null, alergeni: 'ou', imagine: 'amarerto.jpg' },
+  { categorie: 'Bauturi', subcategorie: 'Cocktailuri', nume: 'Cosmopolitan', descriere: 'Vodka Ciroc, Cointreau, suc de merișor, lime — servit în cupă Martini', pret: 58, badge: null, alergeni: null, imagine: 'cosmopolitan.jpg' },
 
  
   // BĂUTURI — BERI (10)
 
-  { categorie: 'Bauturi', subcategorie: 'Beri', nume: 'Peroni Nastro Azzurro — la presă', descriere: 'Bere italiană premium la draft — ușoară, curată, perfectă cu pizza sau antipasto', pret: 28, badge: null, alergeni: 'gluten', imagine: 'bere_peroni.jpg' },
-  { categorie: 'Bauturi', subcategorie: 'Beri', nume: 'Moretti alla Spina', descriere: 'Birra Moretti la halbă — bere italiană ușoară cu gust fin de malț', pret: 28, badge: null, alergeni: 'gluten', imagine: 'bere_moretti.jpg' },
-  { categorie: 'Bauturi', subcategorie: 'Beri', nume: 'Hoegaarden Wit — bere albă', descriere: 'Bere albă belgiană cu coajă de portocală și coriandru — nefiltrat, răcoritoare', pret: 32, badge: null, alergeni: 'gluten', imagine: 'bere_hoegaarden.jpg' },
-  { categorie: 'Bauturi', subcategorie: 'Beri', nume: 'Leffe Brune', descriere: 'Bere abatiales belgiancă închisă — caramel, vanilie și note de fructe uscate', pret: 35, badge: null, alergeni: 'gluten', imagine: 'bere_leffe_brune.jpg' },
-  { categorie: 'Bauturi', subcategorie: 'Beri', nume: 'Paulaner Weissbier', descriere: 'Hefeweizen bavarez autentic — banana, cuișoare și grâu nefiltat', pret: 35, badge: null, alergeni: 'gluten', imagine: 'bere_paulaner.jpg' },
-  { categorie: 'Bauturi', subcategorie: 'Beri', nume: 'Grimbergen Blanc', descriere: 'Bere abatiales belgiancă albă — coriandru, coajă de portocală și aromă fină', pret: 35, badge: null, alergeni: 'gluten', imagine: 'bere_grimbergen.jpg' },
-  { categorie: 'Bauturi', subcategorie: 'Beri', nume: 'Erdinger Dunkel', descriere: 'Bere weiss neagră bavarezcă — ciocolată, caramel și note de malt prăjit', pret: 38, badge: null, alergeni: 'gluten', imagine: 'bere_erdinger.jpg' },
-  { categorie: 'Bauturi', subcategorie: 'Beri', nume: 'Stella Artois', descriere: 'Lager belgianс premium — ușoară, echilibrată, cu ușoară amar de hamei', pret: 25, badge: null, alergeni: 'gluten', imagine: 'bere_stella.jpg' },
-  { categorie: 'Bauturi', subcategorie: 'Beri', nume: 'Corona Extra', descriere: 'Lager mexican ușor — servit cu felie de lime, perfect pentru vară', pret: 28, badge: null, alergeni: 'gluten', imagine: 'bere_corona.jpg' },
-  { categorie: 'Bauturi', subcategorie: 'Beri', nume: 'Heineken Premium', descriere: 'Lager olandez clasic la sticlă — proaspăt, curat și recunoscut în toată lumea', pret: 25, badge: null, alergeni: 'gluten', imagine: 'bere_heineken.jpg' }
+  { categorie: 'Bauturi', subcategorie: 'Beri', nume: 'Peroni Nastro Azzurro — la presă', descriere: 'Bere italiană premium la draft — ușoară, curată, perfectă cu pizza sau antipasto', pret: 28, badge: null, alergeni: 'gluten', imagine: 'peroni.jpg' },
+  { categorie: 'Bauturi', subcategorie: 'Beri', nume: 'Moretti alla Spina', descriere: 'Birra Moretti la halbă — bere italiană ușoară cu gust fin de malț', pret: 28, badge: null, alergeni: 'gluten', imagine: 'moretti.jpg' },
+  { categorie: 'Bauturi', subcategorie: 'Beri', nume: 'Hoegaarden Wit — bere albă', descriere: 'Bere albă belgiană cu coajă de portocală și coriandru — nefiltrat, răcoritoare', pret: 32, badge: null, alergeni: 'gluten', imagine: 'bereAlba.jpg' },
+  { categorie: 'Bauturi', subcategorie: 'Beri', nume: 'Leffe Brune', descriere: 'Bere abatiales belgiancă închisă — caramel, vanilie și note de fructe uscate', pret: 35, badge: null, alergeni: 'gluten', imagine: 'leffe.jpg' },
+  { categorie: 'Bauturi', subcategorie: 'Beri', nume: 'Paulaner Weissbier', descriere: 'Hefeweizen bavarez autentic — banana, cuișoare și grâu nefiltat', pret: 35, badge: null, alergeni: 'gluten', imagine: 'paulaner.jpg' },
+  { categorie: 'Bauturi', subcategorie: 'Beri', nume: 'Grimbergen Blanc', descriere: 'Bere abatiales belgiancă albă — coriandru, coajă de portocală și aromă fină', pret: 35, badge: null, alergeni: 'gluten', imagine: 'crimbingen.jpg' },
+  { categorie: 'Bauturi', subcategorie: 'Beri', nume: 'Erdinger Dunkel', descriere: 'Bere weiss neagră bavarezcă — ciocolată, caramel și note de malt prăjit', pret: 38, badge: null, alergeni: 'gluten', imagine: 'erdinger.jpg' },
+  { categorie: 'Bauturi', subcategorie: 'Beri', nume: 'Stella Artois', descriere: 'Lager belgianс premium — ușoară, echilibrată, cu ușoară amar de hamei', pret: 25, badge: null, alergeni: 'gluten', imagine: 'stella.jpg' },
+  { categorie: 'Bauturi', subcategorie: 'Beri', nume: 'Corona Extra', descriere: 'Lager mexican ușor — servit cu felie de lime, perfect pentru vară', pret: 28, badge: null, alergeni: 'gluten', imagine: 'corona.jpg' },
+  { categorie: 'Bauturi', subcategorie: 'Beri', nume: 'Heineken Premium', descriere: 'Lager olandez clasic la sticlă — proaspăt, curat și recunoscut în toată lumea', pret: 25, badge: null, alergeni: 'gluten', imagine: 'heineken.jpg' }
 
 ])
 

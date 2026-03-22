@@ -133,11 +133,11 @@ const Meniu = () => {
             <span className="sort-label">Preț:</span>
             <button
               className={`sort-btn ${sortPret === 'asc' ? 'activ' : ''}`}
-              onClick={() => setSortPret(sortPret === 'asc' ? null : 'asc')}
+              onClick={() => setSortPret('asc')}
             >↑ Crescător</button>
             <button
               className={`sort-btn ${sortPret === 'desc' ? 'activ' : ''}`}
-              onClick={() => setSortPret(sortPret === 'desc' ? null : 'desc')}
+              onClick={() => setSortPret('desc')}
             >↓ Descrescător</button>
           </div>
           <span className="preparate-count">{preparateFiltrate.length} preparate</span>
