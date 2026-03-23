@@ -42,6 +42,10 @@ const preparatModel = (sequelize, DataTypes) => {
     disponibil: {
       type: DataTypes.BOOLEAN,
       defaultValue: true
+    },
+    vegan: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
     }
   }, {
     timestamps: false

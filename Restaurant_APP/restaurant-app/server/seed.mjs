@@ -9,7 +9,7 @@ await db.Preparat.bulkCreate([
   
   // APERITIVE (25)
   
-  { categorie: 'Aperitive', nume: 'Bruschetta cu Roșii și Busuioc', descriere: 'Pâine rustică prăjită, roșii cherry, busuioc proaspăt și ulei de măsline extravirgin', pret: 38, badge: null, alergeni: 'gluten', imagine: 'bruschete.jpg' },
+  { categorie: 'Aperitive', nume: 'Bruschetta cu Roșii și Busuioc', descriere: 'Pâine rustică prăjită, roșii cherry, busuioc proaspăt și ulei de măsline extravirgin', pret: 38, badge: null, alergeni: 'gluten', imagine: 'bruschete.jpg', vegan: true },
   { categorie: 'Aperitive', nume: 'Carpaccio di Manzo', descriere: 'Vită Angus crud-feliat subțire, parmezan, rucola, capere și dressing de lămâie', pret: 72, badge: 'Signature', alergeni: 'lactate, muștar', imagine: 'carpaccio.jpg' },
   { categorie: 'Aperitive', nume: 'Burrata cu Roșii Cherry', descriere: 'Burrata cremată de Puglia, roșii cherry colorate, pesto de busuioc și pâine croccantă', pret: 65, badge: "Chef's Choice", alergeni: 'lactate, gluten', imagine: 'burataRosiiCherry.jpg' },
   { categorie: 'Aperitive', nume: 'Prosciutto e Melone', descriere: 'Prosciutto di Parma 24 luni maturat, pepene galben de sezon și miere de trufe', pret: 68, badge: null, alergeni: null, imagine: 'prosciutto.jpg' },
@@ -21,8 +21,8 @@ await db.Preparat.bulkCreate([
   { categorie: 'Aperitive', nume: 'Crostini cu Ricotta și Smochine', descriere: 'Pâine prăjită cu ricotta bătută, smochine proaspete și miere de castane', pret: 48, badge: 'Sezonier', alergeni: 'gluten, lactate', imagine: 'crostini.jpg' },
   { categorie: 'Aperitive', nume: 'Tartare de Vită cu Trufe', descriere: 'Mușchi de vită Angus tocat manual, trufe negre răzuite, gălbenuș de ou și muștar Dijon', pret: 120, badge: "Chef's Choice", alergeni: 'ou, muștar', imagine: 'tartatVita.jpg' },
   { categorie: 'Aperitive', nume: 'Calamari Fritti', descriere: 'Inele de calamari tineri prăjiți în aluat ușor, cu aioli de usturoi și lămâie', pret: 58, badge: null, alergeni: 'gluten, ou, crustacee', imagine: 'calamari.jpg' },
-  { categorie: 'Aperitive', nume: 'Bruschetta cu Ciuperci și Trufe', descriere: 'Ciuperci porcini și chanterelle sotate, pe pâine de campagne, cu ulei de trufe albe', pret: 62, badge: 'Sezonier', alergeni: 'gluten', imagine: 'bruscheteCiuperci.jpg' },
-  { categorie: 'Aperitive', nume: 'Focaccia cu Rozmarin', descriere: 'Focaccia artizanală coaptă în ziua respectivă, cu rozmarin, fleur de sel și ulei de măsline', pret: 35, badge: null, alergeni: 'gluten', imagine: 'focacciaRozmarin.jpg' },
+  { categorie: 'Aperitive', nume: 'Bruschetta cu Ciuperci și Trufe', descriere: 'Ciuperci porcini și chanterelle sotate, pe pâine de campagne, cu ulei de trufe albe', pret: 62, badge: 'Sezonier', alergeni: 'gluten', imagine: 'bruscheteCiuperci.jpg', vegan: true },
+  { categorie: 'Aperitive', nume: 'Focaccia cu Rozmarin', descriere: 'Focaccia artizanală coaptă în ziua respectivă, cu rozmarin, fleur de sel și ulei de măsline', pret: 35, badge: null, alergeni: 'gluten', imagine: 'focacciaRozmarin.jpg', vegan: true },
   { categorie: 'Aperitive', nume: 'Gravlax de Somon', descriere: 'Somon Atlantic curat în sare și anason, cu crème fraîche, icre și blini cald', pret: 85, badge: 'Signature', alergeni: 'pește, lactate, gluten, ou', imagine: 'gravlex.jpg' },
   { categorie: 'Aperitive', nume: 'Polenta Prăjită cu Gorgonzola', descriere: 'Bastoane de polentă crocantă cu gorgonzola DOP topit și nuci caramelizate', pret: 52, badge: null, alergeni: 'lactate, nuci', imagine: 'polenta.jpg' },
   { categorie: 'Aperitive', nume: 'Tapenade cu Măsline Negre', descriere: 'Pastă fină de măsline Kalamata, capere, ansoa și usturoi, cu pâine grillată', pret: 42, badge: null, alergeni: 'pește, gluten', imagine: 'tapenade.jpg' },
@@ -40,15 +40,15 @@ await db.Preparat.bulkCreate([
   
   { categorie: 'Supe', nume: 'Bisque de Homar', descriere: 'Cremă bogată de homar cu cognac, tarragon și crème fraîche, servită cu crutoane', pret: 85, badge: 'Signature', alergeni: 'crustacee, lactate, gluten', imagine: 'supa_homar.jpg' },
   { categorie: 'Supe', nume: 'Ciorbă de Văcuță', descriere: 'Rețetă tradițională cu legume de sezon, leuștean și smântână 20%', pret: 42, badge: null, alergeni: 'lactate, țelină', imagine: 'supa_vacuta.jpg' },
-  { categorie: 'Supe', nume: 'Cremă de Dovleac cu Ghimbir', descriere: 'Dovleac butternut copt, ghimbir proaspăt, lapte de cocos și semințe de dovleac prăjite', pret: 48, badge: 'Sezonier', alergeni: null, imagine: 'supa_dovleac.jpg' },
+  { categorie: 'Supe', nume: 'Cremă de Dovleac cu Ghimbir', descriere: 'Dovleac butternut copt, ghimbir proaspăt, lapte de cocos și semințe de dovleac prăjite', pret: 48, badge: 'Sezonier', alergeni: null, imagine: 'supa_dovleac.jpg', vegan: true },
   { categorie: 'Supe', nume: 'Minestrone Clasică', descriere: 'Supă italiană de legume cu fasole, paste mici, pesto genovez și parmezan', pret: 45, badge: null, alergeni: 'gluten, lactate', imagine: 'supa_minestrone.jpg' },
   { categorie: 'Supe', nume: 'French Onion Soup', descriere: 'Supă de ceapă caramelizată cu vin alb, crouton gratinат cu Gruyère topit', pret: 58, badge: "Chef's Choice", alergeni: 'gluten, lactate', imagine: 'supa_ceapa.jpg' },
   { categorie: 'Supe', nume: 'Cremă de Ciuperci Porcini', descriere: 'Ciuperci porcini uscate și proaspete, ulei de trufe și chips de pâine cu usturoi', pret: 62, badge: 'Signature', alergeni: 'gluten, lactate', imagine: 'supa_ciuperci.jpg' },
-  { categorie: 'Supe', nume: 'Gazpacho Andaluz', descriere: 'Supă rece de roșii coapte, ardei, castraveți, usturoi și ulei de măsline', pret: 45, badge: 'Sezonier', alergeni: 'gluten', imagine: 'supa_andaluz.jpg' },
+  { categorie: 'Supe', nume: 'Gazpacho Andaluz', descriere: 'Supă rece de roșii coapte, ardei, castraveți, usturoi și ulei de măsline', pret: 45, badge: 'Sezonier', alergeni: 'gluten', imagine: 'supa_andaluz.jpg', vegan: true },
   { categorie: 'Supe', nume: 'Cremă de Sparanghel cu Trufe', descriere: 'Sparanghel verde de primăvară, cu trufe albe răzuite și unt brun', pret: 75, badge: "Chef's Choice", alergeni: 'lactate', imagine: 'supa_sparanghel.jpg' },
   { categorie: 'Supe', nume: 'Vichyssoise Rece', descriere: 'Cremă clasică franceză de praz și cartofi, servită rece cu ciboulette', pret: 52, badge: null, alergeni: 'lactate, țelină', imagine: 'supa_vichyssoise.jpg' },
   { categorie: 'Supe', nume: 'Zuppa Toscana', descriere: 'Cârnați italieni picante, fasole cannellini, kale toscan și parmezan', pret: 55, badge: null, alergeni: 'lactate', imagine: 'supa_toscana.jpg' },
-  { categorie: 'Supe', nume: 'Cremă de Morcovi cu Curcuma', descriere: 'Morcovi biologici, curcuma proaspătă, lapte de cocos și ulei de semințe de coriandru', pret: 42, badge: null, alergeni: null, imagine: 'supa_morcovi.jpg' },
+  { categorie: 'Supe', nume: 'Cremă de Morcovi cu Curcuma', descriere: 'Morcovi biologici, curcuma proaspătă, lapte de cocos și ulei de semințe de coriandru', pret: 42, badge: null, alergeni: null, imagine: 'supa_morcovi.jpg', vegan: true },
   { categorie: 'Supe', nume: 'Bouillabaisse Provençală', descriere: 'Tocăniță tradițională marseilleză de pești și fructe de mare, cu rouille și croûtons', pret: 95, badge: 'Signature', alergeni: 'pește, crustacee, gluten, ou', imagine: 'supa_bouillabaisse.jpg' },
   { categorie: 'Supe', nume: 'Cremă de Broccoli cu Cheddar', descriere: 'Broccoli proaspăt, cheddar maturat 18 luni, smântână și biguș de ceapă', pret: 48, badge: null, alergeni: 'lactate', imagine: 'supa_broccoli.jpg' },
   { categorie: 'Supe', nume: 'Avgolemono Grecesc', descriere: 'Supă greacă cremoasă de pui cu orez, ou și lămâie proaspătă', pret: 45, badge: null, alergeni: 'ou', imagine: 'supa_avgolemono.jpg' },

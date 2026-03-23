@@ -30,6 +30,7 @@ const Meniu = () => {
   const [searchQuery, setSearchQuery] = useState('')
   const [sortPret, setSortPret] = useState(null)
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     fetchPreparate()
     setSearchQuery('')
@@ -201,6 +202,9 @@ const Meniu = () => {
                         <span className={`preparat-badge ${BADGE_CULORI[p.badge] || ''}`}>
                           {p.badge}
                         </span>
+                      )}
+                      {p.vegan && (
+                         <span className="preparat-badge badge-vegan">Vegan</span>
                       )}
                     </div>
                     <div className="preparat-info">
