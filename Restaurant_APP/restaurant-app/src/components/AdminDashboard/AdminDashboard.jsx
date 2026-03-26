@@ -11,10 +11,40 @@ const AdminDashboard = () => {
   const [userDesters, setUserDesters] = useState(null)
   const [showStersi, setShowStersi] = useState(false)
   const [showManageri, setShowManageri] = useState(false)
+  const [lunaActiva, setLunaActiva] = useState('spaniola')
+  const [loadingLuna, setLoadingLuna] = useState(false)
+
   const navigate = useNavigate()
 
   const clienti = useri.filter(u => u.tip === 'client')
   const manageri = useri.filter(u => u.tip === 'manager')
+
+  const fetchLunaActiva = async () => {
+    try {
+      const res = await fetch('http://localhost:8080/luna/activa')
+      const data = await res.json()
+      setLunaActiva(data.tara)
+    } catch (err) {
+      console.error('Eroare la incarcarea lunii active:', err)
+    }
+  }
+
+  const handleSetLunaActiva = async (tara) => {
+    setLoadingLuna(true)
+    try {
+      await fetch('http://localhost:8080/luna/activa', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ tara })
+      })
+      setLunaActiva(tara)
+    } catch (err) {
+      console.error('Eroare la setarea lunii active:', err)
+    } finally {
+      setLoadingLuna(false)
+    }
+  }
 
   const fetchUseri = async () => {
     try {
@@ -92,6 +122,7 @@ const AdminDashboard = () => {
     }
     fetchUseri()
     fetchUseriStersi()
+    fetchLunaActiva()
   }, [navigate])
 
   return (
@@ -102,11 +133,12 @@ const AdminDashboard = () => {
           <span className="dashboard-tag">Panou Administrator</span>
         </div>
         <div style={{display: 'flex', gap: '1rem', alignItems: 'center'}}>
-
           <button className="dashboard-home" onClick={() => navigate('/')}>
             ← Pagina Principala
+            <button className="dashboard-home" onClick={() => navigate('/admin-meniu')} style={{borderColor: 'rgba(201,168,76,0.4)', color: '#c9a84c'}}>
+               Meniu Țări
+            </button>
           </button>
-
           <div style={{position: 'relative'}}>
             <button
               className="dashboard-manageri-btn"
@@ -130,7 +162,6 @@ const AdminDashboard = () => {
               </div>
             )}
           </div>
-
           <div style={{position: 'relative'}}>
             <button
               className="dashboard-logout"
@@ -148,7 +179,6 @@ const AdminDashboard = () => {
               </div>
             )}
           </div>
-
         </div>
       </div>
 
@@ -200,10 +230,7 @@ const AdminDashboard = () => {
                     <td>{user.email}</td>
                     <td>{new Date(user.createdAt).toLocaleDateString('ro-RO')}</td>
                     <td>
-                      <button
-                        className="btn-sterge"
-                        onClick={() => handleStergeClick(user)}
-                      >
+                      <button className="btn-sterge" onClick={() => handleStergeClick(user)}>
                         Sterge
                       </button>
                     </td>
@@ -217,14 +244,10 @@ const AdminDashboard = () => {
         <div className="dashboard-section" style={{marginTop: '2rem'}}>
           <div className="sectiune-header">
             <h2>Clienti stersi</h2>
-            <button
-              className="btn-toggle-stersi"
-              onClick={() => setShowStersi(!showStersi)}
-            >
+            <button className="btn-toggle-stersi" onClick={() => setShowStersi(!showStersi)}>
               {showStersi ? 'Ascunde' : `Arata (${useriStersi.length})`}
             </button>
           </div>
-
           {showStersi && (
             useriStersi.length === 0 ? (
               <p className="dashboard-loading">Nu exista clienti stersi.</p>
@@ -247,10 +270,7 @@ const AdminDashboard = () => {
                       <td>{user.email}</td>
                       <td>{new Date(user.deletedAt).toLocaleDateString('ro-RO')}</td>
                       <td>
-                        <button
-                          className="btn-restaureaza"
-                          onClick={() => handleRestaureaza(user.id)}
-                        >
+                        <button className="btn-restaureaza" onClick={() => handleRestaureaza(user.id)}>
                           Restaureaza
                         </button>
                       </td>
@@ -261,6 +281,40 @@ const AdminDashboard = () => {
             )
           )}
         </div>
+
+        <div className="dashboard-section" style={{marginTop: '2rem'}}>
+          <h2>Meniul Lunii — Țara Activă</h2>
+         <div className="tari-grid">
+  {[
+    { slug: 'spaniola',      flag: '🇪🇸', label: 'Spaniola',      poze: true  },
+    { slug: 'turceasca',     flag: '🇹🇷', label: 'Turceasca',     poze: true  },
+    { slug: 'moldoveneasca', flag: '🇲🇩', label: 'Moldoveneasca', poze: false },
+    { slug: 'japoneza',      flag: '🇯🇵', label: 'Japoneza',      poze: false },
+    { slug: 'norvegiana',    flag: '🇳🇴', label: 'Norvegiana',    poze: false },
+  ].map(({ slug, flag, label, poze }) => (
+    <div key={slug} className={`tara-card ${lunaActiva === slug ? 'tara-activa' : ''}`}>
+      <div className="tara-flag">{flag}</div>
+      <div className="tara-nume">{label}</div>
+      <span className={`tara-poze-badge ${poze ? '' : 'fara-poze'}`}>
+        {poze ? '✓ are poze' : 'fără poze'}
+      </span>
+      {lunaActiva === slug ? (
+        <span className="tara-badge">Activă</span>
+      ) : (
+        <button
+          className="btn-seteaza"
+          onClick={() => handleSetLunaActiva(slug)}
+          disabled={loadingLuna}
+        >
+          Setează activă
+        </button>
+      )}
+    </div>
+  ))}
+</div>
+
+        </div>
+
       </div>
 
       {showModalStergere && (

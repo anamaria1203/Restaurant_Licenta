@@ -38,6 +38,7 @@ const Navbar = () => {
       <div className="nav-links">
         <a href="/">Home</a>
         <a href="/meniu">Meniu</a>
+        <a href="/meniu-lunii">Meniul Lunii</a>
         <a href="/rezervari">Rezervări</a>
         <a href="/despre">Despre noi</a>
         <a href="/contact">Contact</a>

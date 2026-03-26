@@ -1,6 +1,7 @@
 import { Sequelize, DataTypes } from 'sequelize'
 import userModel from './user.mjs'
 import preparatModel from './preparat.mjs'
+import lunaActivaModel from './lunaActiva.mjs'
 
 const sequelize = new Sequelize({
   dialect: 'sqlite',
@@ -10,11 +11,13 @@ const sequelize = new Sequelize({
 
 const User = userModel(sequelize, DataTypes)
 const Preparat = preparatModel(sequelize, DataTypes)
+const LunaActiva = lunaActivaModel(sequelize, DataTypes)
 
 const db = {
   sequelize,
   User,
-  Preparat
+  Preparat,
+  LunaActiva
 }
 
 export default db

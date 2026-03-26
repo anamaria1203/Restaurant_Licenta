@@ -138,7 +138,7 @@ const Contact = () => {
 
             <div className="faq-item">
               <div className="faq-intrebare">Este necesară rezervarea în avans?</div>
-              <div className="faq-raspuns">Rezervarea nu este obligatorie, dar o recomandăm cu căldură, mai ales în weekend. Ne puteți contacta telefonic sau pe email pentru a rezerva un loc.</div>
+              <div className="faq-raspuns">Rezervarea este obligatorie. O puteți face rapid accesând secțiunea Rezervări din bara de navigare de sus.</div>
             </div>
 
             <div className="faq-item">

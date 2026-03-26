@@ -17,6 +17,7 @@ import AdminDashboard from './components/AdminDashboard/AdminDashboard'
 import Meniu from './components/Meniu/Meniu'
 import DespreNoi from './components/DespreNoi/DespreNoi'
 import Contact from './components/Contact/Contact'
+import MeniulLunii from './components/MeniulLunii/MeniulLunii'
 import { AdminRoute } from './components/ProtectedRoute'
 
 
@@ -44,8 +45,7 @@ function App() {
         <Route path='/meniu' element={<Meniu />} />
         <Route path='/despre' element={<DespreNoi />} />
         <Route path='/contact' element={<Contact />} />
-
-
+        <Route path='/meniu-lunii' element={<MeniulLunii />} />
         <Route path='/admin-dashboard' element={
           <AdminRoute>
             <AdminDashboard />
