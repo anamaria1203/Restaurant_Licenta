@@ -65,14 +65,13 @@ const AdminMeniu = () => {
           <div className="am-sidebar-header">
             <p className="am-sidebar-label">Țările din meniu</p>
           </div>
-          {TARI_LIST.map(({ slug, flag, label, poze }) => (
+          {TARI_LIST.map(({ slug, flag, label }) => (
             <div key={slug} className={`am-tara-item ${taraSelectata === slug ? 'am-tara-selected' : ''}`}>
               <div className="am-tara-top">
                 <span className="am-tara-flag">{flag}</span>
                 <div className="am-tara-info">
                   <span className="am-tara-label">{label}</span>
                   {lunaActiva === slug && <span className="am-activa-badge">Activă</span>}
-                  {!poze && <span className="am-fara-poze-badge">fără poze</span>}
                 </div>
               </div>
               <div className="am-tara-butoane">
