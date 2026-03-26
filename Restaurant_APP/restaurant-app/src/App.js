@@ -18,6 +18,7 @@ import Meniu from './components/Meniu/Meniu'
 import DespreNoi from './components/DespreNoi/DespreNoi'
 import Contact from './components/Contact/Contact'
 import MeniulLunii from './components/MeniulLunii/MeniulLunii'
+import AdminMeniu from './components/AdminMeniu/AdminMeniu'
 import { AdminRoute } from './components/ProtectedRoute'
 
 
@@ -49,6 +50,11 @@ function App() {
         <Route path='/admin-dashboard' element={
           <AdminRoute>
             <AdminDashboard />
+          </AdminRoute>
+        } />
+        <Route path='/admin-meniu' element={
+          <AdminRoute>
+            <AdminMeniu />
           </AdminRoute>
         } />
       </Routes>

@@ -11,40 +11,10 @@ const AdminDashboard = () => {
   const [userDesters, setUserDesters] = useState(null)
   const [showStersi, setShowStersi] = useState(false)
   const [showManageri, setShowManageri] = useState(false)
-  const [lunaActiva, setLunaActiva] = useState('spaniola')
-  const [loadingLuna, setLoadingLuna] = useState(false)
-
   const navigate = useNavigate()
 
   const clienti = useri.filter(u => u.tip === 'client')
   const manageri = useri.filter(u => u.tip === 'manager')
-
-  const fetchLunaActiva = async () => {
-    try {
-      const res = await fetch('http://localhost:8080/luna/activa')
-      const data = await res.json()
-      setLunaActiva(data.tara)
-    } catch (err) {
-      console.error('Eroare la incarcarea lunii active:', err)
-    }
-  }
-
-  const handleSetLunaActiva = async (tara) => {
-    setLoadingLuna(true)
-    try {
-      await fetch('http://localhost:8080/luna/activa', {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-        body: JSON.stringify({ tara })
-      })
-      setLunaActiva(tara)
-    } catch (err) {
-      console.error('Eroare la setarea lunii active:', err)
-    } finally {
-      setLoadingLuna(false)
-    }
-  }
 
   const fetchUseri = async () => {
     try {
@@ -122,7 +92,6 @@ const AdminDashboard = () => {
     }
     fetchUseri()
     fetchUseriStersi()
-    fetchLunaActiva()
   }, [navigate])
 
   return (
@@ -135,9 +104,9 @@ const AdminDashboard = () => {
         <div style={{display: 'flex', gap: '1rem', alignItems: 'center'}}>
           <button className="dashboard-home" onClick={() => navigate('/')}>
             ← Pagina Principala
-            <button className="dashboard-home" onClick={() => navigate('/admin-meniu')} style={{borderColor: 'rgba(201,168,76,0.4)', color: '#c9a84c'}}>
-               Meniu Țări
-            </button>
+          </button>
+          <button className="dashboard-home" onClick={() => navigate('/admin-meniu')} style={{borderColor: 'rgba(201,168,76,0.4)', color: '#c9a84c'}}>
+            Meniu Țări
           </button>
           <div style={{position: 'relative'}}>
             <button
@@ -280,39 +249,6 @@ const AdminDashboard = () => {
               </table>
             )
           )}
-        </div>
-
-        <div className="dashboard-section" style={{marginTop: '2rem'}}>
-          <h2>Meniul Lunii — Țara Activă</h2>
-         <div className="tari-grid">
-  {[
-    { slug: 'spaniola',      flag: '🇪🇸', label: 'Spaniola',      poze: true  },
-    { slug: 'turceasca',     flag: '🇹🇷', label: 'Turceasca',     poze: true  },
-    { slug: 'moldoveneasca', flag: '🇲🇩', label: 'Moldoveneasca', poze: false },
-    { slug: 'japoneza',      flag: '🇯🇵', label: 'Japoneza',      poze: false },
-    { slug: 'norvegiana',    flag: '🇳🇴', label: 'Norvegiana',    poze: false },
-  ].map(({ slug, flag, label, poze }) => (
-    <div key={slug} className={`tara-card ${lunaActiva === slug ? 'tara-activa' : ''}`}>
-      <div className="tara-flag">{flag}</div>
-      <div className="tara-nume">{label}</div>
-      <span className={`tara-poze-badge ${poze ? '' : 'fara-poze'}`}>
-        {poze ? '✓ are poze' : 'fără poze'}
-      </span>
-      {lunaActiva === slug ? (
-        <span className="tara-badge">Activă</span>
-      ) : (
-        <button
-          className="btn-seteaza"
-          onClick={() => handleSetLunaActiva(slug)}
-          disabled={loadingLuna}
-        >
-          Setează activă
-        </button>
-      )}
-    </div>
-  ))}
-</div>
-
         </div>
 
       </div>
