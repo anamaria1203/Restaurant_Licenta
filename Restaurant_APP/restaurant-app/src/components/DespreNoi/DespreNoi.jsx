@@ -59,7 +59,7 @@ const DespreNoi = () => {
         <section className="poveste-section">
           <div className="poveste-text">
             <div className="section-label">Originile noastre</div>
-            <h2>Un vis devenită realitate în 2005</h2>
+            <h2>Un vis devenit realitate în 2005</h2>
             <p>
               Villa Ana Ristorante s-a născut din dragostea pentru gastronomia italiancă autentică
               și din dorința de a oferi României o experiență culinară cu adevărat rafinată.
