@@ -21,8 +21,13 @@ const AdminDashboard = () => {
       const response = await fetch('http://localhost:8080/api/useri', {
         credentials: 'include'
       })
+      if (response.status === 401) {
+        localStorage.removeItem('user')
+        navigate('/admin-login?mod=login')
+        return
+      }
       const data = await response.json()
-      setUseri(data)
+      setUseri(Array.isArray(data) ? data : [])
     } catch (err) {
       console.error('Eroare la incarcarea userilor:', err)
     } finally {
@@ -35,12 +40,14 @@ const AdminDashboard = () => {
       const response = await fetch('http://localhost:8080/api/useri/stersi', {
         credentials: 'include'
       })
+      if (response.status === 401) return
       const data = await response.json()
-      setUseriStersi(data)
+      setUseriStersi(Array.isArray(data) ? data : [])
     } catch (err) {
       console.error('Eroare la incarcarea userilor stersi:', err)
     }
   }
+
 
   const handleStergeClick = (user) => {
     setUserDesters(user)
