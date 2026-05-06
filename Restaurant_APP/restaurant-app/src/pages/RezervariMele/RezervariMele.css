@@ -1,0 +1,220 @@
+.rezme-page {
+  min-height: 100vh;
+  background: #0f0508;
+  color: #f5f0e8;
+}
+
+.rezme-hero {
+  padding: 6rem 2rem 3rem;
+  text-align: center;
+  background: linear-gradient(to bottom, rgba(196, 164, 96, 0.05), transparent);
+}
+
+.rezme-tag {
+  color: #c4a460;
+  font-size: 0.8rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  margin-bottom: 0.8rem;
+}
+
+.rezme-hero-content h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  color: #f5f0e8;
+  margin-bottom: 0.6rem;
+}
+
+.rezme-hero-content p {
+  color: rgba(245, 240, 232, 0.5);
+}
+
+.rezme-body {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 2rem 2rem 4rem;
+}
+
+/* ─── GOALE ──────────────────────────────────────────── */
+.rezme-goale {
+  text-align: center;
+  padding: 4rem 2rem;
+}
+
+.rezme-goale-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.rezme-goale h3 {
+  font-size: 1.4rem;
+  color: #f5f0e8;
+  margin-bottom: 0.5rem;
+}
+
+.rezme-goale p {
+  color: rgba(245, 240, 232, 0.5);
+  margin-bottom: 1.5rem;
+}
+
+.rezme-btn-rezerva {
+  display: inline-block;
+  padding: 0.8rem 2rem;
+  background: #c4a460;
+  color: #1a0a0a;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.rezme-btn-rezerva:hover { background: #d4b470; }
+
+/* ─── CONTAINER ──────────────────────────────────────── */
+.rezme-container {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(196, 164, 96, 0.2);
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+.rezme-eroare {
+  background: rgba(220, 80, 80, 0.1);
+  border-bottom: 1px solid rgba(220, 80, 80, 0.2);
+  color: #e88;
+  font-size: 0.85rem;
+  padding: 0.7rem 2rem;
+}
+
+/* ─── SECTIUNE ───────────────────────────────────────── */
+.rezme-sectiune {
+  padding: 1.8rem 2rem;
+}
+
+.rezme-sectiune.cu-separator {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* ─── HEADER ─────────────────────────────────────────── */
+.rezme-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 1.2rem;
+  gap: 1rem;
+}
+
+.rezme-nr {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #f5f0e8;
+  margin-bottom: 0.25rem;
+}
+
+.rezme-data-creare {
+  font-size: 0.8rem;
+  color: rgba(245, 240, 232, 0.4);
+}
+
+.rezme-dreapta {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  flex-shrink: 0;
+}
+
+.rezme-status {
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+}
+
+.status-asteptare { background: rgba(200, 160, 50, 0.15); color: #c8a032; }
+.status-confirmata { background: rgba(50, 200, 100, 0.15); color: #32c864; }
+.status-anulata { background: rgba(200, 50, 50, 0.15); color: #c83232; }
+
+.rezme-btn-anuleaza {
+  background: transparent;
+  border: 1px solid rgba(220, 80, 80, 0.35);
+  color: rgba(220, 80, 80, 0.8);
+  border-radius: 6px;
+  padding: 0.3rem 0.9rem;
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.rezme-btn-anuleaza:hover:not(:disabled) {
+  background: rgba(220, 80, 80, 0.08);
+  border-color: rgba(220, 80, 80, 0.6);
+}
+
+.rezme-btn-anuleaza:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ─── DETALII ────────────────────────────────────────── */
+.rezme-detalii {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1rem;
+}
+
+.rezme-detaliu-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+}
+
+.rezme-detaliu-icon { font-size: 1.1rem; margin-top: 0.1rem; }
+
+.rezme-detaliu-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(196, 164, 96, 0.6);
+  margin-bottom: 0.2rem;
+}
+
+.rezme-detaliu-val {
+  font-size: 0.88rem;
+  color: rgba(245, 240, 232, 0.85);
+  line-height: 1.4;
+}
+
+/* ─── OBSERVATII ─────────────────────────────────────── */
+.rezme-observatii {
+  margin-top: 0.8rem;
+  font-size: 0.8rem;
+  color: rgba(245, 240, 232, 0.35);
+  font-style: italic;
+}
+
+/* ─── FOOTER BAR ─────────────────────────────────────── */
+.rezme-footer-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.2rem 2rem;
+  background: rgba(196, 164, 96, 0.05);
+  border-top: 1px solid rgba(196, 164, 96, 0.2);
+  font-size: 0.88rem;
+  color: rgba(245, 240, 232, 0.5);
+}
+
+.rezme-btn-noua {
+  padding: 0.5rem 1.2rem;
+  background: rgba(196, 164, 96, 0.15);
+  border: 1px solid rgba(196, 164, 96, 0.35);
+  color: #c4a460;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.rezme-btn-noua:hover { background: rgba(196, 164, 96, 0.25); }

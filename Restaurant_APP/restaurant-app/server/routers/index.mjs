@@ -4,6 +4,7 @@ import meniuRouter from './meniu-router.mjs'
 import lunaRouter from './luna-router.mjs'
 import preparateLunareRouter from './preparateLunare-router.mjs'
 import comandaRouter from './comanda-router.mjs'
+import rezervareRouter from './rezervare-router.mjs'
 
 const routers = {
   auth: authRouter,
@@ -11,7 +12,8 @@ const routers = {
   meniu: meniuRouter,
   luna: lunaRouter,
   preparateLunare: preparateLunareRouter,
-  comanda: comandaRouter
+  comanda: comandaRouter,
+  rezervare: rezervareRouter
 }
 
 export default routers

@@ -11,6 +11,10 @@ import ResetParola from './pages/ResetParola/ResetParola'
 import AdminLogin from './pages/admin/AdminLogin/AdminLogin'
 import AdminDashboard from './pages/admin/AdminDashboard/AdminDashboard'
 import AdminMeniu from './pages/admin/AdminMeniu/AdminMeniu'
+import Comanda from './pages/Comanda/Comanda'
+import ComenziMele from './pages/ComenziMele/ComenziMele'
+import Rezervare from './pages/Rezervare/Rezervare'
+import RezervariMele from './pages/RezervariMele/RezervariMele'
 import { AdminRoute } from './components/ProtectedRoute/ProtectedRoute'
 
 function App() {
@@ -25,6 +29,10 @@ function App() {
         <Route path='/despre' element={<DespreNoi />} />
         <Route path='/contact' element={<Contact />} />
         <Route path='/meniu-lunii' element={<MeniulLunii />} />
+        <Route path='/comanda' element={<Comanda />} />
+        <Route path='/comenzile-mele' element={<ComenziMele />} />
+        <Route path='/rezervare' element={<Rezervare />} />
+        <Route path='/rezervarile-mele' element={<RezervariMele />} />
         <Route path='/admin-dashboard' element={
           <AdminRoute>
             <AdminDashboard />

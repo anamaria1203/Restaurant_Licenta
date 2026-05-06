@@ -39,12 +39,16 @@ const Navbar = () => {
         <a href="/">Home</a>
         <a href="/meniu">Meniu</a>
         <a href="/meniu-lunii">Meniul Lunii</a>
-        <a href="/rezervari">Rezervări</a>
-        <a href="/despre">Despre noi</a>
-        <a href="/contact">Contact</a>
+        <a href="/comanda">Comenzi</a>
         {userLogat && userLogat.tip === 'client' && (
           <a href="/comenzile-mele">Comenzile Mele</a>
         )}
+        <a href="/rezervare">Rezervări</a>
+        {userLogat && userLogat.tip === 'client' && (
+          <a href="/rezervarile-mele">Rezervările Mele</a>
+        )}
+        <a href="/despre">Despre noi</a>
+        <a href="/contact">Contact</a>
       </div>
 
       <div className="nav-right">

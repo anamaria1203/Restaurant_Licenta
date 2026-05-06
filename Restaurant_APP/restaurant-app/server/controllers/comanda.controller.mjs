@@ -82,4 +82,44 @@ const updateStatusComanda = async (req, res, next) => {
   }
 }
 
-export default { creeazaComanda, getComenziUser, getComenziAdmin, updateStatusComanda }
+const updateComandaItems = async (req, res, next) => {
+  try {
+    const { id } = req.params
+    const { items } = req.body
+    const userId = req.user.id
+
+    const comanda = await db.Comanda.findOne({ where: { id, userId } })
+    if (!comanda) return res.status(404).json({ error: 'Comanda nu a fost gasita' })
+    if (comanda.status !== 'in_asteptare') {
+      return res.status(400).json({ error: 'Comanda nu mai poate fi modificata' })
+    }
+    if (!items || items.length === 0) {
+      return res.status(400).json({ error: 'Comanda trebuie sa contina cel putin un produs' })
+    }
+
+    await db.ComandaItem.destroy({ where: { comandaId: id } })
+
+    const itemsDeCreat = items.map(item => ({
+      comandaId: Number(id),
+      preparatId: item.preparatId,
+      numeSnapshot: item.numeSnapshot,
+      pretSnapshot: item.pretSnapshot,
+      cantitate: item.cantitate
+    }))
+
+    await db.ComandaItem.bulkCreate(itemsDeCreat)
+
+    const total = items.reduce((sum, item) => sum + item.pretSnapshot * item.cantitate, 0)
+    await comanda.update({ total })
+
+    const comandaActualizata = await db.Comanda.findByPk(id, {
+      include: [{ model: db.ComandaItem }]
+    })
+
+    res.json(comandaActualizata)
+  } catch (err) {
+    next(err)
+  }
+}
+
+export default { creeazaComanda, getComenziUser, getComenziAdmin, updateStatusComanda, updateComandaItems }

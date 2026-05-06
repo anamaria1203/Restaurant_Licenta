@@ -89,3 +89,55 @@ export const getUseri = () => apiFetch('/api/useri')
 export const getUseriStersi = () => apiFetch('/api/useri/stersi')
 export const stergeUser = (id) => apiFetch(`/api/useri/${id}`, { method: 'DELETE' })
 export const restaureazaUser = (id) => apiFetch(`/api/useri/${id}/restaurare`, { method: 'POST' })
+
+// ─── COMENZI ─────────────────────────────────────────
+export const creeazaComanda = (items, observatii) =>
+  apiFetch('/comanda', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ items, observatii })
+  })
+
+export const getComenziMele = () =>
+  apiFetch('/comanda/ale-mele').then(r => r.json())
+
+export const getComenziAdmin = () =>
+  apiFetch('/comanda/toate').then(r => r.json())
+
+export const updateStatusComanda = (id, status) =>
+  apiFetch(`/comanda/${id}/status`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ status })
+  })
+
+export const updateComandaItems = (id, items) =>
+  apiFetch(`/comanda/${id}/items`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ items })
+  })
+
+// ─── REZERVĂRI ───────────────────────────────────────
+export const creeazaRezervare = (body) =>
+  apiFetch('/rezervare', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  })
+
+export const getRezervariMele = () =>
+  apiFetch('/rezervare/ale-mele').then(r => r.json())
+
+export const getRezervariAdmin = () =>
+  apiFetch('/rezervare/toate').then(r => r.json())
+
+export const updateStatusRezervare = (id, status) =>
+  apiFetch(`/rezervare/${id}/status`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ status })
+  })
+
+export const anuleazaRezervare = (id) =>
+  apiFetch(`/rezervare/${id}/anuleaza`, { method: 'PUT' })
