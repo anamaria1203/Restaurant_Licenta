@@ -18,6 +18,7 @@ app.use(middleware.genericError)
 app.use('/api', routers.api)
 app.use('/meniu', routers.meniu)
 app.use('/luna', routers.luna)
+app.use('/meniu-lunar', routers.preparateLunare)
 
 
 export default app

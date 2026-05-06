@@ -1,45 +1,23 @@
 import './App.css'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import Navbar from './components/Navbar/Navbar'
-import PaginaPrincipala from './components/PaginaPrincipala/PaginaPrincipala'
-import StatisticiBar from './components/StatisticiBar/StatisticiBar'
-import PreviewMeniu from './components/PreviewMeniu/PreviewMeniu'
-import MancareaSaptamanii from './components/MancareaSaptamanii/MancareaSaptamanii'
-import DeceNoi from './components/DeceNoi/DeceNoi'
-import Echipa from './components/Echipa/Echipa'
-import Recenzii from './components/Recenzii/Recenzii'
-import CallToAction from './components/CallToAction/CallToAction'
-import Footer from './components/Footer/Footer'
-import Login from './components/Login/Login'
-import ResetParola from './components/ResetParola/ResetParola'
-import AdminLogin from './components/AdminLogin/AdminLogin'
-import AdminDashboard from './components/AdminDashboard/AdminDashboard'
-import Meniu from './components/Meniu/Meniu'
-import DespreNoi from './components/DespreNoi/DespreNoi'
-import Contact from './components/Contact/Contact'
-import MeniulLunii from './components/MeniulLunii/MeniulLunii'
-import AdminMeniu from './components/AdminMeniu/AdminMeniu'
-import { AdminRoute } from './components/ProtectedRoute'
 
+import Home from './pages/Home/Home'
+import Meniu from './pages/Meniu/Meniu'
+import MeniulLunii from './pages/MeniulLunii/MeniulLunii'
+import DespreNoi from './pages/DespreNoi/DespreNoi'
+import Contact from './pages/Contact/Contact'
+import Login from './pages/Login/Login'
+import ResetParola from './pages/ResetParola/ResetParola'
+import AdminLogin from './pages/admin/AdminLogin/AdminLogin'
+import AdminDashboard from './pages/admin/AdminDashboard/AdminDashboard'
+import AdminMeniu from './pages/admin/AdminMeniu/AdminMeniu'
+import { AdminRoute } from './components/ProtectedRoute/ProtectedRoute'
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path='/' element={
-          <div>
-            <Navbar />
-            <PaginaPrincipala />
-            <StatisticiBar />
-            <PreviewMeniu />
-            <MancareaSaptamanii />
-            <DeceNoi />
-            <Echipa />
-            <Recenzii />
-            <CallToAction />
-            <Footer />
-          </div>
-        } />
+        <Route path='/' element={<Home />} />
         <Route path='/login' element={<Login />} />
         <Route path='/reset-parola' element={<ResetParola />} />
         <Route path='/admin-login' element={<AdminLogin />} />

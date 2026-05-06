@@ -1,0 +1,15 @@
+import authController from './auth.controller.mjs'
+import meniuController from './meniu.controller.mjs'
+import lunaController from './luna.controller.mjs'
+import preparateLunareController from './preparateLunare.controller.mjs'
+import apiController from './api.controller.mjs'
+
+const controllers = {
+  auth: authController,
+  meniu: meniuController,
+  luna: lunaController,
+  preparateLunare: preparateLunareController,
+  api: apiController
+}
+
+export default controllers

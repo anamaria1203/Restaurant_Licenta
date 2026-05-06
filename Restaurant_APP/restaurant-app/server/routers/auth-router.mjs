@@ -1,13 +1,13 @@
 import express from 'express'
-import controllers from './controllers/index.mjs'
+import controllers from '../controllers/index.mjs'
 
-const authRouter = express.Router()
+const router = express.Router()
 
-authRouter.post('/register', controllers.auth.register)
-authRouter.post('/login', controllers.auth.login)
-authRouter.post('/admin-login', controllers.auth.adminLogin)
-authRouter.post('/logout', controllers.auth.logout)
-authRouter.post('/verifica-email', controllers.auth.verificaEmail)
-authRouter.post('/reset-parola', controllers.auth.resetParola)
+router.post('/register', controllers.auth.register)
+router.post('/login', controllers.auth.login)
+router.post('/admin-login', controllers.auth.adminLogin)
+router.post('/logout', controllers.auth.logout)
+router.post('/verifica-email', controllers.auth.verificaEmail)
+router.post('/reset-parola', controllers.auth.resetParola)
 
-export default authRouter
+export default router

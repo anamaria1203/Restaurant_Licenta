@@ -1,7 +1,7 @@
 import './Echipa.css'
-import echipaImg from './echipa.jpg'
-import clientiImg from './clienti.jpg'
-import ospatariImg from './ospatari.jpg'
+import echipaImg from '../../assets/images/echipa.jpg'
+import clientiImg from '../../assets/images/clienti.jpg'
+import ospatariImg from '../../assets/images/ospatari.jpg'
 
 const Echipa = () => {
   return (
