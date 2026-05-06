@@ -2,7 +2,7 @@ import './Comanda.css'
 import { useState, useEffect, useMemo } from 'react'
 import Navbar from '../../components/Navbar/Navbar'
 import Footer from '../../components/Footer/Footer'
-import { getMeniu, creeazaComanda } from '../../services/api'
+import { getMeniu, creeazaComanda, areRezervareConfirmata } from '../../services/api'
 
 const CATEGORII = ['Aperitive', 'Supe', 'Carne', 'Pește', 'Paste & Risotto', 'Deserturi', 'Bauturi']
 const SUBCATEGORII_BAUTURI = ['Vinuri', 'Whisky', 'Rom', 'Cocktailuri', 'Beri', 'Sucuri', 'Ceaiuri']
@@ -54,6 +54,31 @@ const SuccesPage = ({ onReset }) => (
   </div>
 )
 
+const RezervareGatePage = () => (
+  <div className="gate-page">
+    <div className="gate-overlay" />
+    <div className="gate-container">
+      <div className="gate-logo">Villa Ana Ristorante</div>
+      <div className="gate-tagline">Comandă online, simplu și rapid</div>
+      <h2 className="gate-title">Este necesară o rezervare confirmată</h2>
+      <p className="gate-subtitle">
+        Pentru a plasa o comandă trebuie să ai o rezervare confirmată la restaurant. Fă o rezervare și așteaptă confirmarea din partea restaurantului.
+      </p>
+      <div className="gate-butoane">
+        <a href="/rezervare" className="gate-btn gate-btn-primary">
+          Fă o rezervare
+        </a>
+        <a href="/rezervarile-mele" className="gate-btn gate-btn-secondary">
+          Rezervările mele
+        </a>
+      </div>
+      <div className="gate-back">
+        <a href="/">← Înapoi la pagina principală</a>
+      </div>
+    </div>
+  </div>
+)
+
 const Comanda = () => {
   const userLogat = useMemo(() => {
     try { return JSON.parse(localStorage.getItem('user')) } catch { return null }
@@ -68,12 +93,26 @@ const Comanda = () => {
   const [succes, setSucces] = useState(false)
   const [loadingComanda, setLoadingComanda] = useState(false)
   const [eroare, setEroare] = useState('')
+  const [rezervareOk, setRezervareOk] = useState(null)
+  const [loadingRezervare, setLoadingRezervare] = useState(true)
+
+  useEffect(() => {
+    if (!userLogat || userLogat.tip !== 'client') {
+      setLoadingRezervare(false)
+      return
+    }
+    areRezervareConfirmata()
+      .then(data => setRezervareOk(data.areRezervare))
+      .catch(() => setRezervareOk(false))
+      .finally(() => setLoadingRezervare(false))
+  }, [])
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (!userLogat || userLogat.tip !== 'client') return
+    if (!rezervareOk) return
     fetchPreparate()
-  }, [categorieActiva, subcategorieActiva])
+  }, [categorieActiva, subcategorieActiva, rezervareOk])
 
   const fetchPreparate = async () => {
     setLoading(true)
@@ -144,6 +183,16 @@ const Comanda = () => {
   }
 
   if (!userLogat || userLogat.tip !== 'client') return <GatePage />
+  if (loadingRezervare) return (
+    <div className="comanda-page">
+      <Navbar />
+      <div className="comanda-loading-rezervare">
+        <div className="loading-dots"><span /><span /><span /></div>
+        <p>Se verifică rezervarea...</p>
+      </div>
+    </div>
+  )
+  if (!rezervareOk) return <RezervareGatePage />
   if (succes) return <SuccesPage onReset={() => setSucces(false)} />
 
   return (

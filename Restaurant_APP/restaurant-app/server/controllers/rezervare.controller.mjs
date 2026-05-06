@@ -92,4 +92,16 @@ const anuleazaRezervare = async (req, res, next) => {
   }
 }
 
-export default { creeazaRezervare, getRezervariMele, getRezervariAdmin, updateStatusRezervare, anuleazaRezervare }
+const areRezervareConfirmata = async (req, res, next) => {
+  try {
+    const userId = req.user.id
+    const rezervare = await db.Rezervare.findOne({
+      where: { userId, status: 'confirmata' }
+    })
+    res.json({ areRezervare: !!rezervare })
+  } catch (err) {
+    next(err)
+  }
+}
+
+export default { creeazaRezervare, getRezervariMele, getRezervariAdmin, updateStatusRezervare, anuleazaRezervare, areRezervareConfirmata }

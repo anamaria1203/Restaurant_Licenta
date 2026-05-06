@@ -1,3 +1,16 @@
+.comanda-loading-rezervare {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  gap: 1.5rem;
+  color: rgba(245,240,232,0.4);
+  font-size: 0.85rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
 /* ─── GATE PAGE ─────────────────────────────────────── */
 .gate-page {
   min-height: 100vh;
