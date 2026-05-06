@@ -3,13 +3,15 @@ import meniuController from './meniu.controller.mjs'
 import lunaController from './luna.controller.mjs'
 import preparateLunareController from './preparateLunare.controller.mjs'
 import apiController from './api.controller.mjs'
+import comandaController from './comanda.controller.mjs'
 
 const controllers = {
   auth: authController,
   meniu: meniuController,
   luna: lunaController,
   preparateLunare: preparateLunareController,
-  api: apiController
+  api: apiController,
+  comanda: comandaController
 }
 
 export default controllers

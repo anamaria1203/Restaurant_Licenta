@@ -19,6 +19,7 @@ app.use('/api', routers.api)
 app.use('/meniu', routers.meniu)
 app.use('/luna', routers.luna)
 app.use('/meniu-lunar', routers.preparateLunare)
+app.use('/comanda', routers.comanda)
 
 
 export default app
