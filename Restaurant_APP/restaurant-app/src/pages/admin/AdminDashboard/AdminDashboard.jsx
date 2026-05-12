@@ -120,6 +120,9 @@ const AdminDashboard = () => {
           <button className="dashboard-home" onClick={() => navigate('/admin-statistici')} style={{borderColor: 'rgba(201,168,76,0.4)', color: '#c9a84c'}}>
             Statistici
           </button>
+          <button className="dashboard-home" onClick={() => navigate('/admin-menu-evolution')} style={{borderColor: 'rgba(201,168,76,0.4)', color: '#c9a84c'}}>
+            Menu Evolution
+          </button>
           <div style={{position: 'relative'}}>
             <button
               className="dashboard-manageri-btn"

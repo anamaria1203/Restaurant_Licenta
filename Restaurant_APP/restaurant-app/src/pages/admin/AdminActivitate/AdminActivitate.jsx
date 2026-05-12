@@ -98,6 +98,9 @@ const AdminActivitate = () => {
         <div className="act-logo">Villa Ana Ristorante</div>
         <div className="act-navbar-center">Comenzi &amp; Rezervări</div>
         <div style={{display:'flex', gap:'0.8rem'}}>
+          <button className="act-btn-inapoi" onClick={() => navigate('/admin-menu-evolution')}>
+            Menu Evolution
+          </button>
           <button className="act-btn-inapoi" onClick={() => navigate('/admin-statistici')}>
             Statistici
           </button>

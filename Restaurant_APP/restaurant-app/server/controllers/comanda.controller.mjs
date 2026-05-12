@@ -184,4 +184,24 @@ const getPreferinteMele = async (req, res, next) => {
   }
 }
 
-export default { creeazaComanda, getComenziUser, getComenziAdmin, updateStatusComanda, updateComandaItems, getPreferinteMele, getStatistici }
+const getMenuEvolution = async (req, res, next) => {
+  try {
+    const preparate = await db.sequelize.query(
+      `SELECT
+        p.id, p.nume, p.categorie, p.subcategorie, p.imagine, p.disponibil,
+        COALESCE(SUM(CASE WHEN c.createdAt >= date('now', '-30 days') THEN ci.cantitate ELSE 0 END), 0) AS totalUltimele30Zile,
+        MAX(c.createdAt) AS ultimaComanda
+       FROM Preparats p
+       LEFT JOIN ComandaItems ci ON ci.preparatId = p.id
+       LEFT JOIN Comandas c ON ci.comandaId = c.id
+       GROUP BY p.id
+       ORDER BY totalUltimele30Zile DESC`,
+      { type: db.sequelize.QueryTypes.SELECT }
+    )
+    res.json(preparate)
+  } catch (err) {
+    next(err)
+  }
+}
+
+export default { creeazaComanda, getComenziUser, getComenziAdmin, updateStatusComanda, updateComandaItems, getPreferinteMele, getStatistici, getMenuEvolution }

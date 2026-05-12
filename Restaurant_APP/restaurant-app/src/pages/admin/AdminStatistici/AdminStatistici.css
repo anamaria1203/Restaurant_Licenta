@@ -185,3 +185,57 @@
   font-weight: 600;
   margin: 0;
 }
+
+/* ShiftOptimizer */
+.stat-shift-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+.stat-shift-table thead th {
+  text-align: left;
+  padding: 0.6rem 1rem;
+  font-size: 0.72rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(245,240,232,0.4);
+  border-bottom: 1px solid rgba(201,168,76,0.12);
+}
+
+.stat-shift-table tbody tr {
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  transition: background 0.15s;
+}
+
+.stat-shift-table tbody tr:hover { background: rgba(201,168,76,0.05); }
+
+.stat-shift-table td { padding: 0.65rem 1rem; color: rgba(245,240,232,0.8); }
+
+.shift-ora {
+  font-family: 'Playfair Display', serif;
+  color: #c9a84c !important;
+  font-size: 0.95rem;
+}
+
+.shift-ang { font-weight: 600; color: #f5f0e8 !important; }
+
+.shift-nivel {
+  display: inline-block;
+  padding: 0.2rem 0.7rem;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  letter-spacing: 0.8px;
+}
+
+.shift-nivel-zero   { background: rgba(255,255,255,0.06); color: rgba(245,240,232,0.4); }
+.shift-nivel-mic    { background: rgba(76,175,80,0.15);   color: #81c784; }
+.shift-nivel-mediu  { background: rgba(255,193,7,0.15);   color: #ffd54f; }
+.shift-nivel-mare   { background: rgba(201,168,76,0.2);   color: #c9a84c; }
+
+.stat-shift-nota {
+  margin-top: 1rem;
+  font-size: 0.75rem;
+  color: rgba(245,240,232,0.3);
+  font-style: italic;
+}

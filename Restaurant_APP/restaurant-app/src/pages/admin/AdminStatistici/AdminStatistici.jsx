@@ -45,6 +45,9 @@ const AdminStatistici = () => {
         <div className="stat-logo">Villa Ana Ristorante</div>
         <div className="stat-navbar-center">Statistici</div>
         <div style={{ display: 'flex', gap: '0.8rem' }}>
+          <button className="stat-btn-nav" onClick={() => navigate('/admin-menu-evolution')}>
+            Menu Evolution
+          </button>
           <button className="stat-btn-nav" onClick={() => navigate('/admin-activitate')}>
             Comenzi &amp; Rezervări
           </button>
@@ -149,6 +152,42 @@ const AdminStatistici = () => {
                   </Bar>
                 </BarChart>
               </ResponsiveContainer>
+            </div>
+            <div className="stat-grafic-bloc">
+              <div className="stat-grafic-titlu">
+                <h2>ShiftOptimizer — Recomandări Ture</h2>
+              </div>
+              <table className="stat-shift-table">
+                <thead>
+                  <tr>
+                    <th>Ora</th>
+                    <th>Comenzi</th>
+                    <th>Angajați recomandați</th>
+                    <th>Nivel trafic</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {date.peOre
+                    .filter(r => parseInt(r.ora) >= 9 && parseInt(r.ora) <= 23)
+                    .map(r => {
+                      const angajati = r.nrComenzi === 0 ? 1 : Math.max(1, Math.ceil(r.nrComenzi / 3))
+                      const nivel =
+                        r.nrComenzi === 0 ? { label: 'Fără activitate', cls: 'zero'  } :
+                        r.nrComenzi <= 3  ? { label: 'Redus',           cls: 'mic'   } :
+                        r.nrComenzi <= 7  ? { label: 'Moderat',         cls: 'mediu' } :
+                                            { label: 'Ridicat',         cls: 'mare'  }
+                      return (
+                        <tr key={r.ora}>
+                          <td className="shift-ora">{r.ora}</td>
+                          <td>{r.nrComenzi}</td>
+                          <td className="shift-ang">{angajati}</td>
+                          <td><span className={`shift-nivel shift-nivel-${nivel.cls}`}>{nivel.label}</span></td>
+                        </tr>
+                      )
+                    })}
+                </tbody>
+              </table>
+              <p className="stat-shift-nota">Formulă: max(1, ⌈nr. comenzi ÷ 3⌉) angajați per tură de o oră</p>
             </div>
           </>
         )}

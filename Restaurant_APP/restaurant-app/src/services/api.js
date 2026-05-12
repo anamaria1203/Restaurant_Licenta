@@ -110,6 +110,12 @@ export const getPreferinteMele = () =>
 export const getStatisticiComenzi = () =>
   apiFetch('/comanda/statistici').then(r => r.json())
 
+export const getMenuEvolution = () =>
+  apiFetch('/comanda/menu-evolution').then(r => r.json())
+
+export const toggleDisponibil = (id) =>
+  apiFetch(`/meniu/preparate/${id}/disponibil`, { method: 'PUT' }).then(r => r.json())
+
 export const updateStatusComanda = (id, status) =>
   apiFetch(`/comanda/${id}/status`, {
     method: 'PUT',
