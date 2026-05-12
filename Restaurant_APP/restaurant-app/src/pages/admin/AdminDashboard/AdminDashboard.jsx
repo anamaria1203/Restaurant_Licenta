@@ -1,7 +1,7 @@
 import './AdminDashboard.css'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { getUseri, getUseriStersi, stergeUser, restaureazaUser, authLogout } from '../../../services/api'
+import { getUseri, getUseriStersi, stergeUser, restaureazaUser, authLogout, getComenziAdmin, getRezervariAdmin } from '../../../services/api'
 
 const AdminDashboard = () => {
   const [useri, setUseri] = useState([])
@@ -12,6 +12,8 @@ const AdminDashboard = () => {
   const [userDesters, setUserDesters] = useState(null)
   const [showStersi, setShowStersi] = useState(false)
   const [showManageri, setShowManageri] = useState(false)
+  const [nrRezervariActive, setNrRezervariActive] = useState(0)
+  const [nrComenziActive, setNrComenziActive] = useState(0)
   const navigate = useNavigate()
 
   const clienti = useri.filter(u => u.tip === 'client')
@@ -32,6 +34,14 @@ const AdminDashboard = () => {
     } finally {
       setLoading(false)
     }
+  }
+
+  const fetchStatistici = async () => {
+    try {
+      const [rez, com] = await Promise.all([getRezervariAdmin(), getComenziAdmin()])
+      setNrRezervariActive(rez.filter(r => r.status === 'in_asteptare').length)
+      setNrComenziActive(com.filter(c => c.status === 'in_asteptare').length)
+    } catch {}
   }
 
   const fetchUseriStersi = async () => {
@@ -87,6 +97,7 @@ const AdminDashboard = () => {
     }
     fetchUseri()
     fetchUseriStersi()
+    fetchStatistici()
   }, [navigate])
 
   return (
@@ -99,6 +110,9 @@ const AdminDashboard = () => {
         <div style={{display: 'flex', gap: '1rem', alignItems: 'center'}}>
           <button className="dashboard-home" onClick={() => navigate('/')}>
             ← Pagina Principala
+          </button>
+          <button className="dashboard-home" onClick={() => navigate('/admin-activitate')} style={{borderColor: 'rgba(201,168,76,0.4)', color: '#c9a84c'}}>
+            Comenzi &amp; Rezervări
           </button>
           <button className="dashboard-home" onClick={() => navigate('/admin-meniu')} style={{borderColor: 'rgba(201,168,76,0.4)', color: '#c9a84c'}}>
             Meniu Țări
@@ -161,13 +175,13 @@ const AdminDashboard = () => {
             <div className="stat-number">{useriStersi.length}</div>
             <div className="stat-label">Clienti stersi</div>
           </div>
-          <div className="stat-card">
-            <div className="stat-number">0</div>
-            <div className="stat-label">Rezervari active</div>
+          <div className="stat-card" style={{cursor:'pointer'}} onClick={() => navigate('/admin-activitate')}>
+            <div className="stat-number">{nrRezervariActive}</div>
+            <div className="stat-label">Rezervari in asteptare</div>
           </div>
-          <div className="stat-card">
-            <div className="stat-number">0</div>
-            <div className="stat-label">Comenzi active</div>
+          <div className="stat-card" style={{cursor:'pointer'}} onClick={() => navigate('/admin-activitate')}>
+            <div className="stat-number">{nrComenziActive}</div>
+            <div className="stat-label">Comenzi in asteptare</div>
           </div>
         </div>
 

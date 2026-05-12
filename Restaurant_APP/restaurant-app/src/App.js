@@ -11,6 +11,7 @@ import ResetParola from './pages/ResetParola/ResetParola'
 import AdminLogin from './pages/admin/AdminLogin/AdminLogin'
 import AdminDashboard from './pages/admin/AdminDashboard/AdminDashboard'
 import AdminMeniu from './pages/admin/AdminMeniu/AdminMeniu'
+import AdminActivitate from './pages/admin/AdminActivitate/AdminActivitate'
 import Comanda from './pages/Comanda/Comanda'
 import ComenziMele from './pages/ComenziMele/ComenziMele'
 import Rezervare from './pages/Rezervare/Rezervare'
@@ -41,6 +42,11 @@ function App() {
         <Route path='/admin-meniu' element={
           <AdminRoute>
             <AdminMeniu />
+          </AdminRoute>
+        } />
+        <Route path='/admin-activitate' element={
+          <AdminRoute>
+            <AdminActivitate />
           </AdminRoute>
         } />
       </Routes>
