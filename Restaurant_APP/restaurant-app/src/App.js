@@ -17,6 +17,7 @@ import ComenziMele from './pages/ComenziMele/ComenziMele'
 import Rezervare from './pages/Rezervare/Rezervare'
 import RezervariMele from './pages/RezervariMele/RezervariMele'
 import Cos from './pages/Cos/Cos'
+import PreferinteMele from './pages/PreferinteMele/PreferinteMele'
 import { AdminRoute } from './components/ProtectedRoute/ProtectedRoute'
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
         <Route path='/rezervare' element={<Rezervare />} />
         <Route path='/rezervarile-mele' element={<RezervariMele />} />
         <Route path='/cos' element={<Cos />} />
+        <Route path='/preferintele-mele' element={<PreferinteMele />} />
         <Route path='/admin-dashboard' element={
           <AdminRoute>
             <AdminDashboard />

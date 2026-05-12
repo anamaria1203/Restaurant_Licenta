@@ -122,4 +122,31 @@ const updateComandaItems = async (req, res, next) => {
   }
 }
 
-export default { creeazaComanda, getComenziUser, getComenziAdmin, updateStatusComanda, updateComandaItems }
+const getPreferinteMele = async (req, res, next) => {
+  try {
+    const userId = req.user.id
+    const preferinte = await db.sequelize.query(
+      `SELECT
+        p.id,
+        p.nume,
+        p.descriere,
+        p.pret,
+        p.categorie,
+        p.subcategorie,
+        p.imagine,
+        SUM(ci.cantitate) AS totalComandat
+       FROM ComandaItems ci
+       INNER JOIN Comandas c ON ci.comandaId = c.id AND c.userId = :userId
+       INNER JOIN Preparats p ON ci.preparatId = p.id
+       GROUP BY p.id
+       ORDER BY totalComandat DESC
+       LIMIT 10`,
+      { replacements: { userId }, type: db.sequelize.QueryTypes.SELECT }
+    )
+    res.json(preferinte)
+  } catch (err) {
+    next(err)
+  }
+}
+
+export default { creeazaComanda, getComenziUser, getComenziAdmin, updateStatusComanda, updateComandaItems, getPreferinteMele }

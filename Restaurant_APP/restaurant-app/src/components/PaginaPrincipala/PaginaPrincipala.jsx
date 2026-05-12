@@ -4,8 +4,7 @@ const PaginaPrincipala = () => {
   return (
     <section className="hero">
       <div className="hero-bg"></div>
-      <div className="hero-img"></div>
-      <div className="hero-img-overlay"></div>
+      <div className="hero-glow"></div>
 
       <div className="hero-content">
         <div className="hero-tag">Where Every Meal Tells a Story</div>

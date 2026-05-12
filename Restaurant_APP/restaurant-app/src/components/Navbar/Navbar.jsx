@@ -68,6 +68,9 @@ const Navbar = () => {
             {nrCos > 0 && <span className="nav-cos-badge">{nrCos}</span>}
           </a>
         )}
+        {userLogat && userLogat.tip === 'client' && (
+          <a href="/preferintele-mele">Preferatele Mele</a>
+        )}
         <a href="/despre">Despre noi</a>
         <a href="/contact">Contact</a>
       </div>

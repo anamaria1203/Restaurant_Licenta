@@ -104,6 +104,9 @@ export const getComenziMele = () =>
 export const getComenziAdmin = () =>
   apiFetch('/comanda/toate').then(r => r.json())
 
+export const getPreferinteMele = () =>
+  apiFetch('/comanda/preferinte').then(r => r.json())
+
 export const updateStatusComanda = (id, status) =>
   apiFetch(`/comanda/${id}/status`, {
     method: 'PUT',
