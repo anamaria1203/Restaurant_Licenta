@@ -122,6 +122,41 @@ const updateComandaItems = async (req, res, next) => {
   }
 }
 
+const getStatistici = async (req, res, next) => {
+  try {
+    const peOre = await db.sequelize.query(
+      `SELECT CAST(strftime('%H', createdAt) AS INTEGER) AS ora, COUNT(*) AS nrComenzi
+       FROM Comandas
+       GROUP BY ora
+       ORDER BY ora`,
+      { type: db.sequelize.QueryTypes.SELECT }
+    )
+
+    const peZile = await db.sequelize.query(
+      `SELECT CAST(strftime('%w', createdAt) AS INTEGER) AS ziuaIndex, COUNT(*) AS nrComenzi
+       FROM Comandas
+       GROUP BY ziuaIndex
+       ORDER BY ziuaIndex`,
+      { type: db.sequelize.QueryTypes.SELECT }
+    )
+
+    const ZILE = ['Duminică', 'Luni', 'Marți', 'Miercuri', 'Joi', 'Vineri', 'Sâmbătă']
+    const zileFormatate = peZile.map(r => ({
+      ziua: ZILE[r.ziuaIndex],
+      nrComenzi: r.nrComenzi
+    }))
+
+    const oreComplete = Array.from({ length: 24 }, (_, i) => {
+      const gasit = peOre.find(r => r.ora === i)
+      return { ora: `${String(i).padStart(2, '0')}:00`, nrComenzi: gasit ? gasit.nrComenzi : 0 }
+    })
+
+    res.json({ peOre: oreComplete, peZile: zileFormatate })
+  } catch (err) {
+    next(err)
+  }
+}
+
 const getPreferinteMele = async (req, res, next) => {
   try {
     const userId = req.user.id
@@ -149,4 +184,4 @@ const getPreferinteMele = async (req, res, next) => {
   }
 }
 
-export default { creeazaComanda, getComenziUser, getComenziAdmin, updateStatusComanda, updateComandaItems, getPreferinteMele }
+export default { creeazaComanda, getComenziUser, getComenziAdmin, updateStatusComanda, updateComandaItems, getPreferinteMele, getStatistici }

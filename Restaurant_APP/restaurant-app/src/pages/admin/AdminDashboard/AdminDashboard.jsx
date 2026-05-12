@@ -117,6 +117,9 @@ const AdminDashboard = () => {
           <button className="dashboard-home" onClick={() => navigate('/admin-meniu')} style={{borderColor: 'rgba(201,168,76,0.4)', color: '#c9a84c'}}>
             Meniu Țări
           </button>
+          <button className="dashboard-home" onClick={() => navigate('/admin-statistici')} style={{borderColor: 'rgba(201,168,76,0.4)', color: '#c9a84c'}}>
+            Statistici
+          </button>
           <div style={{position: 'relative'}}>
             <button
               className="dashboard-manageri-btn"

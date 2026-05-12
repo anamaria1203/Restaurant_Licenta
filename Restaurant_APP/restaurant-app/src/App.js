@@ -12,6 +12,7 @@ import AdminLogin from './pages/admin/AdminLogin/AdminLogin'
 import AdminDashboard from './pages/admin/AdminDashboard/AdminDashboard'
 import AdminMeniu from './pages/admin/AdminMeniu/AdminMeniu'
 import AdminActivitate from './pages/admin/AdminActivitate/AdminActivitate'
+import AdminStatistici from './pages/admin/AdminStatistici/AdminStatistici'
 import Comanda from './pages/Comanda/Comanda'
 import ComenziMele from './pages/ComenziMele/ComenziMele'
 import Rezervare from './pages/Rezervare/Rezervare'
@@ -51,6 +52,11 @@ function App() {
         <Route path='/admin-activitate' element={
           <AdminRoute>
             <AdminActivitate />
+          </AdminRoute>
+        } />
+        <Route path='/admin-statistici' element={
+          <AdminRoute>
+            <AdminStatistici />
           </AdminRoute>
         } />
       </Routes>

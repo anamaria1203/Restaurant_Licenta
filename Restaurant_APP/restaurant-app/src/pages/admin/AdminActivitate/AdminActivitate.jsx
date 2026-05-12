@@ -97,9 +97,14 @@ const AdminActivitate = () => {
       <div className="act-navbar">
         <div className="act-logo">Villa Ana Ristorante</div>
         <div className="act-navbar-center">Comenzi &amp; Rezervări</div>
-        <button className="act-btn-inapoi" onClick={() => navigate('/admin-dashboard')}>
-          ← Dashboard
-        </button>
+        <div style={{display:'flex', gap:'0.8rem'}}>
+          <button className="act-btn-inapoi" onClick={() => navigate('/admin-statistici')}>
+            Statistici
+          </button>
+          <button className="act-btn-inapoi" onClick={() => navigate('/admin-dashboard')}>
+            ← Dashboard
+          </button>
+        </div>
       </div>
 
       <div className="act-content">
@@ -139,7 +144,6 @@ const AdminActivitate = () => {
                     {rezervari.map(r => (
                       <div key={r.id} className="act-rand">
                         <div className="act-rand-info">
-                          <span className="act-rand-nr">#REZ-{r.id}</span>
                           <span>{new Date(r.data + 'T12:00:00').toLocaleDateString('ro-RO', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
                           <span>{r.ora}</span>
                           <span>{ZONA_LABEL[r.zona]}</span>
