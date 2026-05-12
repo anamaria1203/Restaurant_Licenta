@@ -124,14 +124,35 @@ const AdminActivitate = () => {
                           {STATUS_REZ[r.status]?.label}
                         </span>
                         {r.status === 'in_asteptare' && (
-                          <div className="act-butoane">
-                            <button className="act-btn-confirma" onClick={() => handleRezervare(r.id, 'confirmata')} disabled={procesand === `rez-${r.id}`}>Confirmă</button>
-                            <button className="act-btn-respinge" onClick={() => handleRezervare(r.id, 'anulata')} disabled={procesand === `rez-${r.id}`}>Respinge</button>
-                          </div>
+                          confirmareAnulare === r.id ? (
+                            <div className="act-confirmare-inline">
+                              <span>Sigur anulezi?</span>
+                              <button className="act-btn-respinge" onClick={() => { handleRezervare(r.id, 'anulata'); setConfirmareAnulare(null) }} disabled={procesand === `rez-${r.id}`}>Da</button>
+                              <button className="act-btn-anulare-nu" onClick={() => setConfirmareAnulare(null)}>Nu</button>
+                            </div>
+                          ) : (
+                            <div className="act-butoane">
+                              <button className="act-btn-confirma" onClick={() => handleRezervare(r.id, 'confirmata')} disabled={procesand === `rez-${r.id}`}>Confirmă</button>
+                              <button className="act-btn-respinge" onClick={() => setConfirmareAnulare(r.id)} disabled={procesand === `rez-${r.id}`}>Respinge</button>
+                            </div>
+                          )
                         )}
                         {r.status === 'confirmata' && (
+                          confirmareAnulare === r.id ? (
+                            <div className="act-confirmare-inline">
+                              <span>Sigur anulezi?</span>
+                              <button className="act-btn-respinge" onClick={() => { handleRezervare(r.id, 'anulata'); setConfirmareAnulare(null) }} disabled={procesand === `rez-${r.id}`}>Da</button>
+                              <button className="act-btn-anulare-nu" onClick={() => setConfirmareAnulare(null)}>Nu</button>
+                            </div>
+                          ) : (
+                            <div className="act-butoane">
+                              <button className="act-btn-respinge" onClick={() => setConfirmareAnulare(r.id)} disabled={procesand === `rez-${r.id}`}>Anulează</button>
+                            </div>
+                          )
+                        )}
+                        {r.status === 'anulata' && (
                           <div className="act-butoane">
-                            <button className="act-btn-respinge" onClick={() => handleRezervare(r.id, 'anulata')} disabled={procesand === `rez-${r.id}`}>Anulează</button>
+                            <button className="act-btn-restaureaza" onClick={() => handleRezervare(r.id, 'in_asteptare')} disabled={procesand === `rez-${r.id}`}>Restaurează</button>
                           </div>
                         )}
                       </div>
