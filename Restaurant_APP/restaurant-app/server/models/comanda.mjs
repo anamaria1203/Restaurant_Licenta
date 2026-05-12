@@ -21,6 +21,11 @@ const comandaModel = (sequelize, DataTypes) => {
       type: DataTypes.TEXT,
       allowNull: true,
       defaultValue: null
+    },
+    rezervareId: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: null
     }
   }, {
     timestamps: true

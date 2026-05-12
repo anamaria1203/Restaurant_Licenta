@@ -130,9 +130,11 @@
   border-radius: 20px;
 }
 
-.status-asteptare { background: rgba(200, 160, 50, 0.15); color: #c8a032; }
-.status-confirmata { background: rgba(50, 200, 100, 0.15); color: #32c864; }
-.status-anulata { background: rgba(200, 50, 50, 0.15); color: #c83232; }
+.status-asteptare  { background: rgba(200, 160, 50, 0.15);  color: #c8a032; }
+.status-confirmata { background: rgba(50, 200, 100, 0.15);  color: #32c864; }
+.status-anulata    { background: rgba(200, 50, 50, 0.15);   color: #c83232; }
+.status-preparare  { background: rgba(200, 100, 50, 0.15);  color: #c86432; }
+.status-livrata    { background: rgba(50, 200, 100, 0.12);  color: #90d090; }
 
 .rezme-btn-comanda {
   background: rgba(50, 200, 100, 0.12);
@@ -343,3 +345,51 @@
 }
 
 .rezme-btn-noua:hover { background: rgba(196, 164, 96, 0.25); }
+
+/* ─── COMANDA ASOCIATA ───────────────────────────────── */
+.rezme-comanda-asociata {
+  margin: 0.9rem 0 0.2rem;
+  padding: 0.9rem 1.1rem;
+  background: rgba(201, 168, 76, 0.04);
+  border-left: 2px solid rgba(201, 168, 76, 0.35);
+  border-radius: 0 8px 8px 0;
+}
+
+.rezme-comanda-titlu {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.7rem;
+  font-size: 0.72rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(196, 164, 96, 0.7);
+}
+
+.rezme-comanda-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.22rem;
+  margin-bottom: 0.6rem;
+}
+
+.rezme-comanda-item {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-size: 0.83rem;
+  color: rgba(245, 240, 232, 0.75);
+}
+
+.rezme-ci-nume  { flex: 1; }
+.rezme-ci-cant  { color: rgba(245, 240, 232, 0.35); white-space: nowrap; }
+.rezme-ci-pret  { color: #c4a460; font-size: 0.8rem; white-space: nowrap; min-width: 70px; text-align: right; }
+
+.rezme-comanda-total {
+  font-size: 0.83rem;
+  color: rgba(245, 240, 232, 0.5);
+  text-align: right;
+  padding-top: 0.4rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}

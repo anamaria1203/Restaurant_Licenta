@@ -2,7 +2,7 @@ import db from '../models/index.mjs'
 
 const creeazaComanda = async (req, res, next) => {
   try {
-    const { items, observatii } = req.body
+    const { items, observatii, rezervareId } = req.body
     const userId = req.user.id
 
     if (!items || items.length === 0) {
@@ -11,7 +11,7 @@ const creeazaComanda = async (req, res, next) => {
 
     const total = items.reduce((sum, item) => sum + item.pretSnapshot * item.cantitate, 0)
 
-    const comanda = await db.Comanda.create({ userId, total, observatii })
+    const comanda = await db.Comanda.create({ userId, total, observatii, rezervareId: rezervareId || null })
 
     const itemsDeCreat = items.map(item => ({
       comandaId: comanda.id,
@@ -124,8 +124,11 @@ const updateComandaItems = async (req, res, next) => {
 
 const getStatistici = async (req, res, next) => {
   try {
+    // substr(createdAt,1,19) strips the "+00:00" suffix Sequelize appends,
+    // allowing SQLite strftime to parse it correctly; localtime converts UTC→local
     const peOre = await db.sequelize.query(
-      `SELECT CAST(strftime('%H', createdAt) AS INTEGER) AS ora, COUNT(*) AS nrComenzi
+      `SELECT CAST(strftime('%H', datetime(substr(createdAt,1,19), 'localtime')) AS INTEGER) AS ora,
+              COUNT(*) AS nrComenzi
        FROM Comandas
        GROUP BY ora
        ORDER BY ora`,
@@ -133,10 +136,25 @@ const getStatistici = async (req, res, next) => {
     )
 
     const peZile = await db.sequelize.query(
-      `SELECT CAST(strftime('%w', createdAt) AS INTEGER) AS ziuaIndex, COUNT(*) AS nrComenzi
+      `SELECT CAST(strftime('%w', datetime(substr(createdAt,1,19), 'localtime')) AS INTEGER) AS ziuaIndex,
+              COUNT(*) AS nrComenzi
        FROM Comandas
        GROUP BY ziuaIndex
        ORDER BY ziuaIndex`,
+      { type: db.sequelize.QueryTypes.SELECT }
+    )
+
+    const rezervariPeOre = await db.sequelize.query(
+      `SELECT
+         CAST(substr(r.ora, 1, 2) AS INTEGER) AS ora,
+         COUNT(DISTINCT r.id) AS nrRezervari,
+         COALESCE(SUM(ci.cantitate), 0) AS totalPreparate
+       FROM Rezervares r
+       LEFT JOIN Comandas c ON c.rezervareId = r.id
+       LEFT JOIN ComandaItems ci ON ci.comandaId = c.id
+       WHERE r.status != 'anulata'
+       GROUP BY ora
+       ORDER BY ora`,
       { type: db.sequelize.QueryTypes.SELECT }
     )
 
@@ -147,8 +165,14 @@ const getStatistici = async (req, res, next) => {
     }))
 
     const oreComplete = Array.from({ length: 24 }, (_, i) => {
-      const gasit = peOre.find(r => r.ora === i)
-      return { ora: `${String(i).padStart(2, '0')}:00`, nrComenzi: gasit ? gasit.nrComenzi : 0 }
+      const gasitComanda   = peOre.find(r => Number(r.ora) === i)
+      const gasitRezervare = rezervariPeOre.find(r => Number(r.ora) === i)
+      return {
+        ora: `${String(i).padStart(2, '0')}:00`,
+        nrComenzi:      gasitComanda   ? Number(gasitComanda.nrComenzi)         : 0,
+        nrRezervari:    gasitRezervare ? Number(gasitRezervare.nrRezervari)     : 0,
+        totalPreparate: gasitRezervare ? Number(gasitRezervare.totalPreparate)  : 0
+      }
     })
 
     res.json({ peOre: oreComplete, peZile: zileFormatate })

@@ -49,6 +49,26 @@ const RezervareGatePage = () => (
   </div>
 )
 
+const AsteptareGatePage = () => (
+  <div className="gate-page">
+    <div className="gate-overlay" />
+    <div className="gate-container">
+      <div className="gate-logo">Villa Ana Ristorante</div>
+      <div className="gate-tagline">Comandă online, simplu și rapid</div>
+      <div className="gate-asteptare-icon">⏳</div>
+      <h2 className="gate-title">Rezervarea ta este în așteptare</h2>
+      <p className="gate-subtitle">
+        Rezervarea ta a fost înregistrată și urmează să fie confirmată de echipa noastră.
+        Vei putea comanda imediat ce rezervarea este confirmată.
+      </p>
+      <div className="gate-butoane">
+        <a href="/rezervarile-mele" className="gate-btn gate-btn-primary">Vezi rezervarea mea</a>
+        <a href="/" className="gate-btn gate-btn-secondary">Înapoi acasă</a>
+      </div>
+    </div>
+  </div>
+)
+
 const Comanda = () => {
   const userLogat = useMemo(() => {
     try { return JSON.parse(localStorage.getItem('user')) } catch { return null }
@@ -59,6 +79,7 @@ const Comanda = () => {
   const [categorieActiva, setCategorieActiva] = useState('Aperitive')
   const [subcategorieActiva, setSubcategorieActiva] = useState('Vinuri')
   const [rezervareOk, setRezervareOk] = useState(null)
+  const [asteptare, setAsteptare] = useState(false)
   const [loadingRezervare, setLoadingRezervare] = useState(true)
   const [adaugat, setAdaugat] = useState(null)
 
@@ -68,7 +89,10 @@ const Comanda = () => {
       return
     }
     areRezervareConfirmata()
-      .then(data => setRezervareOk(data.areRezervare))
+      .then(data => {
+        setRezervareOk(data.areRezervare)
+        setAsteptare(data.areRezervareInAsteptare)
+      })
       .catch(() => setRezervareOk(false))
       .finally(() => setLoadingRezervare(false))
   }, [])
@@ -115,7 +139,7 @@ const Comanda = () => {
       </div>
     </div>
   )
-  if (!rezervareOk) return <RezervareGatePage />
+  if (!rezervareOk) return asteptare ? <AsteptareGatePage /> : <RezervareGatePage />
 
   return (
     <div className="comanda-page">

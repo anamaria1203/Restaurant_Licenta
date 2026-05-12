@@ -180,6 +180,9 @@ const ComenziMele = () => {
                       year: 'numeric', month: 'long', day: 'numeric',
                       hour: '2-digit', minute: '2-digit'
                     })}
+                    {c.rezervareId && (
+                      <span className="comanda-rez-badge">Rezervare #{c.rezervareId}</span>
+                    )}
                   </div>
                   <div className="comanda-sectiune-dreapta">
                     <span className={`comanda-status ${STATUS_CULORI[c.status]}`}>

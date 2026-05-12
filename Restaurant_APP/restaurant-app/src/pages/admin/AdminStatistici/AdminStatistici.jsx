@@ -25,6 +25,8 @@ const AdminStatistici = () => {
   const navigate = useNavigate()
   const [date, setDate] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [override, setOverride] = useState({})
+  const [editingOra, setEditingOra] = useState(null)
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'))
@@ -162,6 +164,8 @@ const AdminStatistici = () => {
                   <tr>
                     <th>Ora</th>
                     <th>Comenzi</th>
+                    <th>Rezervări</th>
+                    <th>Preparate pre-comandate</th>
                     <th>Angajați recomandați</th>
                     <th>Nivel trafic</th>
                   </tr>
@@ -170,24 +174,56 @@ const AdminStatistici = () => {
                   {date.peOre
                     .filter(r => parseInt(r.ora) >= 9 && parseInt(r.ora) <= 23)
                     .map(r => {
-                      const angajati = r.nrComenzi === 0 ? 1 : Math.max(1, Math.ceil(r.nrComenzi / 3))
+                      const total = r.nrComenzi + r.nrRezervari
+                      const angajatiRec = total === 0 ? 1 : Math.max(1,
+                        Math.ceil(r.nrRezervari / 2) +
+                        Math.ceil((r.totalPreparate || 0) / 4) +
+                        Math.ceil(r.nrComenzi / 3)
+                      )
+                      const angajati = override[r.ora] ?? angajatiRec
                       const nivel =
-                        r.nrComenzi === 0 ? { label: 'Fără activitate', cls: 'zero'  } :
-                        r.nrComenzi <= 3  ? { label: 'Redus',           cls: 'mic'   } :
-                        r.nrComenzi <= 7  ? { label: 'Moderat',         cls: 'mediu' } :
-                                            { label: 'Ridicat',         cls: 'mare'  }
+                        total === 0 ? { label: 'Fără activitate', cls: 'zero'  } :
+                        total <= 3  ? { label: 'Redus',           cls: 'mic'   } :
+                        total <= 7  ? { label: 'Moderat',         cls: 'mediu' } :
+                                      { label: 'Ridicat',         cls: 'mare'  }
                       return (
                         <tr key={r.ora}>
                           <td className="shift-ora">{r.ora}</td>
                           <td>{r.nrComenzi}</td>
-                          <td className="shift-ang">{angajati}</td>
+                          <td>{r.nrRezervari}</td>
+                          <td>{r.totalPreparate || 0}</td>
+                          <td
+                            className={`shift-ang${override[r.ora] !== undefined ? ' ang-editata' : ''}`}
+                            onClick={() => setEditingOra(r.ora)}
+                            title="Click pentru modificare manuală"
+                          >
+                            {editingOra === r.ora ? (
+                              <input
+                                className="shift-ang-input"
+                                type="number"
+                                min="0"
+                                max="20"
+                                defaultValue={angajati}
+                                autoFocus
+                                onBlur={e => {
+                                  const val = parseInt(e.target.value)
+                                  if (!isNaN(val) && val >= 0) setOverride(prev => ({ ...prev, [r.ora]: val }))
+                                  setEditingOra(null)
+                                }}
+                                onKeyDown={e => {
+                                  if (e.key === 'Enter') e.target.blur()
+                                  if (e.key === 'Escape') setEditingOra(null)
+                                }}
+                              />
+                            ) : angajati}
+                          </td>
                           <td><span className={`shift-nivel shift-nivel-${nivel.cls}`}>{nivel.label}</span></td>
                         </tr>
                       )
                     })}
                 </tbody>
               </table>
-              <p className="stat-shift-nota">Formulă: max(1, ⌈nr. comenzi ÷ 3⌉) angajați per tură de o oră</p>
+              <p className="stat-shift-nota">Formulă: ⌈rezervări ÷ 2⌉ + ⌈preparate ÷ 4⌉ + ⌈comenzi ÷ 3⌉ · Click pe nr. angajați pentru modificare manuală</p>
             </div>
           </>
         )}

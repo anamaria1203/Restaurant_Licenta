@@ -2,12 +2,20 @@ import './RezervariMele.css'
 import { useState, useEffect } from 'react'
 import Navbar from '../../components/Navbar/Navbar'
 import Footer from '../../components/Footer/Footer'
-import { getRezervariMele, anuleazaRezervare } from '../../services/api'
+import { getRezervariMele, anuleazaRezervare, getComenziMele } from '../../services/api'
 
 const STATUS_CULORI = {
   in_asteptare: 'status-asteptare',
   confirmata: 'status-confirmata',
   anulata: 'status-anulata'
+}
+
+const STATUS_COM = {
+  in_asteptare: { label: 'În așteptare', cls: 'status-asteptare' },
+  confirmata:   { label: 'Confirmată',   cls: 'status-confirmata' },
+  in_preparare: { label: 'În preparare', cls: 'status-preparare' },
+  livrata:      { label: 'Livrată',      cls: 'status-livrata' },
+  anulata:      { label: 'Anulată',      cls: 'status-anulata' }
 }
 
 const STATUS_LABEL = {
@@ -37,6 +45,7 @@ const RezervariMele = () => {
   })()
 
   const [rezervari, setRezervari] = useState([])
+  const [comenzi, setComenzi] = useState([])
   const [loading, setLoading] = useState(true)
   const [anulandId, setAnulandId] = useState(null)
   const [confirmareId, setConfirmareId] = useState(null)
@@ -48,8 +57,8 @@ const RezervariMele = () => {
       window.location.href = '/login?mod=login'
       return
     }
-    getRezervariMele()
-      .then(data => setRezervari(data))
+    Promise.all([getRezervariMele(), getComenziMele()])
+      .then(([rez, com]) => { setRezervari(rez); setComenzi(com) })
       .catch(console.error)
       .finally(() => setLoading(false))
   }, [])
@@ -104,7 +113,9 @@ const RezervariMele = () => {
               const active = rezervari.filter(r => r.status !== 'anulata')
               const anulate = rezervari.filter(r => r.status === 'anulata')
 
-              const RandRezervare = ({ r }) => (
+              const RandRezervare = ({ r }) => {
+                const comandaAsociata = comenzi.find(c => c.rezervareId === r.id)
+                return (
                 <div key={r.id} className="rezme-sectiune">
                   <div className="rezme-header">
                     <div className="rezme-stanga">
@@ -181,8 +192,32 @@ const RezervariMele = () => {
                   {r.observatii && (
                     <div className="rezme-observatii">Observații: {r.observatii}</div>
                   )}
+
+                  {comandaAsociata && (
+                    <div className="rezme-comanda-asociata">
+                      <div className="rezme-comanda-titlu">
+                        <span>Comandă pre-comandată</span>
+                        <span className={`rezme-status ${STATUS_COM[comandaAsociata.status]?.cls}`}>
+                          {STATUS_COM[comandaAsociata.status]?.label}
+                        </span>
+                      </div>
+                      <div className="rezme-comanda-items">
+                        {comandaAsociata.ComandaItems?.map(item => (
+                          <div key={item.id} className="rezme-comanda-item">
+                            <span className="rezme-ci-nume">{item.numeSnapshot}</span>
+                            <span className="rezme-ci-cant">× {item.cantitate}</span>
+                            <span className="rezme-ci-pret">{(item.pretSnapshot * item.cantitate).toFixed(2)} RON</span>
+                          </div>
+                        ))}
+                      </div>
+                      <div className="rezme-comanda-total">
+                        Total: {Number(comandaAsociata.total).toFixed(2)} RON
+                      </div>
+                    </div>
+                  )}
                 </div>
               )
+              }
 
               return (
                 <>

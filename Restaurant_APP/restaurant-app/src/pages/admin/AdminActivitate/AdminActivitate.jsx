@@ -27,44 +27,27 @@ const ZONA_LABEL = {
 
 const AdminActivitate = () => {
   const navigate = useNavigate()
-  const [clienti, setClienti] = useState([])
+  const [rezervari, setRezervari] = useState([])
   const [loading, setLoading] = useState(true)
   const [procesand, setProcesand] = useState(null)
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'))
-    if (!user || user.tip !== 'manager') {
-      navigate('/')
-      return
-    }
+    if (!user || user.tip !== 'manager') { navigate('/'); return }
     fetchDate()
   }, [navigate])
 
   const fetchDate = async () => {
     setLoading(true)
     try {
-      const [rezervari, comenzi] = await Promise.all([
-        getRezervariAdmin(),
-        getComenziAdmin()
-      ])
+      const [rez, com] = await Promise.all([getRezervariAdmin(), getComenziAdmin()])
 
-      const map = {}
+      const rezervariCuComanda = rez.map(r => ({
+        ...r,
+        comanda: com.find(c => c.rezervareId === r.id) || null
+      })).sort((a, b) => new Date(b.data) - new Date(a.data))
 
-      rezervari.forEach(r => {
-        if (!r.user) return
-        const uid = r.user.id
-        if (!map[uid]) map[uid] = { user: r.user, rezervari: [], comenzi: [] }
-        map[uid].rezervari.push(r)
-      })
-
-      comenzi.forEach(c => {
-        if (!c.user) return
-        const uid = c.user.id
-        if (!map[uid]) map[uid] = { user: c.user, rezervari: [], comenzi: [] }
-        map[uid].comenzi.push(c)
-      })
-
-      setClienti(Object.values(map).sort((a, b) => a.user.nume.localeCompare(b.user.nume)))
+      setRezervari(rezervariCuComanda)
     } catch (err) {
       console.error(err)
     } finally {
@@ -77,9 +60,7 @@ const AdminActivitate = () => {
     try {
       const res = await updateStatusRezervare(id, status)
       if (res.ok) fetchDate()
-    } finally {
-      setProcesand(null)
-    }
+    } finally { setProcesand(null) }
   }
 
   const handleComanda = async (id, status) => {
@@ -87,9 +68,7 @@ const AdminActivitate = () => {
     try {
       const res = await updateStatusComanda(id, status)
       if (res.ok) fetchDate()
-    } finally {
-      setProcesand(null)
-    }
+    } finally { setProcesand(null) }
   }
 
   return (
@@ -97,23 +76,17 @@ const AdminActivitate = () => {
       <div className="act-navbar">
         <div className="act-logo">Villa Ana Ristorante</div>
         <div className="act-navbar-center">Comenzi &amp; Rezervări</div>
-        <div style={{display:'flex', gap:'0.8rem'}}>
-          <button className="act-btn-inapoi" onClick={() => navigate('/admin-menu-evolution')}>
-            Menu Evolution
-          </button>
-          <button className="act-btn-inapoi" onClick={() => navigate('/admin-statistici')}>
-            Statistici
-          </button>
-          <button className="act-btn-inapoi" onClick={() => navigate('/admin-dashboard')}>
-            ← Dashboard
-          </button>
+        <div style={{ display: 'flex', gap: '0.8rem' }}>
+          <button className="act-btn-inapoi" onClick={() => navigate('/admin-menu-evolution')}>Menu Evolution</button>
+          <button className="act-btn-inapoi" onClick={() => navigate('/admin-statistici')}>Statistici</button>
+          <button className="act-btn-inapoi" onClick={() => navigate('/admin-dashboard')}>← Dashboard</button>
         </div>
       </div>
 
       <div className="act-content">
         <div className="act-header">
-          <h1>Activitate Clienți</h1>
-          <p>Gestionează rezervările și comenzile clienților</p>
+          <h1>Activitate Restaurant</h1>
+          <p>Rezervări cu comenzile asociate și comenzi independente</p>
         </div>
 
         {loading ? (
@@ -121,109 +94,102 @@ const AdminActivitate = () => {
             <div className="loading-dots"><span /><span /><span /></div>
             <p>Se încarcă...</p>
           </div>
-        ) : clienti.length === 0 ? (
-          <div className="act-gol">
-            <p>Nu există activitate înregistrată.</p>
-          </div>
         ) : (
-          <div className="act-lista">
-            {clienti.map(({ user, rezervari, comenzi }) => (
-              <div key={user.id} className="act-client-card">
+          <>
+            {/* ─── REZERVĂRI ─── */}
+            <div className="act-sectiune-titlu-mare">
+              Rezervări
+              <span className="act-count">{rezervari.length}</span>
+            </div>
 
-                <div className="act-client-header">
-                  <div className="act-client-info">
-                    <span className="act-client-nume">{user.nume}</span>
-                    <span className="act-client-email">{user.email}</span>
-                  </div>
-                  <div className="act-client-badges">
-                    <span className="act-badge">{rezervari.length} rezerv.</span>
-                    <span className="act-badge">{comenzi.length} com.</span>
-                  </div>
-                </div>
+            {rezervari.length === 0 ? (
+              <div className="act-gol">Nu există rezervări înregistrate.</div>
+            ) : (
+              <div className="act-lista">
+                {rezervari.map(r => (
+                  <div key={r.id} className={`act-rez-card${r.status === 'anulata' ? ' anulata' : ''}`}>
 
-                {rezervari.length > 0 && (
-                  <div className="act-sectiune">
-                    <div className="act-sectiune-titlu">Rezervări</div>
-                    {rezervari.map(r => (
-                      <div key={r.id} className="act-rand">
-                        <div className="act-rand-info">
-                          <span>{new Date(r.data + 'T12:00:00').toLocaleDateString('ro-RO', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
-                          <span>{r.ora}</span>
-                          <span>{ZONA_LABEL[r.zona]}</span>
-                          <span>{r.nrPersoane} pers.</span>
-                          {r.ocazie && <span className="act-ocazie">{r.ocazie}</span>}
-                        </div>
-                        <div className="act-rand-dreapta">
-                          <span className={`act-status ${STATUS_REZ[r.status]?.cls}`}>
-                            {STATUS_REZ[r.status]?.label}
-                          </span>
-                          {r.status === 'in_asteptare' && (
-                            <div className="act-butoane">
-                              <button
-                                className="act-btn-confirma"
-                                onClick={() => handleRezervare(r.id, 'confirmata')}
-                                disabled={procesand === `rez-${r.id}`}
-                              >Confirmă</button>
-                              <button
-                                className="act-btn-respinge"
-                                onClick={() => handleRezervare(r.id, 'anulata')}
-                                disabled={procesand === `rez-${r.id}`}
-                              >Respinge</button>
-                            </div>
-                          )}
-                        </div>
+                    {/* Header rezervare */}
+                    <div className="act-rez-header">
+                      <div className="act-rez-header-stanga">
+                        <span className="act-rez-nr">Rezervare #{r.id}</span>
+                        <span className="act-rez-client">
+                          {r.user?.nume}
+                          <span className="act-rez-email">{r.user?.email}</span>
+                        </span>
                       </div>
-                    ))}
-                  </div>
-                )}
+                      <div className="act-rez-header-dreapta">
+                        <span className={`act-status ${STATUS_REZ[r.status]?.cls}`}>
+                          {STATUS_REZ[r.status]?.label}
+                        </span>
+                        {r.status === 'in_asteptare' && (
+                          <div className="act-butoane">
+                            <button className="act-btn-confirma" onClick={() => handleRezervare(r.id, 'confirmata')} disabled={procesand === `rez-${r.id}`}>Confirmă</button>
+                            <button className="act-btn-respinge" onClick={() => handleRezervare(r.id, 'anulata')} disabled={procesand === `rez-${r.id}`}>Respinge</button>
+                          </div>
+                        )}
+                      </div>
+                    </div>
 
-                {comenzi.length > 0 && (
-                  <div className="act-sectiune">
-                    <div className="act-sectiune-titlu">Comenzi</div>
-                    {comenzi.map((c, ci) => (
-                      <div key={c.id} className={`act-comanda-bloc${ci < comenzi.length - 1 ? ' cu-sep' : ''}`}>
-                        <div className="act-comanda-cap">
-                          <span className="act-comanda-meta">
-                            {new Date(c.createdAt).toLocaleDateString('ro-RO', { day: 'numeric', month: 'long', year: 'numeric' })}
-                            {' · '}<span className="act-total">{Number(c.total).toFixed(2)} RON</span>
-                          </span>
-                          <div className="act-rand-dreapta">
-                            <span className={`act-status ${STATUS_COM[c.status]?.cls}`}>
-                              {STATUS_COM[c.status]?.label}
+                    {/* Detalii rezervare */}
+                    <div className="act-rez-detalii">
+                      <span>{new Date(r.data + 'T12:00:00').toLocaleDateString('ro-RO', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
+                      <span className="act-rez-sep">·</span>
+                      <span>{r.ora}</span>
+                      <span className="act-rez-sep">·</span>
+                      <span>{ZONA_LABEL[r.zona]}</span>
+                      <span className="act-rez-sep">·</span>
+                      <span>{r.nrPersoane} pers.</span>
+                      {r.ocazie && <><span className="act-rez-sep">·</span><span className="act-ocazie">{r.ocazie}</span></>}
+                    </div>
+
+                    {/* Comanda asociata */}
+                    {r.comanda ? (
+                      <div className="act-precomanda">
+                        <div className="act-precomanda-header">
+                          <span className="act-precomanda-label">Comandă pre-comandată</span>
+                          <div className="act-precomanda-dreapta">
+                            <span className={`act-status ${STATUS_COM[r.comanda.status]?.cls}`}>
+                              {STATUS_COM[r.comanda.status]?.label}
                             </span>
                             <div className="act-butoane">
-                              {c.status === 'in_asteptare' && (
+                              {r.comanda.status === 'in_asteptare' && (
                                 <>
-                                  <button className="act-btn-confirma" onClick={() => handleComanda(c.id, 'confirmata')} disabled={procesand === `com-${c.id}`}>Confirmă</button>
-                                  <button className="act-btn-respinge" onClick={() => handleComanda(c.id, 'anulata')} disabled={procesand === `com-${c.id}`}>Respinge</button>
+                                  <button className="act-btn-confirma" onClick={() => handleComanda(r.comanda.id, 'confirmata')} disabled={procesand === `com-${r.comanda.id}`}>Confirmă</button>
+                                  <button className="act-btn-respinge" onClick={() => handleComanda(r.comanda.id, 'anulata')} disabled={procesand === `com-${r.comanda.id}`}>Respinge</button>
                                 </>
                               )}
-                              {c.status === 'confirmata' && (
-                                <button className="act-btn-preparare" onClick={() => handleComanda(c.id, 'in_preparare')} disabled={procesand === `com-${c.id}`}>În preparare</button>
+                              {r.comanda.status === 'confirmata' && (
+                                <button className="act-btn-preparare" onClick={() => handleComanda(r.comanda.id, 'in_preparare')} disabled={procesand === `com-${r.comanda.id}`}>În preparare</button>
                               )}
-                              {c.status === 'in_preparare' && (
-                                <button className="act-btn-livrata" onClick={() => handleComanda(c.id, 'livrata')} disabled={procesand === `com-${c.id}`}>Livrată</button>
+                              {r.comanda.status === 'in_preparare' && (
+                                <button className="act-btn-livrata" onClick={() => handleComanda(r.comanda.id, 'livrata')} disabled={procesand === `com-${r.comanda.id}`}>Livrată</button>
                               )}
                             </div>
                           </div>
                         </div>
-                        <div className="act-comanda-items">
-                          {c.ComandaItems.map(item => (
-                            <div key={item.id} className="act-comanda-item">
+                        <div className="act-precomanda-items">
+                          {r.comanda.ComandaItems?.map(item => (
+                            <div key={item.id} className="act-precomanda-item">
                               <span className="act-ci-nume">{item.numeSnapshot}</span>
                               <span className="act-ci-cant">× {item.cantitate}</span>
                               <span className="act-ci-pret">{(item.pretSnapshot * item.cantitate).toFixed(2)} RON</span>
                             </div>
                           ))}
                         </div>
+                        <div className="act-precomanda-total">
+                          Total: {Number(r.comanda.total).toFixed(2)} RON
+                        </div>
                       </div>
-                    ))}
+                    ) : (
+                      <div className="act-fara-comanda">Nicio pre-comandă asociată</div>
+                    )}
                   </div>
-                )}
-
+                ))}
               </div>
-            ))}
-          </div>
+            )}
+
+          </>
         )}
       </div>
     </div>

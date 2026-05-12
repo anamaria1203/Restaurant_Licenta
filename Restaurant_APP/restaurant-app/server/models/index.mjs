@@ -32,6 +32,9 @@ ComandaItem.belongsTo(Preparat, { foreignKey: 'preparatId' })
 Rezervare.belongsTo(User, { foreignKey: 'userId' })
 User.hasMany(Rezervare, { foreignKey: 'userId' })
 
+Comanda.belongsTo(Rezervare, { foreignKey: 'rezervareId' })
+Rezervare.hasMany(Comanda, { foreignKey: 'rezervareId' })
+
 const db = {
   sequelize,
   User,

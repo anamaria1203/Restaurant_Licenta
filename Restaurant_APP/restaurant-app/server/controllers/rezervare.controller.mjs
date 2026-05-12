@@ -95,10 +95,11 @@ const anuleazaRezervare = async (req, res, next) => {
 const areRezervareConfirmata = async (req, res, next) => {
   try {
     const userId = req.user.id
-    const rezervare = await db.Rezervare.findOne({
-      where: { userId, status: 'confirmata' }
-    })
-    res.json({ areRezervare: !!rezervare })
+    const [confirmata, inAsteptare] = await Promise.all([
+      db.Rezervare.findOne({ where: { userId, status: 'confirmata' } }),
+      db.Rezervare.findOne({ where: { userId, status: 'in_asteptare' } })
+    ])
+    res.json({ areRezervare: !!confirmata, areRezervareInAsteptare: !!inAsteptare })
   } catch (err) {
     next(err)
   }

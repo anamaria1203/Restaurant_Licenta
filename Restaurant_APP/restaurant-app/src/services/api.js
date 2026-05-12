@@ -91,11 +91,11 @@ export const stergeUser = (id) => apiFetch(`/api/useri/${id}`, { method: 'DELETE
 export const restaureazaUser = (id) => apiFetch(`/api/useri/${id}/restaurare`, { method: 'POST' })
 
 // ─── COMENZI ─────────────────────────────────────────
-export const creeazaComanda = (items, observatii) =>
+export const creeazaComanda = (items, observatii, rezervareId) =>
   apiFetch('/comanda', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ items, observatii })
+    body: JSON.stringify({ items, observatii, rezervareId: rezervareId || null })
   })
 
 export const getComenziMele = () =>

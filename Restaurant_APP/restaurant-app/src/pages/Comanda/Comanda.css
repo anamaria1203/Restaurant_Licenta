@@ -121,6 +121,17 @@
   color: rgba(245, 240, 232, 0.7);
 }
 
+.gate-asteptare-icon {
+  font-size: 2.8rem;
+  margin-bottom: 0.8rem;
+  animation: pulse-slow 2s ease-in-out infinite;
+}
+
+@keyframes pulse-slow {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.6; transform: scale(0.95); }
+}
+
 /* ─── COMANDA PAGE ───────────────────────────────────── */
 .comanda-page {
   min-height: 100vh;

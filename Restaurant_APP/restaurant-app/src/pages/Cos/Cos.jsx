@@ -2,7 +2,7 @@ import './Cos.css'
 import { useState, useEffect, useMemo } from 'react'
 import Navbar from '../../components/Navbar/Navbar'
 import Footer from '../../components/Footer/Footer'
-import { creeazaComanda, areRezervareConfirmata } from '../../services/api'
+import { creeazaComanda, areRezervareConfirmata, getRezervariMele } from '../../services/api'
 
 const GatePage = () => (
   <div className="gate-page">
@@ -42,6 +42,26 @@ const RezervareGatePage = () => (
   </div>
 )
 
+const AsteptareGatePage = () => (
+  <div className="gate-page">
+    <div className="gate-overlay" />
+    <div className="gate-container">
+      <div className="gate-logo">Villa Ana Ristorante</div>
+      <div className="gate-tagline">Comandă online, simplu și rapid</div>
+      <div className="gate-asteptare-icon">⏳</div>
+      <h2 className="gate-title">Rezervarea ta este în așteptare</h2>
+      <p className="gate-subtitle">
+        Rezervarea ta a fost înregistrată și urmează să fie confirmată de echipa noastră.
+        Vei putea comanda imediat ce rezervarea este confirmată.
+      </p>
+      <div className="gate-butoane">
+        <a href="/rezervarile-mele" className="gate-btn gate-btn-primary">Vezi rezervarea mea</a>
+        <a href="/" className="gate-btn gate-btn-secondary">Înapoi acasă</a>
+      </div>
+    </div>
+  </div>
+)
+
 const getCosLocal = () => {
   try { return JSON.parse(localStorage.getItem('cos')) || [] } catch { return [] }
 }
@@ -57,7 +77,10 @@ const Cos = () => {
   const [eroare, setEroare] = useState('')
   const [succes, setSucces] = useState(false)
   const [rezervareOk, setRezervareOk] = useState(null)
+  const [asteptare, setAsteptare] = useState(false)
   const [loadingRezervare, setLoadingRezervare] = useState(true)
+  const [rezervariConfirmate, setRezervariConfirmate] = useState([])
+  const [rezervareSelectata, setRezervareSelectata] = useState('')
 
   useEffect(() => {
     if (!userLogat || userLogat.tip !== 'client') {
@@ -65,9 +88,18 @@ const Cos = () => {
       return
     }
     areRezervareConfirmata()
-      .then(data => setRezervareOk(data.areRezervare))
+      .then(data => {
+        setRezervareOk(data.areRezervare)
+        setAsteptare(data.areRezervareInAsteptare)
+      })
       .catch(() => setRezervareOk(false))
       .finally(() => setLoadingRezervare(false))
+
+    getRezervariMele()
+      .then(data => setRezervariConfirmate(
+        (Array.isArray(data) ? data : []).filter(r => r.status === 'confirmata')
+      ))
+      .catch(() => {})
   }, [])
 
   useEffect(() => {
@@ -106,7 +138,7 @@ const Cos = () => {
     setLoadingComanda(true)
     setEroare('')
     try {
-      const response = await creeazaComanda(cos, observatii)
+      const response = await creeazaComanda(cos, observatii, rezervareSelectata || null)
       const data = await response.json()
       if (!response.ok) {
         setEroare(data.error || 'Eroare la plasarea comenzii')
@@ -134,7 +166,7 @@ const Cos = () => {
       </div>
     </div>
   )
-  if (!rezervareOk) return <RezervareGatePage />
+  if (!rezervareOk) return asteptare ? <AsteptareGatePage /> : <RezervareGatePage />
 
   if (succes) return (
     <div className="cos-page">
@@ -193,6 +225,22 @@ const Cos = () => {
             </div>
 
             <div className="cos-footer">
+              {rezervariConfirmate.length > 0 && (
+                <div className="cos-rezervare-link">
+                  <label>Asociază cu o rezervare (opțional)</label>
+                  <select
+                    value={rezervareSelectata}
+                    onChange={e => setRezervareSelectata(e.target.value)}
+                  >
+                    <option value="">— Fără rezervare —</option>
+                    {rezervariConfirmate.map(r => (
+                      <option key={r.id} value={r.id}>
+                        {new Date(r.data + 'T12:00:00').toLocaleDateString('ro-RO', { day: 'numeric', month: 'long' })} · {r.ora} · {r.nrPersoane} pers.
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
               <div className="cos-observatii">
                 <label>Observații (opțional)</label>
                 <textarea

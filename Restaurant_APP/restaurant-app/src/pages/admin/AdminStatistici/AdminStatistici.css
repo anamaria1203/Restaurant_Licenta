@@ -239,3 +239,22 @@
   color: rgba(245,240,232,0.3);
   font-style: italic;
 }
+
+.shift-ang { cursor: pointer; }
+.shift-ang:hover { color: #c9a84c !important; }
+
+.ang-editata { color: #c9a84c !important; }
+
+.shift-ang-input {
+  width: 52px;
+  background: rgba(201,168,76,0.1);
+  border: 1px solid rgba(201,168,76,0.4);
+  color: #c9a84c;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-align: center;
+  padding: 0.15rem 0.3rem;
+  border-radius: 2px;
+  outline: none;
+}
