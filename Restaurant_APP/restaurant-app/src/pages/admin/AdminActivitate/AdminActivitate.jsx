@@ -42,12 +42,10 @@ const AdminActivitate = () => {
     try {
       const [rez, com] = await Promise.all([getRezervariAdmin(), getComenziAdmin()])
 
-      const rezervariCuComanda = rez
-        .filter(r => r.status !== 'anulata')
-        .map(r => ({
-          ...r,
-          comanda: com.find(c => c.rezervareId === r.id) || null
-        })).sort((a, b) => new Date(b.data) - new Date(a.data))
+      const rezervariCuComanda = rez.map(r => ({
+        ...r,
+        comanda: com.find(c => c.rezervareId === r.id) || null
+      })).sort((a, b) => new Date(b.data) - new Date(a.data))
 
       setRezervari(rezervariCuComanda)
     } catch (err) {
@@ -101,7 +99,7 @@ const AdminActivitate = () => {
             {/* ─── REZERVĂRI ─── */}
             <div className="act-sectiune-titlu-mare">
               Rezervări
-              <span className="act-count">{rezervari.length}</span>
+              <span className="act-count">{rezervari.filter(r => r.status !== 'anulata').length}</span>
             </div>
 
             {rezervari.length === 0 ? (
