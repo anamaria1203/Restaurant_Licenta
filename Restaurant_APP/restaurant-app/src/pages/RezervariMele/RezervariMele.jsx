@@ -39,6 +39,8 @@ const RezervariMele = () => {
   const [rezervari, setRezervari] = useState([])
   const [loading, setLoading] = useState(true)
   const [anulandId, setAnulandId] = useState(null)
+  const [confirmareId, setConfirmareId] = useState(null)
+  const [showAnulate, setShowAnulate] = useState(false)
   const [eroare, setEroare] = useState('')
 
   useEffect(() => {
@@ -97,81 +99,119 @@ const RezervariMele = () => {
         ) : (
           <div className="rezme-container">
             {eroare && <div className="rezme-eroare">⚠ {eroare}</div>}
-            {rezervari.map((r, index) => (
-              <div
-                key={r.id}
-                className={`rezme-sectiune ${index < rezervari.length - 1 ? 'cu-separator' : ''}`}
-              >
-                <div className="rezme-header">
-                  <div className="rezme-stanga">
-                    <div className="rezme-nr">Rezervare #{r.id}</div>
-                    <div className="rezme-data-creare">
-                      Plasată pe {new Date(r.createdAt).toLocaleDateString('ro-RO', {
-                        year: 'numeric', month: 'long', day: 'numeric'
-                      })}
-                    </div>
-                  </div>
-                  <div className="rezme-dreapta">
-                    <span className={`rezme-status ${STATUS_CULORI[r.status]}`}>
-                      {STATUS_LABEL[r.status]}
-                    </span>
-                    {r.status === 'in_asteptare' && (
-                      <button
-                        className="rezme-btn-anuleaza"
-                        onClick={() => handleAnuleaza(r.id)}
-                        disabled={anulandId === r.id}
-                      >
-                        {anulandId === r.id ? '...' : 'Anulează'}
-                      </button>
-                    )}
-                  </div>
-                </div>
 
-                <div className="rezme-detalii">
-                  <div className="rezme-detaliu-item">
-                    <div>
-                      <div className="rezme-detaliu-label">Data & Ora</div>
-                      <div className="rezme-detaliu-val">
-                        {new Date(r.data + 'T12:00:00').toLocaleDateString('ro-RO', {
-                          weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
-                        })}, {r.ora}
+            {(() => {
+              const active = rezervari.filter(r => r.status !== 'anulata')
+              const anulate = rezervari.filter(r => r.status === 'anulata')
+
+              const RandRezervare = ({ r }) => (
+                <div key={r.id} className="rezme-sectiune">
+                  <div className="rezme-header">
+                    <div className="rezme-stanga">
+                      <div className="rezme-nr">Rezervare #{r.id}</div>
+                      <div className="rezme-data-creare">
+                        Plasată pe {new Date(r.createdAt).toLocaleDateString('ro-RO', {
+                          year: 'numeric', month: 'long', day: 'numeric'
+                        })}
                       </div>
                     </div>
-                  </div>
-                  <div className="rezme-detaliu-item">
-                    <div>
-                      <div className="rezme-detaliu-label">Persoane</div>
-                      <div className="rezme-detaliu-val">{r.nrPersoane} {r.nrPersoane === 1 ? 'persoană' : 'persoane'}</div>
+                    <div className="rezme-dreapta">
+                      <span className={`rezme-status ${STATUS_CULORI[r.status]}`}>
+                        {STATUS_LABEL[r.status]}
+                      </span>
+                      {r.status === 'confirmata' && (
+                        <a href="/comanda" className="rezme-btn-comanda">Comandă acum</a>
+                      )}
+                      {r.status === 'in_asteptare' && (
+                        <div className="rezme-anulare-wrapper">
+                          <button
+                            className="rezme-btn-anuleaza"
+                            onClick={() => setConfirmareId(confirmareId === r.id ? null : r.id)}
+                            disabled={anulandId === r.id}
+                          >
+                            {anulandId === r.id ? '...' : 'Anulează'}
+                          </button>
+                          {confirmareId === r.id && (
+                            <div className="rezme-confirmare-dropdown">
+                              <p>Ești sigur că vrei să anulezi rezervarea?</p>
+                              <div className="rezme-confirmare-butoane">
+                                <button className="rezme-btn-da" onClick={() => { setConfirmareId(null); handleAnuleaza(r.id) }}>Da</button>
+                                <button className="rezme-btn-nu" onClick={() => setConfirmareId(null)}>Nu</button>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      )}
                     </div>
                   </div>
-                  <div className="rezme-detaliu-item">
-                    <div>
-                      <div className="rezme-detaliu-label">Zona</div>
-                      <div className="rezme-detaliu-val">{ZONA_INFO[r.zona]?.label}</div>
-                    </div>
-                  </div>
-                  {r.ocazie && (
+
+                  <div className="rezme-detalii">
                     <div className="rezme-detaliu-item">
                       <div>
-                        <div className="rezme-detaliu-label">Ocazie</div>
-                        <div className="rezme-detaliu-val">{OCAZIE_LABEL[r.ocazie] || r.ocazie}</div>
+                        <div className="rezme-detaliu-label">Data & Ora</div>
+                        <div className="rezme-detaliu-val">
+                          {new Date(r.data + 'T12:00:00').toLocaleDateString('ro-RO', {
+                            weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+                          })}, {r.ora}
+                        </div>
                       </div>
                     </div>
+                    <div className="rezme-detaliu-item">
+                      <div>
+                        <div className="rezme-detaliu-label">Persoane</div>
+                        <div className="rezme-detaliu-val">{r.nrPersoane} {r.nrPersoane === 1 ? 'persoană' : 'persoane'}</div>
+                      </div>
+                    </div>
+                    <div className="rezme-detaliu-item">
+                      <div>
+                        <div className="rezme-detaliu-label">Zona</div>
+                        <div className="rezme-detaliu-val">{ZONA_INFO[r.zona]?.label}</div>
+                      </div>
+                    </div>
+                    {r.ocazie && (
+                      <div className="rezme-detaliu-item">
+                        <div>
+                          <div className="rezme-detaliu-label">Ocazie</div>
+                          <div className="rezme-detaliu-val">{OCAZIE_LABEL[r.ocazie] || r.ocazie}</div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {r.observatii && (
+                    <div className="rezme-observatii">Observații: {r.observatii}</div>
                   )}
                 </div>
+              )
 
-                {r.observatii && (
-                  <div className="rezme-observatii">
-                    Observații: {r.observatii}
+              return (
+                <>
+                  {active.length === 0 ? (
+                    <div className="rezme-goale-inline">
+                      <p>Nu ai rezervări active în acest moment.</p>
+                      <a href="/rezervare" className="rezme-btn-rezerva">Rezervă acum</a>
+                    </div>
+                  ) : (
+                    active.map(r => <RandRezervare key={r.id} r={r} />)
+                  )}
+
+                  {anulate.length > 0 && (
+                    <div className="rezme-anulate-sectiune">
+                      <div className="rezme-anulate-header" onClick={() => setShowAnulate(!showAnulate)}>
+                        <span>Rezervări anulate ({anulate.length})</span>
+                        <span className="rezme-toggle">{showAnulate ? '▲' : '▼'}</span>
+                      </div>
+                      {showAnulate && anulate.map(r => <RandRezervare key={r.id} r={r} />)}
+                    </div>
+                  )}
+
+                  <div className="rezme-footer-bar">
+                    <span>{active.length} {active.length === 1 ? 'rezervare activă' : 'rezervări active'}</span>
+                    <a href="/rezervare" className="rezme-btn-noua">+ Rezervare nouă</a>
                   </div>
-                )}
-              </div>
-            ))}
-
-            <div className="rezme-footer-bar">
-              <span>{rezervari.length} {rezervari.length === 1 ? 'rezervare' : 'rezervări'} în total</span>
-              <a href="/rezervare" className="rezme-btn-noua">+ Rezervare nouă</a>
-            </div>
+                </>
+              )
+            })()}
           </div>
         )}
       </div>

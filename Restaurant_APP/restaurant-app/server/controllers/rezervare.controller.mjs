@@ -46,7 +46,7 @@ const getRezervariMele = async (req, res, next) => {
 const getRezervariAdmin = async (req, res, next) => {
   try {
     const rezervari = await db.Rezervare.findAll({
-      include: [{ model: db.User, attributes: ['id', 'nume', 'email'] }],
+      include: [{ model: db.User, attributes: ['id', 'nume', 'email'], where: { deletedAt: null } }],
       order: [['data', 'DESC'], ['ora', 'DESC']]
     })
     res.json(rezervari)

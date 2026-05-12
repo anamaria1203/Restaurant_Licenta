@@ -1,0 +1,334 @@
+.cos-page {
+  min-height: 100vh;
+  background: #0f0508;
+  color: #f5f0e8;
+}
+
+.cos-hero {
+  padding: 6rem 2rem 3rem;
+  text-align: center;
+  background: linear-gradient(to bottom, rgba(196, 164, 96, 0.05), transparent);
+}
+
+.cos-tag {
+  color: #c4a460;
+  font-size: 0.8rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  margin-bottom: 0.8rem;
+}
+
+.cos-hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  color: #f5f0e8;
+  margin-bottom: 0.6rem;
+}
+
+.cos-hero p {
+  color: rgba(245, 240, 232, 0.5);
+}
+
+.cos-body {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 2rem 2rem 4rem;
+}
+
+/* ─── GOL ─── */
+.cos-gol {
+  text-align: center;
+  padding: 4rem 2rem;
+}
+
+.cos-gol-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.cos-gol h3 {
+  font-size: 1.4rem;
+  color: #f5f0e8;
+  margin-bottom: 0.5rem;
+}
+
+.cos-gol p {
+  color: rgba(245, 240, 232, 0.5);
+  margin-bottom: 1.5rem;
+}
+
+.cos-btn-browse {
+  display: inline-block;
+  padding: 0.8rem 2rem;
+  background: #c4a460;
+  color: #1a0a0a;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.cos-btn-browse:hover { background: #d4b470; }
+
+/* ─── CONTAINER ─── */
+.cos-container {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(196, 164, 96, 0.2);
+  border-radius: 18px;
+  overflow: hidden;
+}
+
+/* ─── ITEMS ─── */
+.cos-items {
+  padding: 1.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.cos-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  gap: 1rem;
+}
+
+.cos-item:last-child { border-bottom: none; }
+
+.cos-item-info {
+  flex: 1;
+}
+
+.cos-item-nume {
+  font-size: 0.92rem;
+  color: #f5f0e8;
+  margin-bottom: 0.2rem;
+}
+
+.cos-item-pret-unit {
+  font-size: 0.78rem;
+  color: rgba(245, 240, 232, 0.4);
+}
+
+.cos-item-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.cos-ctrl-btn {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: #f5f0e8;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.15s;
+}
+
+.cos-ctrl-btn:hover { background: rgba(255, 255, 255, 0.13); }
+
+.cos-ctrl-btn.sterge {
+  color: rgba(220, 100, 100, 0.8);
+  margin-left: 0.2rem;
+}
+
+.cos-ctrl-btn.sterge:hover { background: rgba(220, 100, 100, 0.12); }
+
+.cos-ctrl-nr {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #f5f0e8;
+  min-width: 1.4rem;
+  text-align: center;
+}
+
+.cos-item-subtotal {
+  font-size: 0.88rem;
+  color: #c4a460;
+  font-weight: 600;
+  min-width: 70px;
+  text-align: right;
+}
+
+/* ─── FOOTER COȘ ─── */
+.cos-footer {
+  padding: 1.5rem 2rem;
+  border-top: 1px solid rgba(196, 164, 96, 0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.cos-observatii label {
+  display: block;
+  font-size: 0.78rem;
+  color: rgba(245, 240, 232, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.5rem;
+}
+
+.cos-observatii textarea {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: #f5f0e8;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.88rem;
+  padding: 0.7rem 1rem;
+  resize: none;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.cos-observatii textarea:focus {
+  border-color: rgba(196, 164, 96, 0.4);
+}
+
+.cos-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(196, 164, 96, 0.15);
+  font-size: 1rem;
+  color: rgba(245, 240, 232, 0.7);
+}
+
+.cos-total-suma {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #c4a460;
+}
+
+.cos-eroare {
+  background: rgba(220, 80, 80, 0.1);
+  border: 1px solid rgba(220, 80, 80, 0.3);
+  color: #e88;
+  font-size: 0.85rem;
+  padding: 0.6rem 0.8rem;
+  border-radius: 8px;
+}
+
+.cos-btn-plaseaza {
+  width: 100%;
+  padding: 0.9rem;
+  background: #c4a460;
+  color: #1a0a0a;
+  border: none;
+  border-radius: 10px;
+  font-family: 'Jost', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.cos-btn-plaseaza:hover:not(:disabled) { background: #d4b470; }
+
+.cos-btn-plaseaza:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ─── SUCCES ─── */
+.cos-succes-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 70vh;
+  padding: 2rem;
+}
+
+.cos-succes-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(196, 164, 96, 0.2);
+  border-radius: 18px;
+  padding: 3rem 2.5rem;
+  text-align: center;
+  max-width: 460px;
+  width: 100%;
+}
+
+.succes-check {
+  width: 64px;
+  height: 64px;
+  background: rgba(50, 200, 100, 0.15);
+  border: 2px solid rgba(50, 200, 100, 0.4);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  color: #32c864;
+  margin: 0 auto 1.5rem;
+}
+
+.cos-succes-card h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  color: #f5f0e8;
+  margin-bottom: 0.8rem;
+}
+
+.cos-succes-card p {
+  color: rgba(245, 240, 232, 0.6);
+  line-height: 1.7;
+  margin-bottom: 2rem;
+}
+
+.succes-butoane {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.btn-succes-primary {
+  display: block;
+  padding: 0.85rem;
+  background: #c4a460;
+  color: #1a0a0a;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 700;
+  transition: background 0.2s;
+}
+
+.btn-succes-primary:hover { background: #d4b470; }
+
+.btn-succes-secondary {
+  padding: 0.85rem;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: rgba(245, 240, 232, 0.6);
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.95rem;
+  transition: all 0.2s;
+}
+
+.btn-succes-secondary:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+  color: #f5f0e8;
+}
+
+/* ─── LOADING ─── */
+.cos-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  gap: 1rem;
+  color: rgba(245, 240, 232, 0.5);
+}

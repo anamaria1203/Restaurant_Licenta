@@ -174,19 +174,10 @@
 }
 
 /* ─── LAYOUT ─────────────────────────────────────────── */
-.comanda-layout {
-  display: flex;
-  gap: 2rem;
-  max-width: 1400px;
+.comanda-browse {
+  max-width: 1200px;
   margin: 0 auto;
   padding: 0 2rem 4rem;
-  align-items: flex-start;
-}
-
-/* ─── LEFT: MENU ─────────────────────────────────────── */
-.comanda-meniu {
-  flex: 1;
-  min-width: 0;
 }
 
 .comanda-preparate-grid {

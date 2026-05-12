@@ -134,6 +134,24 @@
 .status-confirmata { background: rgba(50, 200, 100, 0.15); color: #32c864; }
 .status-anulata { background: rgba(200, 50, 50, 0.15); color: #c83232; }
 
+.rezme-btn-comanda {
+  background: rgba(50, 200, 100, 0.12);
+  border: 1px solid rgba(50, 200, 100, 0.35);
+  color: #32c864;
+  border-radius: 6px;
+  padding: 0.3rem 0.9rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.rezme-btn-comanda:hover {
+  background: rgba(50, 200, 100, 0.22);
+  border-color: rgba(50, 200, 100, 0.6);
+}
+
 .rezme-btn-anuleaza {
   background: transparent;
   border: 1px solid rgba(220, 80, 80, 0.35);
@@ -153,6 +171,73 @@
 .rezme-btn-anuleaza:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+.rezme-anulare-wrapper {
+  position: relative;
+}
+
+.rezme-confirmare-dropdown {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  background: #1e2d1f;
+  border: 1px solid rgba(201,168,76,0.3);
+  padding: 1rem 1.2rem;
+  min-width: 220px;
+  z-index: 200;
+  border-radius: 2px;
+  animation: fadeUp 0.15s ease both;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.rezme-confirmare-dropdown p {
+  font-size: 0.83rem;
+  color: rgba(245,240,232,0.8);
+  margin-bottom: 0.8rem;
+  text-align: center;
+}
+
+.rezme-confirmare-butoane {
+  display: flex;
+  gap: 0.6rem;
+  justify-content: center;
+}
+
+.rezme-btn-da {
+  padding: 0.35rem 1.1rem;
+  background: rgba(200,50,50,0.2);
+  border: 1px solid rgba(200,50,50,0.4);
+  color: #ff8080;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.8rem;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all 0.2s;
+}
+
+.rezme-btn-da:hover {
+  background: rgba(200,50,50,0.35);
+}
+
+.rezme-btn-nu {
+  padding: 0.35rem 1.1rem;
+  background: rgba(201,168,76,0.1);
+  border: 1px solid rgba(201,168,76,0.3);
+  color: #c9a84c;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.8rem;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all 0.2s;
+}
+
+.rezme-btn-nu:hover {
+  background: rgba(201,168,76,0.2);
 }
 
 /* ─── DETALII ────────────────────────────────────────── */
@@ -191,6 +276,46 @@
   font-size: 0.8rem;
   color: rgba(245, 240, 232, 0.35);
   font-style: italic;
+}
+
+/* ─── GOALE INLINE ───────────────────────────────────── */
+.rezme-goale-inline {
+  text-align: center;
+  padding: 2.5rem 2rem;
+  color: rgba(245,240,232,0.5);
+  font-size: 0.88rem;
+}
+
+.rezme-goale-inline p {
+  margin-bottom: 1rem;
+}
+
+/* ─── SECTIUNE ANULATE ───────────────────────────────── */
+.rezme-anulate-sectiune {
+  margin-top: 1.5rem;
+  border-top: 1px solid rgba(200,60,60,0.15);
+}
+
+.rezme-anulate-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.9rem 2rem;
+  font-size: 0.78rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(220,80,80,0.6);
+  cursor: pointer;
+  transition: color 0.2s;
+  user-select: none;
+}
+
+.rezme-anulate-header:hover {
+  color: rgba(220,80,80,0.9);
+}
+
+.rezme-toggle {
+  font-size: 0.65rem;
 }
 
 /* ─── FOOTER BAR ─────────────────────────────────────── */

@@ -51,14 +51,16 @@ const AdminActivitate = () => {
       const map = {}
 
       rezervari.forEach(r => {
-        const uid = r.User.id
-        if (!map[uid]) map[uid] = { user: r.User, rezervari: [], comenzi: [] }
+        if (!r.user) return
+        const uid = r.user.id
+        if (!map[uid]) map[uid] = { user: r.user, rezervari: [], comenzi: [] }
         map[uid].rezervari.push(r)
       })
 
       comenzi.forEach(c => {
-        const uid = c.User.id
-        if (!map[uid]) map[uid] = { user: c.User, rezervari: [], comenzi: [] }
+        if (!c.user) return
+        const uid = c.user.id
+        if (!map[uid]) map[uid] = { user: c.user, rezervari: [], comenzi: [] }
         map[uid].comenzi.push(c)
       })
 
@@ -171,56 +173,41 @@ const AdminActivitate = () => {
                 {comenzi.length > 0 && (
                   <div className="act-sectiune">
                     <div className="act-sectiune-titlu">Comenzi</div>
-                    {comenzi.map(c => (
-                      <div key={c.id} className="act-rand act-rand-comanda">
-                        <div className="act-rand-info act-rand-info-col">
-                          <div className="act-rand-info-top">
-                            <span className="act-rand-nr">#COM-{c.id}</span>
-                            <span>{new Date(c.createdAt).toLocaleDateString('ro-RO', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
-                            <span className="act-total">{Number(c.total).toFixed(2)} RON</span>
-                          </div>
-                          <div className="act-items-lista">
-                            {c.ComandaItems.map(item => (
-                              <span key={item.id} className="act-item-chip">
-                                {item.numeSnapshot} × {item.cantitate}
-                              </span>
-                            ))}
+                    {comenzi.map((c, ci) => (
+                      <div key={c.id} className={`act-comanda-bloc${ci < comenzi.length - 1 ? ' cu-sep' : ''}`}>
+                        <div className="act-comanda-cap">
+                          <span className="act-comanda-meta">
+                            {new Date(c.createdAt).toLocaleDateString('ro-RO', { day: 'numeric', month: 'long', year: 'numeric' })}
+                            {' · '}<span className="act-total">{Number(c.total).toFixed(2)} RON</span>
+                          </span>
+                          <div className="act-rand-dreapta">
+                            <span className={`act-status ${STATUS_COM[c.status]?.cls}`}>
+                              {STATUS_COM[c.status]?.label}
+                            </span>
+                            <div className="act-butoane">
+                              {c.status === 'in_asteptare' && (
+                                <>
+                                  <button className="act-btn-confirma" onClick={() => handleComanda(c.id, 'confirmata')} disabled={procesand === `com-${c.id}`}>Confirmă</button>
+                                  <button className="act-btn-respinge" onClick={() => handleComanda(c.id, 'anulata')} disabled={procesand === `com-${c.id}`}>Respinge</button>
+                                </>
+                              )}
+                              {c.status === 'confirmata' && (
+                                <button className="act-btn-preparare" onClick={() => handleComanda(c.id, 'in_preparare')} disabled={procesand === `com-${c.id}`}>În preparare</button>
+                              )}
+                              {c.status === 'in_preparare' && (
+                                <button className="act-btn-livrata" onClick={() => handleComanda(c.id, 'livrata')} disabled={procesand === `com-${c.id}`}>Livrată</button>
+                              )}
+                            </div>
                           </div>
                         </div>
-                        <div className="act-rand-dreapta">
-                          <span className={`act-status ${STATUS_COM[c.status]?.cls}`}>
-                            {STATUS_COM[c.status]?.label}
-                          </span>
-                          <div className="act-butoane">
-                            {c.status === 'in_asteptare' && (
-                              <>
-                                <button
-                                  className="act-btn-confirma"
-                                  onClick={() => handleComanda(c.id, 'confirmata')}
-                                  disabled={procesand === `com-${c.id}`}
-                                >Confirmă</button>
-                                <button
-                                  className="act-btn-respinge"
-                                  onClick={() => handleComanda(c.id, 'anulata')}
-                                  disabled={procesand === `com-${c.id}`}
-                                >Respinge</button>
-                              </>
-                            )}
-                            {c.status === 'confirmata' && (
-                              <button
-                                className="act-btn-preparare"
-                                onClick={() => handleComanda(c.id, 'in_preparare')}
-                                disabled={procesand === `com-${c.id}`}
-                              >În preparare</button>
-                            )}
-                            {c.status === 'in_preparare' && (
-                              <button
-                                className="act-btn-livrata"
-                                onClick={() => handleComanda(c.id, 'livrata')}
-                                disabled={procesand === `com-${c.id}`}
-                              >Livrată</button>
-                            )}
-                          </div>
+                        <div className="act-comanda-items">
+                          {c.ComandaItems.map(item => (
+                            <div key={item.id} className="act-comanda-item">
+                              <span className="act-ci-nume">{item.numeSnapshot}</span>
+                              <span className="act-ci-cant">× {item.cantitate}</span>
+                              <span className="act-ci-pret">{(item.pretSnapshot * item.cantitate).toFixed(2)} RON</span>
+                            </div>
+                          ))}
                         </div>
                       </div>
                     ))}

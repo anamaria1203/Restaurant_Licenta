@@ -286,6 +286,62 @@
   color: #e08080;
 }
 
+/* ─── Bloc comanda (nou) ─── */
+.act-comanda-bloc {
+  padding: 0.65rem 0;
+}
+
+.act-comanda-bloc.cu-sep {
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  margin-bottom: 0.1rem;
+}
+
+.act-comanda-cap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.45rem;
+}
+
+.act-comanda-meta {
+  font-size: 0.78rem;
+  color: rgba(245,240,232,0.4);
+  letter-spacing: 0.2px;
+}
+
+.act-comanda-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.22rem;
+  padding-left: 0.3rem;
+}
+
+.act-comanda-item {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-size: 0.83rem;
+  color: rgba(245,240,232,0.75);
+}
+
+.act-ci-nume {
+  flex: 1;
+}
+
+.act-ci-cant {
+  color: rgba(245,240,232,0.35);
+  white-space: nowrap;
+}
+
+.act-ci-pret {
+  color: #c9a84c;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  min-width: 70px;
+  text-align: right;
+}
+
 /* ─── Butoane actiuni ─── */
 .act-butoane {
   display: flex;

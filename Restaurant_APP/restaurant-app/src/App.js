@@ -16,6 +16,7 @@ import Comanda from './pages/Comanda/Comanda'
 import ComenziMele from './pages/ComenziMele/ComenziMele'
 import Rezervare from './pages/Rezervare/Rezervare'
 import RezervariMele from './pages/RezervariMele/RezervariMele'
+import Cos from './pages/Cos/Cos'
 import { AdminRoute } from './components/ProtectedRoute/ProtectedRoute'
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
         <Route path='/comenzile-mele' element={<ComenziMele />} />
         <Route path='/rezervare' element={<Rezervare />} />
         <Route path='/rezervarile-mele' element={<RezervariMele />} />
+        <Route path='/cos' element={<Cos />} />
         <Route path='/admin-dashboard' element={
           <AdminRoute>
             <AdminDashboard />

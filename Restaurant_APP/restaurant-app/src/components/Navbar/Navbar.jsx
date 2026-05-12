@@ -6,11 +6,26 @@ const Navbar = () => {
   const [showAdminDropdown, setShowAdminDropdown] = useState(false)
   const [userLogat, setUserLogat] = useState(null)
   const [showConfirmare, setShowConfirmare] = useState(false)
+  const [nrCos, setNrCos] = useState(0)
 
   useEffect(() => {
     const user = localStorage.getItem('user')
-    if (user) {
-      setUserLogat(JSON.parse(user))
+    if (user) setUserLogat(JSON.parse(user))
+  }, [])
+
+  useEffect(() => {
+    const updateNrCos = () => {
+      try {
+        const cos = JSON.parse(localStorage.getItem('cos')) || []
+        setNrCos(cos.reduce((s, i) => s + i.cantitate, 0))
+      } catch { setNrCos(0) }
+    }
+    updateNrCos()
+    window.addEventListener('cos-update', updateNrCos)
+    window.addEventListener('storage', updateNrCos)
+    return () => {
+      window.removeEventListener('cos-update', updateNrCos)
+      window.removeEventListener('storage', updateNrCos)
     }
   }, [])
 
@@ -46,6 +61,12 @@ const Navbar = () => {
         <a href="/rezervare">Rezervări</a>
         {userLogat && userLogat.tip === 'client' && (
           <a href="/rezervarile-mele">Rezervările Mele</a>
+        )}
+        {userLogat && userLogat.tip === 'client' && (
+          <a href="/cos" className="nav-cos-link">
+            Coș
+            {nrCos > 0 && <span className="nav-cos-badge">{nrCos}</span>}
+          </a>
         )}
         <a href="/despre">Despre noi</a>
         <a href="/contact">Contact</a>

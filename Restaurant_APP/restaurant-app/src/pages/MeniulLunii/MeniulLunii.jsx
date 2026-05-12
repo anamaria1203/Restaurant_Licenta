@@ -15,7 +15,29 @@ const TARI_META = {
 const SUBCATEGORII_BAUTURI = ['Vinuri', 'Whisky', 'Rom', 'Cocktailuri', 'Beri', 'Sucuri', 'Ceaiuri']
 
 const MeniulLunii = () => {
+  const userLogat = (() => {
+    try { return JSON.parse(localStorage.getItem('user')) } catch { return null }
+  })()
+
+  const [showGate, setShowGate] = useState(false)
+  const [adaugat, setAdaugat] = useState(null)
   const [lunaActiva, setLunaActiva] = useState('spaniola')
+
+  const handleAdauga = (preparat) => {
+    if (!userLogat || userLogat.tip !== 'client') {
+      setShowGate(true)
+      return
+    }
+    const cos = (() => { try { return JSON.parse(localStorage.getItem('cos')) || [] } catch { return [] } })()
+    const existent = cos.find(i => i.preparatId === preparat.id)
+    const nouCos = existent
+      ? cos.map(i => i.preparatId === preparat.id ? { ...i, cantitate: i.cantitate + 1 } : i)
+      : [...cos, { preparatId: preparat.id, numeSnapshot: preparat.nume, pretSnapshot: preparat.pret, cantitate: 1 }]
+    localStorage.setItem('cos', JSON.stringify(nouCos))
+    window.dispatchEvent(new Event('cos-update'))
+    setAdaugat(preparat.id)
+    setTimeout(() => setAdaugat(null), 1500)
+  }
   const [preparate, setPreparate] = useState([])
   const [deserturi, setDeserturi] = useState([])
   const [bauturi, setBauturi] = useState([])
@@ -88,7 +110,9 @@ const MeniulLunii = () => {
                     <p>{p.descriere}</p>
                     <div className="ml-card-footer">
                       <span className="ml-pret">{p.pret} RON</span>
-                      <button className="ml-btn-adauga">Adaugă la comandă</button>
+                      <button className="ml-btn-adauga" onClick={() => handleAdauga(p)}>
+                        {adaugat === p.id ? '✓ Adăugat' : 'Adaugă la comandă'}
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -118,7 +142,9 @@ const MeniulLunii = () => {
                     <p>{p.descriere}</p>
                     <div className="ml-card-footer">
                       <span className="ml-pret">{p.pret} RON</span>
-                      <button className="ml-btn-adauga">Adaugă la comandă</button>
+                      <button className="ml-btn-adauga" onClick={() => handleAdauga(p)}>
+                        {adaugat === p.id ? '✓ Adăugat' : 'Adaugă la comandă'}
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -159,7 +185,9 @@ const MeniulLunii = () => {
                     <p>{b.descriere}</p>
                     <div className="ml-card-footer">
                       <span className="ml-pret">{b.pret} RON</span>
-                      <button className="ml-btn-adauga">Adaugă la comandă</button>
+                      <button className="ml-btn-adauga" onClick={() => handleAdauga(b)}>
+                        {adaugat === b.id ? '✓ Adăugat' : 'Adaugă la comandă'}
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -171,6 +199,20 @@ const MeniulLunii = () => {
       </div>
 
       <Footer />
+
+      {showGate && (
+        <div className="gate-modal-overlay" onClick={() => setShowGate(false)}>
+          <div className="gate-modal-card" onClick={e => e.stopPropagation()}>
+            <button className="gate-modal-close" onClick={() => setShowGate(false)}>✕</button>
+            <h3>Ai cont la restaurant?</h3>
+            <p>Este necesar un cont pentru a plasa o comandă. Conectează-te sau înregistrează-te gratuit.</p>
+            <div className="gate-modal-butoane">
+              <a href="/login?mod=login" className="gate-modal-btn-primary">Da, am cont → Conectează-te</a>
+              <a href="/login?mod=signup" className="gate-modal-btn-secondary">Nu am cont → Înregistrează-te</a>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

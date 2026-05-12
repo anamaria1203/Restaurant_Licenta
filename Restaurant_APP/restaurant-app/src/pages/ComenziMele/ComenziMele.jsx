@@ -175,14 +175,11 @@ const ComenziMele = () => {
                 className={`comanda-sectiune ${index < comenzi.length - 1 ? 'cu-separator' : ''}`}
               >
                 <div className="comanda-sectiune-header">
-                  <div className="comanda-sectiune-stanga">
-                    <div className="comanda-nr">Comanda #{c.id}</div>
-                    <div className="comanda-data">
-                      {new Date(c.createdAt).toLocaleDateString('ro-RO', {
-                        year: 'numeric', month: 'long', day: 'numeric',
-                        hour: '2-digit', minute: '2-digit'
-                      })}
-                    </div>
+                  <div className="comanda-data">
+                    {new Date(c.createdAt).toLocaleDateString('ro-RO', {
+                      year: 'numeric', month: 'long', day: 'numeric',
+                      hour: '2-digit', minute: '2-digit'
+                    })}
                   </div>
                   <div className="comanda-sectiune-dreapta">
                     <span className={`comanda-status ${STATUS_CULORI[c.status]}`}>
@@ -268,6 +265,7 @@ const ComenziMele = () => {
                         Observații: {c.observatii}
                       </div>
                     )}
+                    <div className="comanda-total-row">Total: {Number(c.total).toFixed(2)} RON</div>
                   </div>
                 )}
               </div>

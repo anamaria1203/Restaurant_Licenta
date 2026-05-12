@@ -52,7 +52,7 @@ const getComenziAdmin = async (req, res, next) => {
     const comenzi = await db.Comanda.findAll({
       include: [
         { model: db.ComandaItem },
-        { model: db.User, attributes: ['id', 'nume', 'email'] }
+        { model: db.User, attributes: ['id', 'nume', 'email'], where: { deletedAt: null } }
       ],
       order: [['createdAt', 'DESC']]
     })

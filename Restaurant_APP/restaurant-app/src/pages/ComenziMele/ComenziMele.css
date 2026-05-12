@@ -91,7 +91,7 @@
 /* ─── HEADER COMANDA ─────────────────────────────────── */
 .comanda-sectiune-header {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   margin-bottom: 1rem;
   gap: 1rem;

@@ -24,12 +24,34 @@ const BADGE_CULORI = {
 }
 
 const Meniu = () => {
+  const userLogat = (() => {
+    try { return JSON.parse(localStorage.getItem('user')) } catch { return null }
+  })()
+
   const [preparate, setPreparate] = useState([])
   const [loading, setLoading] = useState(true)
   const [categorieActiva, setCategorieActiva] = useState('Aperitive')
   const [subcategorieActiva, setSubcategorieActiva] = useState('Vinuri')
   const [searchQuery, setSearchQuery] = useState('')
   const [sortPret, setSortPret] = useState(null)
+  const [showGate, setShowGate] = useState(false)
+  const [adaugat, setAdaugat] = useState(null)
+
+  const handleAdauga = (preparat) => {
+    if (!userLogat || userLogat.tip !== 'client') {
+      setShowGate(true)
+      return
+    }
+    const cos = (() => { try { return JSON.parse(localStorage.getItem('cos')) || [] } catch { return [] } })()
+    const existent = cos.find(i => i.preparatId === preparat.id)
+    const nouCos = existent
+      ? cos.map(i => i.preparatId === preparat.id ? { ...i, cantitate: i.cantitate + 1 } : i)
+      : [...cos, { preparatId: preparat.id, numeSnapshot: preparat.nume, pretSnapshot: preparat.pret, cantitate: 1 }]
+    localStorage.setItem('cos', JSON.stringify(nouCos))
+    window.dispatchEvent(new Event('cos-update'))
+    setAdaugat(preparat.id)
+    setTimeout(() => setAdaugat(null), 1500)
+  }
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
@@ -170,7 +192,9 @@ const Meniu = () => {
                         <p>{p.descriere}</p>
                         <div className="recomandat-footer">
                           <span className="recomandat-pret">{p.pret} RON</span>
-                          <button className="btn-adauga">Adaugă</button>
+                          <button className="btn-adauga" onClick={() => handleAdauga(p)}>
+                            {adaugat === p.id ? '✓ Adăugat' : 'Adaugă'}
+                          </button>
                         </div>
                       </div>
                     </div>
@@ -214,7 +238,9 @@ const Meniu = () => {
                       )}
                       <div className="preparat-footer">
                         <span className="preparat-pret">{p.pret} RON</span>
-                        <button className="btn-adauga">Adaugă la comandă</button>
+                        <button className="btn-adauga" onClick={() => handleAdauga(p)}>
+                          {adaugat === p.id ? '✓ Adăugat' : 'Adaugă la comandă'}
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -226,6 +252,20 @@ const Meniu = () => {
       </div>
 
       <Footer />
+
+      {showGate && (
+        <div className="gate-modal-overlay" onClick={() => setShowGate(false)}>
+          <div className="gate-modal-card" onClick={e => e.stopPropagation()}>
+            <button className="gate-modal-close" onClick={() => setShowGate(false)}>✕</button>
+            <h3>Ai cont la restaurant?</h3>
+            <p>Este necesar un cont pentru a plasa o comandă. Conectează-te sau înregistrează-te gratuit.</p>
+            <div className="gate-modal-butoane">
+              <a href="/login?mod=login" className="gate-modal-btn-primary">Da, am cont → Conectează-te</a>
+              <a href="/login?mod=signup" className="gate-modal-btn-secondary">Nu am cont → Înregistrează-te</a>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
