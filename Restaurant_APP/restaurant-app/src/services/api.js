@@ -2,6 +2,18 @@ const BASE_URL = 'http://localhost:8080'
 
 const apiFetch = (path, options = {}) =>
   fetch(`${BASE_URL}${path}`, { credentials: 'include', ...options })
+    .then(res => {
+      if (res.status === 401 && !window.location.pathname.includes('admin-login')) {
+        try {
+          const user = JSON.parse(localStorage.getItem('user'))
+          if (user?.tip === 'manager') {
+            localStorage.removeItem('user')
+            window.location.href = '/admin-login?mod=login'
+          }
+        } catch {}
+      }
+      return res
+    })
 
 // ─── MENIU ───────────────────────────────────────────
 export const getMeniu = (categorie, subcategorie) => {

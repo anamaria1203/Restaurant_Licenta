@@ -42,10 +42,12 @@ const AdminActivitate = () => {
     try {
       const [rez, com] = await Promise.all([getRezervariAdmin(), getComenziAdmin()])
 
-      const rezervariCuComanda = rez.map(r => ({
-        ...r,
-        comanda: com.find(c => c.rezervareId === r.id) || null
-      })).sort((a, b) => new Date(b.data) - new Date(a.data))
+      const rezervariCuComanda = rez
+        .filter(r => r.status !== 'anulata')
+        .map(r => ({
+          ...r,
+          comanda: com.find(c => c.rezervareId === r.id) || null
+        })).sort((a, b) => new Date(b.data) - new Date(a.data))
 
       setRezervari(rezervariCuComanda)
     } catch (err) {

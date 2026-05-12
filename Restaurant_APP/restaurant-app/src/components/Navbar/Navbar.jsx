@@ -41,7 +41,7 @@ const Navbar = () => {
 
   return (
     <nav className="navbar">
-      <div style={{display: 'flex', alignItems: 'center', gap: '1rem'}}>
+      <div style={{display: 'flex', alignItems: 'center', gap: '1rem', flex: 1}}>
         <a href="/" className="nav-logo">Villa Ana Ristorante</a>
         {userLogat && userLogat.tip === 'manager' && (
           <a href="/admin-dashboard" className="btn-dashboard">
@@ -57,7 +57,7 @@ const Navbar = () => {
         <a href="/comanda">Comenzi</a>
         <a href="/rezervare">Rezervări</a>
         {userLogat && userLogat.tip === 'client' && (
-          <a href="/rezervarile-mele">Rezervările Mele</a>
+          <a href="/rezervarile-mele">Rezervări & Comenzi</a>
         )}
         {userLogat && userLogat.tip === 'client' && (
           <a href="/cos" className="nav-cos-link">

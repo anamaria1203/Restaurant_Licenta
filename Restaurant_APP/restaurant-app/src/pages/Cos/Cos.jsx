@@ -96,9 +96,11 @@ const Cos = () => {
       .finally(() => setLoadingRezervare(false))
 
     getRezervariMele()
-      .then(data => setRezervariConfirmate(
-        (Array.isArray(data) ? data : []).filter(r => r.status === 'confirmata')
-      ))
+      .then(data => {
+        const confirmate = (Array.isArray(data) ? data : []).filter(r => r.status === 'confirmata')
+        setRezervariConfirmate(confirmate)
+        if (confirmate.length > 0) setRezervareSelectata(String(confirmate[0].id))
+      })
       .catch(() => {})
   }, [])
 
@@ -177,7 +179,7 @@ const Cos = () => {
           <h2>Comanda a fost plasată!</h2>
           <p>Îți mulțumim! Comanda ta a fost înregistrată și va fi procesată în curând.</p>
           <div className="succes-butoane">
-            <a href="/comenzile-mele" className="btn-succes-primary">Vezi comenzile mele</a>
+            <a href="/rezervarile-mele" className="btn-succes-primary">Rezervările &amp; Comenzile mele</a>
             <button className="btn-succes-secondary" onClick={() => setSucces(false)}>Comandă din nou</button>
           </div>
         </div>
@@ -227,12 +229,11 @@ const Cos = () => {
             <div className="cos-footer">
               {rezervariConfirmate.length > 0 && (
                 <div className="cos-rezervare-link">
-                  <label>Asociază cu o rezervare (opțional)</label>
+                  <label>Asociază cu o rezervare</label>
                   <select
                     value={rezervareSelectata}
                     onChange={e => setRezervareSelectata(e.target.value)}
                   >
-                    <option value="">— Fără rezervare —</option>
                     {rezervariConfirmate.map(r => (
                       <option key={r.id} value={r.id}>
                         {new Date(r.data + 'T12:00:00').toLocaleDateString('ro-RO', { day: 'numeric', month: 'long' })} · {r.ora} · {r.nrPersoane} pers.

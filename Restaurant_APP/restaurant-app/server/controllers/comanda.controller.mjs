@@ -124,33 +124,13 @@ const updateComandaItems = async (req, res, next) => {
 
 const getStatistici = async (req, res, next) => {
   try {
-    // substr(createdAt,1,19) strips the "+00:00" suffix Sequelize appends,
-    // allowing SQLite strftime to parse it correctly; localtime converts UTC→local
     const peOre = await db.sequelize.query(
-      `SELECT CAST(strftime('%H', datetime(substr(createdAt,1,19), 'localtime')) AS INTEGER) AS ora,
-              COUNT(*) AS nrComenzi
-       FROM Comandas
-       GROUP BY ora
-       ORDER BY ora`,
-      { type: db.sequelize.QueryTypes.SELECT }
-    )
-
-    const peZile = await db.sequelize.query(
-      `SELECT CAST(strftime('%w', datetime(substr(createdAt,1,19), 'localtime')) AS INTEGER) AS ziuaIndex,
-              COUNT(*) AS nrComenzi
-       FROM Comandas
-       GROUP BY ziuaIndex
-       ORDER BY ziuaIndex`,
-      { type: db.sequelize.QueryTypes.SELECT }
-    )
-
-    const rezervariPeOre = await db.sequelize.query(
       `SELECT
          CAST(substr(r.ora, 1, 2) AS INTEGER) AS ora,
          COUNT(DISTINCT r.id) AS nrRezervari,
          COALESCE(SUM(ci.cantitate), 0) AS totalPreparate
        FROM Rezervares r
-       LEFT JOIN Comandas c ON c.rezervareId = r.id
+       INNER JOIN Comandas c ON c.rezervareId = r.id AND c.status != 'anulata'
        LEFT JOIN ComandaItems ci ON ci.comandaId = c.id
        WHERE r.status != 'anulata'
        GROUP BY ora
@@ -158,24 +138,41 @@ const getStatistici = async (req, res, next) => {
       { type: db.sequelize.QueryTypes.SELECT }
     )
 
+    const peZile = await db.sequelize.query(
+      `SELECT
+         CAST(strftime('%w', r.data) AS INTEGER) AS ziuaIndex,
+         COUNT(DISTINCT r.id) AS nrRezervari,
+         COALESCE(SUM(ci.cantitate), 0) AS totalPreparate
+       FROM Rezervares r
+       INNER JOIN Comandas c ON c.rezervareId = r.id AND c.status != 'anulata'
+       LEFT JOIN ComandaItems ci ON ci.comandaId = c.id
+       WHERE r.status != 'anulata'
+       GROUP BY ziuaIndex
+       ORDER BY ziuaIndex`,
+      { type: db.sequelize.QueryTypes.SELECT }
+    )
+
     const ZILE = ['Duminică', 'Luni', 'Marți', 'Miercuri', 'Joi', 'Vineri', 'Sâmbătă']
-    const zileFormatate = peZile.map(r => ({
-      ziua: ZILE[r.ziuaIndex],
-      nrComenzi: r.nrComenzi
-    }))
 
     const oreComplete = Array.from({ length: 24 }, (_, i) => {
-      const gasitComanda   = peOre.find(r => Number(r.ora) === i)
-      const gasitRezervare = rezervariPeOre.find(r => Number(r.ora) === i)
+      const gasit = peOre.find(r => Number(r.ora) === i)
       return {
         ora: `${String(i).padStart(2, '0')}:00`,
-        nrComenzi:      gasitComanda   ? Number(gasitComanda.nrComenzi)         : 0,
-        nrRezervari:    gasitRezervare ? Number(gasitRezervare.nrRezervari)     : 0,
-        totalPreparate: gasitRezervare ? Number(gasitRezervare.totalPreparate)  : 0
+        nrRezervari:    gasit ? Number(gasit.nrRezervari)    : 0,
+        totalPreparate: gasit ? Number(gasit.totalPreparate) : 0
       }
     })
 
-    res.json({ peOre: oreComplete, peZile: zileFormatate })
+    const zileComplete = Array.from({ length: 7 }, (_, i) => {
+      const gasit = peZile.find(r => Number(r.ziuaIndex) === i)
+      return {
+        ziua:           ZILE[i],
+        nrRezervari:    gasit ? Number(gasit.nrRezervari)    : 0,
+        totalPreparate: gasit ? Number(gasit.totalPreparate) : 0
+      }
+    })
+
+    res.json({ peOre: oreComplete, peZile: zileComplete })
   } catch (err) {
     next(err)
   }
