@@ -30,6 +30,7 @@ const AdminActivitate = () => {
   const [rezervari, setRezervari] = useState([])
   const [loading, setLoading] = useState(true)
   const [procesand, setProcesand] = useState(null)
+  const [confirmareAnulare, setConfirmareAnulare] = useState(null)
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'))
@@ -126,6 +127,11 @@ const AdminActivitate = () => {
                           <div className="act-butoane">
                             <button className="act-btn-confirma" onClick={() => handleRezervare(r.id, 'confirmata')} disabled={procesand === `rez-${r.id}`}>Confirmă</button>
                             <button className="act-btn-respinge" onClick={() => handleRezervare(r.id, 'anulata')} disabled={procesand === `rez-${r.id}`}>Respinge</button>
+                          </div>
+                        )}
+                        {r.status === 'confirmata' && (
+                          <div className="act-butoane">
+                            <button className="act-btn-respinge" onClick={() => handleRezervare(r.id, 'anulata')} disabled={procesand === `rez-${r.id}`}>Anulează</button>
                           </div>
                         )}
                       </div>
