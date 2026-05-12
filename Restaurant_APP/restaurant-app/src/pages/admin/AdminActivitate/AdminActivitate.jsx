@@ -46,7 +46,7 @@ const AdminActivitate = () => {
       const rezervariCuComanda = rez.map(r => ({
         ...r,
         comanda: com.find(c => c.rezervareId === r.id) || null
-      })).sort((a, b) => new Date(b.data) - new Date(a.data))
+      })).sort((a, b) => a.id - b.id)
 
       setRezervari(rezervariCuComanda)
     } catch (err) {
