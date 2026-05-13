@@ -46,6 +46,11 @@ const preparatModel = (sequelize, DataTypes) => {
     vegan: {
       type: DataTypes.BOOLEAN,
       defaultValue: false
+    },
+    tip_vreme: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      defaultValue: 'neutru'
     }
   }, {
     timestamps: false

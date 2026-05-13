@@ -18,6 +18,16 @@ async function start() {
     console.log('Coloana rezervareId adaugata in Comandas')
   }
 
+  const colsPreparat = await qi.describeTable('Preparats')
+  if (!colsPreparat.tip_vreme) {
+    await qi.addColumn('Preparats', 'tip_vreme', {
+      type: db.sequelize.Sequelize.STRING,
+      allowNull: true,
+      defaultValue: 'neutru'
+    })
+    console.log('Coloana tip_vreme adaugata in Preparats')
+  }
+
   console.log('Baza de date sincronizata!')
   app.listen(PORT, () => console.log(`Server ruleaza pe portul ${PORT}`))
 }

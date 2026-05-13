@@ -1,0 +1,147 @@
+.wb-banner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  background: rgba(201,168,76,0.04);
+  border: 1px solid rgba(201,168,76,0.2);
+  border-left: 3px solid rgba(201,168,76,0.5);
+  border-radius: 4px;
+  padding: 1.2rem 3rem 1.2rem 1.5rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.wb-close {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.8rem;
+  background: transparent;
+  border: none;
+  color: rgba(245,240,232,0.3);
+  font-size: 0.75rem;
+  cursor: pointer;
+  padding: 0.2rem;
+  transition: color 0.2s;
+}
+.wb-close:hover { color: rgba(245,240,232,0.7); }
+
+/* Stanga — info vreme */
+.wb-stanga {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-shrink: 0;
+}
+
+.wb-emoji {
+  font-size: 2.2rem;
+  line-height: 1;
+}
+
+.wb-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.wb-temp {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  color: #c9a84c;
+  line-height: 1;
+}
+
+.wb-descriere {
+  font-size: 0.78rem;
+  color: rgba(245,240,232,0.5);
+  text-transform: capitalize;
+}
+
+.wb-mesaj {
+  font-size: 0.72rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: rgba(201,168,76,0.6);
+  margin-top: 0.2rem;
+}
+
+/* Separator */
+.wb-separator {
+  width: 1px;
+  height: 60px;
+  background: rgba(201,168,76,0.15);
+  flex-shrink: 0;
+}
+
+/* Dreapta — preparate */
+.wb-preparate {
+  display: flex;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+  flex: 1;
+}
+
+.wb-card {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(201,168,76,0.12);
+  border-radius: 3px;
+  padding: 0.5rem 0.7rem;
+  min-width: 160px;
+  flex: 1;
+  max-width: 220px;
+  transition: border-color 0.2s;
+}
+
+.wb-card:hover { border-color: rgba(201,168,76,0.3); }
+
+.wb-card-img {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.wb-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.wb-card-nume {
+  font-size: 0.82rem;
+  color: #f5f0e8;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.wb-card-pret {
+  font-size: 0.75rem;
+  color: #c9a84c;
+}
+
+.wb-card-btn {
+  align-self: flex-end;
+  background: rgba(201,168,76,0.1);
+  border: 1px solid rgba(201,168,76,0.3);
+  color: #c9a84c;
+  font-size: 0.85rem;
+  width: 24px;
+  height: 24px;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.wb-card-btn:hover { background: rgba(201,168,76,0.2); }

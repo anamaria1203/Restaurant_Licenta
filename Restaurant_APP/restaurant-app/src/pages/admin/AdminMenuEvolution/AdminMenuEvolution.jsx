@@ -1,7 +1,7 @@
 import './AdminMenuEvolution.css'
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { getMenuEvolution, toggleDisponibil } from '../../../services/api'
+import { getMenuEvolution, toggleDisponibil, setTipVreme } from '../../../services/api'
 import AdminNavbar from '../../../components/AdminNavbar/AdminNavbar'
 
 const getStatus = (p) => {
@@ -31,6 +31,7 @@ const AdminMenuEvolution = () => {
   const [loading, setLoading] = useState(true)
   const [filtru, setFiltru] = useState('toate')
   const [procesand, setProcesand] = useState(null)
+  const [procesandVreme, setProcesandVreme] = useState(null)
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'))
@@ -48,6 +49,16 @@ const AdminMenuEvolution = () => {
       setPreparate(prev => prev.map(p => p.id === id ? { ...p, disponibil: result.disponibil } : p))
     } finally {
       setProcesand(null)
+    }
+  }
+
+  const handleTipVreme = async (id, tip) => {
+    setProcesandVreme(id)
+    try {
+      const result = await setTipVreme(id, tip)
+      setPreparate(prev => prev.map(p => p.id === id ? { ...p, tip_vreme: result.tip_vreme } : p))
+    } finally {
+      setProcesandVreme(null)
     }
   }
 
@@ -130,6 +141,22 @@ const AdminMenuEvolution = () => {
                         {avertisment && (
                           <div className="mevo-avertisment">⚠ Consideră înlocuirea</div>
                         )}
+                        <div className="mevo-tip-vreme">
+                          {[
+                            { val: 'cald', label: '🔥 Cald' },
+                            { val: 'rece', label: '❄️ Rece' },
+                            { val: 'neutru', label: '— Neutru' }
+                          ].map(({ val, label }) => (
+                            <button
+                              key={val}
+                              className={`mevo-tip-btn${(p.tip_vreme || 'neutru') === val ? ` activ-${val}` : ''}`}
+                              onClick={() => handleTipVreme(p.id, val)}
+                              disabled={procesandVreme === p.id}
+                            >
+                              {label}
+                            </button>
+                          ))}
+                        </div>
                         <button
                           className={`mevo-toggle-btn ${p.disponibil ? 'dezactiveaza' : 'activeaza'}`}
                           onClick={() => handleToggle(p.id)}

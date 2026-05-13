@@ -128,6 +128,16 @@ export const getMenuEvolution = () =>
 export const toggleDisponibil = (id) =>
   apiFetch(`/meniu/preparate/${id}/disponibil`, { method: 'PUT' }).then(r => r.json())
 
+export const getRecomandateMeteo = (tip) =>
+  apiFetch(`/meniu/recomandate-meteo?tip=${encodeURIComponent(tip)}`).then(r => r.json())
+
+export const setTipVreme = (id, tip_vreme) =>
+  apiFetch(`/meniu/preparate/${id}/tip-vreme`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ tip_vreme })
+  }).then(r => r.json())
+
 export const updateStatusComanda = (id, status) =>
   apiFetch(`/comanda/${id}/status`, {
     method: 'PUT',

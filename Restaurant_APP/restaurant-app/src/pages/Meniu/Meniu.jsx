@@ -2,6 +2,7 @@ import './Meniu.css'
 import { useState, useEffect, useMemo } from 'react'
 import Navbar from '../../components/Navbar/Navbar'
 import Footer from '../../components/Footer/Footer'
+import WeatherBanner from '../../components/WeatherBanner/WeatherBanner'
 import { getMeniu } from '../../services/api'
 
 const CATEGORII = ['Aperitive', 'Supe', 'Carne', 'Pește', 'Paste & Risotto', 'Deserturi', 'Bauturi']
@@ -53,11 +54,11 @@ const Meniu = () => {
     setTimeout(() => setAdaugat(null), 1500)
   }
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     fetchPreparate()
     setSearchQuery('')
     setSortPret(null)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [categorieActiva, subcategorieActiva])
 
   const fetchPreparate = async () => {
@@ -107,6 +108,8 @@ const Meniu = () => {
       </div>
 
       <div className="meniu-body">
+
+        <WeatherBanner onAdauga={handleAdauga} adaugat={adaugat} />
 
         <div className="categorii-bar">
           {CATEGORII.map(cat => (

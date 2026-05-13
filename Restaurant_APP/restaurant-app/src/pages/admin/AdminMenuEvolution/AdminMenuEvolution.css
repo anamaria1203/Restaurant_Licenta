@@ -260,6 +260,48 @@
 
 .mevo-toggle-btn:disabled { opacity: 0.5; cursor: default; }
 
+/* Tip vreme */
+.mevo-tip-vreme {
+  display: flex;
+  gap: 0.3rem;
+  margin-top: 0.7rem;
+  margin-bottom: 0.3rem;
+}
+
+.mevo-tip-btn {
+  flex: 1;
+  padding: 0.28rem 0;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.68rem;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: transparent;
+  color: rgba(245,240,232,0.35);
+}
+
+.mevo-tip-btn:hover:not(:disabled) { color: rgba(245,240,232,0.7); border-color: rgba(255,255,255,0.25); }
+.mevo-tip-btn:disabled { opacity: 0.4; cursor: default; }
+
+.mevo-tip-btn.activ-cald {
+  background: rgba(255,120,60,0.12);
+  border-color: rgba(255,120,60,0.4);
+  color: #ff8c5a;
+}
+
+.mevo-tip-btn.activ-rece {
+  background: rgba(60,150,255,0.12);
+  border-color: rgba(60,150,255,0.4);
+  color: #60a8ff;
+}
+
+.mevo-tip-btn.activ-neutru {
+  background: rgba(201,168,76,0.1);
+  border-color: rgba(201,168,76,0.3);
+  color: #c9a84c;
+}
+
 /* Card indisponibil */
 .mevo-card.indisponibil { opacity: 0.6; }
 
