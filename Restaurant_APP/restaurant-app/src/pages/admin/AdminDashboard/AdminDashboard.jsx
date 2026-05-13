@@ -1,23 +1,21 @@
 import './AdminDashboard.css'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { getUseri, getUseriStersi, stergeUser, restaureazaUser, authLogout, getComenziAdmin, getRezervariAdmin } from '../../../services/api'
+import { getUseri, getUseriStersi, stergeUser, restaureazaUser, getComenziAdmin, getRezervariAdmin } from '../../../services/api'
+import AdminNavbar from '../../../components/AdminNavbar/AdminNavbar'
 
 const AdminDashboard = () => {
   const [useri, setUseri] = useState([])
   const [useriStersi, setUseriStersi] = useState([])
   const [loading, setLoading] = useState(true)
-  const [showConfirmare, setShowConfirmare] = useState(false)
   const [showModalStergere, setShowModalStergere] = useState(false)
   const [userDesters, setUserDesters] = useState(null)
   const [showStersi, setShowStersi] = useState(false)
-  const [showManageri, setShowManageri] = useState(false)
   const [nrRezervariActive, setNrRezervariActive] = useState(0)
   const [nrComenziActive, setNrComenziActive] = useState(0)
   const navigate = useNavigate()
 
   const clienti = useri.filter(u => u.tip === 'client')
-  const manageri = useri.filter(u => u.tip === 'manager')
 
   const fetchUseri = async () => {
     try {
@@ -83,12 +81,6 @@ const AdminDashboard = () => {
     }
   }
 
-  const handleLogout = async () => {
-    await authLogout()
-    localStorage.removeItem('user')
-    navigate('/')
-  }
-
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'))
     if (!user || user.tip !== 'manager') {
@@ -103,69 +95,7 @@ const AdminDashboard = () => {
 
   return (
     <div className="dashboard-page">
-      <div className="dashboard-navbar">
-        <div className="dashboard-logo">Villa Ana Ristorante</div>
-        <div className="dashboard-nav-links">
-          <span className="dashboard-tag">Panou Administrator</span>
-        </div>
-        <div style={{display: 'flex', gap: '1rem', alignItems: 'center'}}>
-          <button className="dashboard-home" onClick={() => navigate('/')}>
-            ← Pagina Principala
-          </button>
-          <button className="dashboard-home" onClick={() => navigate('/admin-activitate')} style={{borderColor: 'rgba(201,168,76,0.4)', color: '#c9a84c'}}>
-            Comenzi &amp; Rezervări
-          </button>
-          <button className="dashboard-home" onClick={() => navigate('/admin-meniu')} style={{borderColor: 'rgba(201,168,76,0.4)', color: '#c9a84c'}}>
-            Meniu Țări
-          </button>
-          <button className="dashboard-home" onClick={() => navigate('/admin-statistici')} style={{borderColor: 'rgba(201,168,76,0.4)', color: '#c9a84c'}}>
-            Statistici
-          </button>
-          <button className="dashboard-home" onClick={() => navigate('/admin-menu-evolution')} style={{borderColor: 'rgba(201,168,76,0.4)', color: '#c9a84c'}}>
-            Menu Evolution
-          </button>
-          <div style={{position: 'relative'}}>
-            <button
-              className="dashboard-manageri-btn"
-              onClick={() => { setShowManageri(!showManageri); setShowConfirmare(false) }}
-            >
-              Manageri ({manageri.length})
-            </button>
-            {showManageri && (
-              <div className="manageri-dropdown">
-                <p className="manageri-dropdown-titlu">Conturi Manager</p>
-                {manageri.length === 0 ? (
-                  <p className="manageri-gol">Nu exista manageri.</p>
-                ) : (
-                  manageri.map(m => (
-                    <div key={m.id} className="manager-row">
-                      <span className="manager-nume">{m.nume}</span>
-                      <span className="manager-email">{m.email}</span>
-                    </div>
-                  ))
-                )}
-              </div>
-            )}
-          </div>
-          <div style={{position: 'relative'}}>
-            <button
-              className="dashboard-logout"
-              onClick={() => { setShowConfirmare(!showConfirmare); setShowManageri(false) }}
-            >
-              Deconectare
-            </button>
-            {showConfirmare && (
-              <div className="confirmare-dropdown">
-                <p>Esti sigur ca vrei sa te deconectezi?</p>
-                <div className="confirmare-butoane">
-                  <button className="btn-da" onClick={handleLogout}>Da</button>
-                  <button className="btn-nu" onClick={() => setShowConfirmare(false)}>Nu</button>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
+      <AdminNavbar title="Panou Administrator" />
 
       <div className="dashboard-content">
         <div className="dashboard-header">

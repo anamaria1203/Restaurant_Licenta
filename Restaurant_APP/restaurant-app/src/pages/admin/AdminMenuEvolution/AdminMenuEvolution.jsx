@@ -2,6 +2,7 @@ import './AdminMenuEvolution.css'
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { getMenuEvolution, toggleDisponibil } from '../../../services/api'
+import AdminNavbar from '../../../components/AdminNavbar/AdminNavbar'
 
 const getStatus = (p) => {
   if (p.totalUltimele30Zile >= 10) return { label: 'Popular',                cls: 'popular'  }
@@ -67,15 +68,7 @@ const AdminMenuEvolution = () => {
 
   return (
     <div className="mevo-page">
-      <div className="mevo-navbar">
-        <div className="mevo-logo">Villa Ana Ristorante</div>
-        <div className="mevo-navbar-center">Menu Evolution</div>
-        <div style={{ display: 'flex', gap: '0.8rem' }}>
-          <button className="mevo-btn-nav" onClick={() => navigate('/admin-statistici')}>Statistici</button>
-          <button className="mevo-btn-nav" onClick={() => navigate('/admin-activitate')}>Comenzi &amp; Rezervări</button>
-          <button className="mevo-btn-nav" onClick={() => navigate('/admin-dashboard')}>← Dashboard</button>
-        </div>
-      </div>
+      <AdminNavbar title="Menu Evolution" />
 
       <div className="mevo-content">
         <div className="mevo-header">

@@ -2,6 +2,7 @@ import './AdminMeniu.css'
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { getLunaActiva, setLunaActiva as apiSetLunaActiva, getPreparateLunare, getMeniu, adaugaPreparatLunar, editeazaPreparatLunar, stergePreparatLunar } from '../../../services/api'
+import AdminNavbar from '../../../components/AdminNavbar/AdminNavbar'
 
 const TARI_LIST = [
   { slug: 'spaniola',      flag: '🇪🇸', label: 'Spaniolă',      culoare: '#4a1a0a', titlu: 'Luna Spaniolă',      descriere: 'Pasiunea și vivacitatea Spaniei în fiecare farfurie.' },
@@ -122,11 +123,7 @@ const AdminMeniu = () => {
 
   return (
     <div className="am-page">
-      <div className="am-navbar">
-        <div className="am-navbar-logo">Villa Ana Ristorante</div>
-        <div className="am-navbar-title">Gestionare Meniu Luni</div>
-        <button className="am-back-btn" onClick={() => navigate('/admin-dashboard')}>← Dashboard</button>
-      </div>
+      <AdminNavbar title="Meniu Țări" />
 
       <div className="am-layout">
 

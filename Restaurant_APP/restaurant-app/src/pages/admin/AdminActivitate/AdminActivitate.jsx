@@ -2,6 +2,7 @@ import './AdminActivitate.css'
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { getComenziAdmin, getRezervariAdmin, updateStatusRezervare, updateStatusComanda } from '../../../services/api'
+import AdminNavbar from '../../../components/AdminNavbar/AdminNavbar'
 
 const STATUS_REZ = {
   in_asteptare: { label: 'În așteptare', cls: 'act-status-asteptare' },
@@ -74,15 +75,7 @@ const AdminActivitate = () => {
 
   return (
     <div className="act-page">
-      <div className="act-navbar">
-        <div className="act-logo">Villa Ana Ristorante</div>
-        <div className="act-navbar-center">Comenzi &amp; Rezervări</div>
-        <div style={{ display: 'flex', gap: '0.8rem' }}>
-          <button className="act-btn-inapoi" onClick={() => navigate('/admin-menu-evolution')}>Menu Evolution</button>
-          <button className="act-btn-inapoi" onClick={() => navigate('/admin-statistici')}>Statistici</button>
-          <button className="act-btn-inapoi" onClick={() => navigate('/admin-dashboard')}>← Dashboard</button>
-        </div>
-      </div>
+      <AdminNavbar title="Comenzi &amp; Rezervări" />
 
       <div className="act-content">
         <div className="act-header">

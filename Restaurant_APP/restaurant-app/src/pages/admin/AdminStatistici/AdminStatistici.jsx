@@ -2,6 +2,7 @@ import './AdminStatistici.css'
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { getStatisticiComenzi } from '../../../services/api'
+import AdminNavbar from '../../../components/AdminNavbar/AdminNavbar'
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell
 } from 'recharts'
@@ -66,15 +67,7 @@ const AdminStatistici = () => {
 
   return (
     <div className="stat-page">
-      <div className="stat-navbar">
-        <div className="stat-logo">Villa Ana Ristorante</div>
-        <div className="stat-navbar-center">Statistici</div>
-        <div style={{ display: 'flex', gap: '0.8rem' }}>
-          <button className="stat-btn-nav" onClick={() => navigate('/admin-menu-evolution')}>Menu Evolution</button>
-          <button className="stat-btn-nav" onClick={() => navigate('/admin-activitate')}>Comenzi &amp; Rezervări</button>
-          <button className="stat-btn-nav" onClick={() => navigate('/admin-dashboard')}>← Dashboard</button>
-        </div>
-      </div>
+      <AdminNavbar title="Statistici" />
 
       <div className="stat-content">
         <div className="stat-header">
