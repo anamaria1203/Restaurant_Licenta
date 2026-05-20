@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { getUseri, authLogout } from '../../services/api'
+import { getUseri, authLogout, getMesaje, getMesajeNecititeCount, marcheazaMesajCitit, raspundeMesaj } from '../../services/api'
 import './AdminNavbar.css'
 
 const AdminNavbar = ({ title }) => {
@@ -8,13 +8,52 @@ const AdminNavbar = ({ title }) => {
   const [manageri, setManageri] = useState([])
   const [showManageri, setShowManageri] = useState(false)
   const [showConfirmare, setShowConfirmare] = useState(false)
+  const [necitite, setNecitite] = useState(0)
+  const [showMesaje, setShowMesaje] = useState(false)
+  const [mesaje, setMesaje] = useState([])
+  const [raspunsuri, setRaspunsuri] = useState({})
+  const [trimitand, setTrimitand] = useState(null)
 
   useEffect(() => {
     getUseri()
       .then(res => res.json())
       .then(data => setManageri((Array.isArray(data) ? data : []).filter(u => u.tip === 'manager')))
       .catch(() => {})
+    getMesajeNecititeCount()
+      .then(data => setNecitite(data.count || 0))
+      .catch(() => {})
   }, [])
+
+  const handleDeschideMesaje = async () => {
+    const nouVal = !showMesaje
+    setShowMesaje(nouVal)
+    setShowManageri(false)
+    setShowConfirmare(false)
+    if (nouVal) {
+      const data = await getMesaje().catch(() => [])
+      setMesaje(Array.isArray(data) ? data : [])
+    }
+  }
+
+  const handleCitit = async (id) => {
+    await marcheazaMesajCitit(id).catch(() => {})
+    setMesaje(prev => prev.map(m => m.id === id ? { ...m, citit: true } : m))
+    setNecitite(prev => Math.max(0, prev - 1))
+  }
+
+  const handleRaspunde = async (id) => {
+    const text = raspunsuri[id]
+    if (!text?.trim()) return
+    setTrimitand(id)
+    try {
+      const updated = await raspundeMesaj(id, text)
+      setMesaje(prev => prev.map(m => m.id === id ? updated : m))
+      setRaspunsuri(prev => ({ ...prev, [id]: '' }))
+      setNecitite(prev => Math.max(0, prev - 1))
+    } finally {
+      setTrimitand(null)
+    }
+  }
 
   const handleLogout = async () => {
     await authLogout()
@@ -29,15 +68,65 @@ const AdminNavbar = ({ title }) => {
         <span className="admin-navbar-tag">{title}</span>
       </div>
       <div className="admin-navbar-right">
+
+        <div style={{ position: 'relative' }}>
+          <button className="admin-nav-btn admin-bell-btn" onClick={handleDeschideMesaje}>
+            <span className="admin-bell-icon">🔔</span>
+            {necitite > 0 && <span className="admin-bell-badge">{necitite}</span>}
+          </button>
+          {showMesaje && (
+            <div className="admin-mesaje-dropdown">
+              <p className="admin-manageri-titlu">Mesaje de la clienți</p>
+              {mesaje.length === 0 ? (
+                <p className="admin-manageri-gol">Nu există mesaje.</p>
+              ) : (
+                mesaje.map(m => (
+                  <div key={m.id} className={`admin-mesaj-row${m.citit ? ' citit' : ''}`}>
+                    <div className="admin-mesaj-header">
+                      <span className="admin-mesaj-nume">{m.nume}</span>
+                      <span className="admin-mesaj-email">{m.email}</span>
+                    </div>
+                    <p className="admin-mesaj-text">{m.intrebare}</p>
+                    {m.raspuns ? (
+                      <div className="admin-mesaj-raspuns-existent">
+                        <span className="admin-mesaj-raspuns-label">Răspuns trimis:</span>
+                        <p>{m.raspuns}</p>
+                      </div>
+                    ) : (
+                      <div className="admin-mesaj-reply">
+                        <textarea
+                          className="admin-mesaj-reply-input"
+                          placeholder="Scrie răspunsul..."
+                          rows={2}
+                          value={raspunsuri[m.id] || ''}
+                          onChange={e => setRaspunsuri(prev => ({ ...prev, [m.id]: e.target.value }))}
+                        />
+                        <button
+                          className="admin-mesaj-reply-btn"
+                          onClick={() => handleRaspunde(m.id)}
+                          disabled={trimitand === m.id}
+                        >
+                          {trimitand === m.id ? '...' : 'Trimite'}
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                ))
+              )}
+            </div>
+          )}
+        </div>
+
         <button className="admin-nav-btn" onClick={() => navigate('/')}>← Pagina Principala</button>
         <button className="admin-nav-btn" onClick={() => navigate('/admin-activitate')}>Comenzi &amp; Rezervări</button>
         <button className="admin-nav-btn" onClick={() => navigate('/admin-meniu')}>Meniu Țări</button>
         <button className="admin-nav-btn" onClick={() => navigate('/admin-statistici')}>Statistici</button>
         <button className="admin-nav-btn" onClick={() => navigate('/admin-menu-evolution')}>Menu Evolution</button>
+
         <div style={{ position: 'relative' }}>
           <button
             className="admin-nav-btn admin-nav-btn-gold"
-            onClick={() => { setShowManageri(v => !v); setShowConfirmare(false) }}
+            onClick={() => { setShowManageri(v => !v); setShowConfirmare(false); setShowMesaje(false) }}
           >
             Manageri ({manageri.length})
           </button>
@@ -57,10 +146,11 @@ const AdminNavbar = ({ title }) => {
             </div>
           )}
         </div>
+
         <div style={{ position: 'relative' }}>
           <button
             className="admin-nav-btn admin-nav-btn-logout"
-            onClick={() => { setShowConfirmare(v => !v); setShowManageri(false) }}
+            onClick={() => { setShowConfirmare(v => !v); setShowManageri(false); setShowMesaje(false) }}
           >
             Deconectare
           </button>
@@ -74,6 +164,7 @@ const AdminNavbar = ({ title }) => {
             </div>
           )}
         </div>
+
       </div>
     </div>
   )

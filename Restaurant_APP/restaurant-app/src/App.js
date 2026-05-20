@@ -20,6 +20,7 @@ import Rezervare from './pages/Rezervare/Rezervare'
 import RezervariMele from './pages/RezervariMele/RezervariMele'
 import Cos from './pages/Cos/Cos'
 import PreferinteMele from './pages/PreferinteMele/PreferinteMele'
+import MesajeleMele from './pages/MesajeleMele/MesajeleMele'
 import { AdminRoute } from './components/ProtectedRoute/ProtectedRoute'
 
 function App() {
@@ -40,6 +41,7 @@ function App() {
         <Route path='/rezervarile-mele' element={<RezervariMele />} />
         <Route path='/cos' element={<Cos />} />
         <Route path='/preferintele-mele' element={<PreferinteMele />} />
+        <Route path='/mesajele-mele' element={<MesajeleMele />} />
         <Route path='/admin-dashboard' element={
           <AdminRoute>
             <AdminDashboard />

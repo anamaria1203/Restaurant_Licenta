@@ -21,15 +21,17 @@
 
 .nav-links {
   display: flex;
-  gap: 1.2rem;
+  gap: 1.5rem;
   align-items: center;
+  flex: 1;
+  justify-content: center;
 }
 
 .nav-links a {
   color: #f5f0e8;
   text-decoration: none;
-  font-size: 0.75rem;
-  letter-spacing: 0.8px;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
   text-transform: uppercase;
   opacity: 0.85;
   transition: opacity 0.2s, color 0.2s;
@@ -68,8 +70,8 @@
   display: flex;
   gap: 1rem;
   align-items: center;
-  flex: 1;
   justify-content: flex-end;
+  flex-shrink: 0;
 }
 
 .btn-login {
@@ -355,6 +357,114 @@
 
 .btn-nu:hover {
   background: rgba(201,168,76,0.2);
+}
+
+/* CONTUL MEU DROPDOWN */
+.cont-meu-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.btn-cont-meu {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(201,168,76,0.08);
+  border: 1px solid rgba(201,168,76,0.3);
+  color: #c9a84c;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.78rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 0.4rem 0.9rem;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  white-space: nowrap;
+}
+
+.btn-cont-meu:hover {
+  background: rgba(201,168,76,0.15);
+  border-color: rgba(201,168,76,0.6);
+}
+
+.cont-meu-badge {
+  position: absolute;
+  top: -7px;
+  right: -7px;
+  background: #e53e3e;
+  color: white;
+  font-size: 0.6rem;
+  font-weight: 700;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cont-meu-chevron {
+  font-size: 0.65rem;
+  opacity: 0.7;
+}
+
+.cont-meu-dropdown {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  background: #1a1209;
+  border: 1px solid rgba(201,168,76,0.2);
+  border-radius: 6px;
+  padding: 0.5rem;
+  min-width: 200px;
+  z-index: 200;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+  animation: fadeUp 0.2s ease both;
+}
+
+.cont-item {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.6rem 0.8rem;
+  border-radius: 4px;
+  color: rgba(245,240,232,0.75);
+  text-decoration: none;
+  font-size: 0.82rem;
+  transition: background 0.15s, color 0.15s;
+  position: relative;
+}
+
+.cont-item:hover {
+  background: rgba(201,168,76,0.08);
+  color: #f5f0e8;
+}
+
+.cont-item-icon {
+  font-size: 0.9rem;
+  width: 20px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.cont-item-badge {
+  margin-left: auto;
+  background: #c9a84c;
+  color: #0d0a05;
+  font-size: 0.65rem;
+  font-weight: 700;
+  border-radius: 10px;
+  padding: 1px 6px;
+  min-width: 16px;
+  text-align: center;
+}
+
+.cont-item-badge.rosu {
+  background: #e53e3e;
+  color: white;
 }
 
 .nav-link-comenzi {

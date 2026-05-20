@@ -6,6 +6,7 @@ import preparatLunarModel from './preparatLunar.mjs'
 import comandaModel from './comanda.mjs'
 import comandaItemModel from './comandaItem.mjs'
 import rezervareModel from './rezervare.mjs'
+import mesajModel from './mesaj.mjs'
 
 const sequelize = new Sequelize({
   dialect: 'sqlite',
@@ -20,6 +21,7 @@ const PreparatLunar = preparatLunarModel(sequelize, DataTypes)
 const Comanda = comandaModel(sequelize, DataTypes)
 const ComandaItem = comandaItemModel(sequelize, DataTypes)
 const Rezervare = rezervareModel(sequelize, DataTypes)
+const Mesaj = mesajModel(sequelize, DataTypes)
 
 Comanda.belongsTo(User, { foreignKey: 'userId' })
 User.hasMany(Comanda, { foreignKey: 'userId' })
@@ -43,7 +45,8 @@ const db = {
   PreparatLunar,
   Comanda,
   ComandaItem,
-  Rezervare
+  Rezervare,
+  Mesaj
 }
 
 export default db

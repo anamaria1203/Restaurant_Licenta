@@ -181,3 +181,64 @@
 }
 
 .admin-btn-nu:hover { background: rgba(255,255,255,0.06); }
+
+/* Bell & mesaje */
+.admin-bell-btn { position: relative; font-size: 1.1rem; }
+.admin-bell-icon { font-size: 1.2rem; }
+.admin-bell-badge {
+  position: absolute; top: -6px; right: -6px;
+  background: #e53e3e; color: white;
+  font-size: 0.65rem; font-weight: 700;
+  border-radius: 50%; width: 18px; height: 18px;
+  display: flex; align-items: center; justify-content: center;
+}
+.admin-mesaje-dropdown {
+  position: absolute; top: calc(100% + 8px); left: 0;
+  background: #1a1209; border: 1px solid rgba(201,168,76,0.2);
+  border-radius: 6px; padding: 12px;
+  min-width: 360px; max-height: 420px; overflow-y: auto;
+  z-index: 1000; box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+}
+.admin-mesaj-row {
+  border-bottom: 1px solid rgba(255,255,255,0.06); padding: 10px 0;
+}
+.admin-mesaj-row:last-child { border-bottom: none; }
+.admin-mesaj-row.citit { opacity: 0.45; }
+.admin-mesaj-header {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 5px;
+}
+.admin-mesaj-nume { color: #c9a84c; font-weight: 600; font-size: 0.85rem; }
+.admin-mesaj-email { color: rgba(245,240,232,0.4); font-size: 0.75rem; }
+.admin-mesaj-citit-btn {
+  margin-left: auto; background: none; border: 1px solid rgba(255,255,255,0.2);
+  color: rgba(245,240,232,0.5); font-size: 0.7rem; padding: 2px 8px;
+  border-radius: 3px; cursor: pointer; font-family: 'Jost', sans-serif;
+}
+.admin-mesaj-citit-btn:hover { border-color: #c9a84c; color: #c9a84c; }
+.admin-mesaj-text { color: rgba(245,240,232,0.65); font-size: 0.82rem; margin: 0 0 8px; line-height: 1.5; }
+
+.admin-mesaj-reply { display: flex; gap: 6px; margin-top: 6px; }
+.admin-mesaj-reply-input {
+  flex: 1; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 4px; color: #f5f0e8; font-size: 0.78rem; padding: 6px 8px;
+  font-family: 'Jost', sans-serif; resize: none;
+}
+.admin-mesaj-reply-input:focus { outline: none; border-color: #c9a84c; }
+.admin-mesaj-reply-btn {
+  align-self: flex-end; padding: 6px 14px;
+  background: #c9a84c; color: #0d0a05;
+  border: none; border-radius: 4px; font-size: 0.75rem;
+  font-weight: 600; cursor: pointer; font-family: 'Jost', sans-serif;
+}
+.admin-mesaj-reply-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.admin-mesaj-raspuns-existent {
+  margin-top: 6px; padding: 8px 10px;
+  background: rgba(104,211,145,0.08); border-left: 2px solid rgba(104,211,145,0.4);
+  border-radius: 0 4px 4px 0;
+}
+.admin-mesaj-raspuns-label {
+  font-size: 0.68rem; letter-spacing: 1px; text-transform: uppercase;
+  color: rgba(104,211,145,0.7); display: block; margin-bottom: 4px;
+}
+.admin-mesaj-raspuns-existent p { color: rgba(245,240,232,0.6); font-size: 0.8rem; margin: 0; }

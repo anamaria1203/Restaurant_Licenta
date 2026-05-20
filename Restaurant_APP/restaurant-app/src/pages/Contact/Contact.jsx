@@ -1,6 +1,8 @@
 import './Contact.css'
+import { useState } from 'react'
 import Navbar from '../../components/Navbar/Navbar'
 import Footer from '../../components/Footer/Footer'
+import { trimiteMesaj } from '../../services/api'
 
 const PROGRAM = [
   { zi: 'Luni',     interval: '12:00 – 23:00', index: 1 },
@@ -13,6 +15,66 @@ const PROGRAM = [
 ]
 
 const ziuaCurenta = new Date().getDay()
+
+const ContactForm = () => {
+  const userLogat = (() => { try { return JSON.parse(localStorage.getItem('user')) } catch { return null } })()
+  const [intrebare, setIntrebare] = useState('')
+  const [stare, setStare] = useState(null)
+  const [loading, setLoading] = useState(false)
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setLoading(true)
+    try {
+      const res = await trimiteMesaj(intrebare)
+      if (res.ok) {
+        setStare('succes')
+        setIntrebare('')
+      } else {
+        setStare('eroare')
+      }
+    } catch {
+      setStare('eroare')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  return (
+    <section className="contact-form-section">
+      <div className="section-label">Scrie-ne</div>
+      <h2>Trimite o întrebare</h2>
+      {!userLogat || userLogat.tip !== 'client' ? (
+        <div className="contact-form-gate">
+          <p>Este necesar un cont pentru a trimite un mesaj.</p>
+          <div className="contact-form-gate-btns">
+            <a href="/login?mod=login" className="contact-gate-btn-primary">Conectează-te</a>
+            <a href="/login?mod=signup" className="contact-gate-btn-secondary">Creează cont</a>
+          </div>
+        </div>
+      ) : (
+        <>
+          <p className="contact-form-sub">Salut, <strong>{userLogat.nume}</strong>! Răspundem în maxim 24 de ore.</p>
+          <form className="contact-form" onSubmit={handleSubmit}>
+            <textarea
+              placeholder="Scrie întrebarea ta aici..." required rows={4}
+              value={intrebare} onChange={e => setIntrebare(e.target.value)}
+            />
+            <button type="submit" className="contact-form-btn" disabled={loading}>
+              {loading ? 'Se trimite...' : 'Trimite întrebarea'}
+            </button>
+            {stare === 'succes' && (
+              <p className="contact-form-succes">
+                Mesajul a fost trimis! Vezi răspunsul în <a href="/mesajele-mele">Mesajele mele</a>.
+              </p>
+            )}
+            {stare === 'eroare' && <p className="contact-form-eroare">A apărut o eroare. Încearcă din nou.</p>}
+          </form>
+        </>
+      )}
+    </section>
+  )
+}
 
 const Contact = () => {
   return (
@@ -129,35 +191,39 @@ const Contact = () => {
           <div className="raspuns-icon">✦</div>
         </div>
 
-        {/* FAQ */}
-        <section className="faq-section">
-          <div className="section-label">Întrebări frecvente</div>
-          <h2 className="faq-title">Ai o întrebare?</h2>
+        {/* FAQ + FORMULAR */}
+        <div className="faq-form-grid">
+          <section className="faq-section">
+            <div className="section-label">Întrebări frecvente</div>
+            <h2 className="faq-title">Ai o întrebare?</h2>
 
-          <div className="faq-list">
+            <div className="faq-list">
 
-            <div className="faq-item">
-              <div className="faq-intrebare">Este necesară rezervarea în avans?</div>
-              <div className="faq-raspuns">Rezervarea este obligatorie. O puteți face rapid accesând secțiunea Rezervări din bara de navigare de sus.</div>
+              <div className="faq-item">
+                <div className="faq-intrebare">Este necesară rezervarea în avans?</div>
+                <div className="faq-raspuns">Rezervarea este obligatorie. O puteți face rapid accesând secțiunea Rezervări din bara de navigare de sus.</div>
+              </div>
+
+              <div className="faq-item">
+                <div className="faq-intrebare">Aveți opțiuni vegetariene sau vegane?</div>
+                <div className="faq-raspuns">Da, meniul nostru include o selecție de preparate vegetariene și vegane, gândite cu aceeași atenție și rafinament ca restul ofertei culinare.</div>
+              </div>
+
+              <div className="faq-item">
+                <div className="faq-intrebare">Puteți organiza evenimente private?</div>
+                <div className="faq-raspuns">Cu plăcere! Oferim posibilitatea de a rezerva întreaga sală sau o zonă privată pentru ocazii speciale — aniversări, cine de afaceri, cereri în căsătorie. Contactați-ne pentru detalii.</div>
+              </div>
+
+              <div className="faq-item">
+                <div className="faq-intrebare">Aveți parcare disponibilă?</div>
+                <div className="faq-raspuns">În apropierea restaurantului există mai multe locuri de parcare publice. De asemenea, recomandăm parcarea din Piața Victoriei, la doar 5 minute de mers pe jos.</div>
+              </div>
+
             </div>
+          </section>
 
-            <div className="faq-item">
-              <div className="faq-intrebare">Aveți opțiuni vegetariene sau vegane?</div>
-              <div className="faq-raspuns">Da, meniul nostru include o selecție de preparate vegetariene și vegane, gândite cu aceeași atenție și rafinament ca restul ofertei culinare.</div>
-            </div>
-
-            <div className="faq-item">
-              <div className="faq-intrebare">Puteți organiza evenimente private?</div>
-              <div className="faq-raspuns">Cu plăcere! Oferim posibilitatea de a rezerva întreaga sală sau o zonă privată pentru ocazii speciale — aniversări, cine de afaceri, cereri în căsătorie. Contactați-ne pentru detalii.</div>
-            </div>
-
-            <div className="faq-item">
-              <div className="faq-intrebare">Aveți parcare disponibilă?</div>
-              <div className="faq-raspuns">În apropierea restaurantului există mai multe locuri de parcare publice. De asemenea, recomandăm parcarea din Piața Victoriei, la doar 5 minute de mers pe jos.</div>
-            </div>
-
-          </div>
-        </section>
+          <ContactForm />
+        </div>
 
     {/* SOCIAL MEDIA */}
     <section className="social-section">

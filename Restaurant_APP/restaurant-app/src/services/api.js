@@ -178,3 +178,30 @@ export const anuleazaRezervare = (id) =>
 
 export const areRezervareConfirmata = () =>
   apiFetch('/rezervare/are-rezervare-confirmata').then(r => r.json())
+
+// ─── MESAJE CONTACT ──────────────────────────────────
+export const trimiteMesaj = (intrebare) =>
+  apiFetch('/mesaj', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ intrebare })
+  })
+
+export const getMesajeleMele = () =>
+  apiFetch('/mesaj/ale-mele').then(r => r.json())
+
+export const getMesaje = () =>
+  apiFetch('/mesaj/toate').then(r => r.json())
+
+export const getMesajeNecititeCount = () =>
+  apiFetch('/mesaj/necitite-count').then(r => r.json())
+
+export const marcheazaMesajCitit = (id) =>
+  apiFetch(`/mesaj/${id}/citit`, { method: 'PUT' }).then(r => r.json())
+
+export const raspundeMesaj = (id, raspuns) =>
+  apiFetch(`/mesaj/${id}/raspuns`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ raspuns })
+  }).then(r => r.json())

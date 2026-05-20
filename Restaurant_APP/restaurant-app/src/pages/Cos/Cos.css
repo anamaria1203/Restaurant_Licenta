@@ -201,6 +201,25 @@
   color: #f5f0e8;
 }
 
+.cos-rezervare-obligatoriu {
+  color: #fc8181;
+  font-size: 0.7rem;
+  margin-left: 4px;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.cos-rezervare-lipsa {
+  font-size: 0.85rem;
+  color: rgba(245,240,232,0.45);
+  padding: 0.5rem 0;
+}
+
+.cos-rezervare-lipsa a {
+  color: #c9a84c;
+  text-decoration: underline;
+}
+
 .cos-observatii label {
   display: block;
   font-size: 0.78rem;

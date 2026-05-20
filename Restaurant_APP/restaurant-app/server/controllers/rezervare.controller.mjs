@@ -1,4 +1,5 @@
 import db from '../models/index.mjs'
+import { Op } from 'sequelize'
 
 const ZONE_VALIDE = ['retras', 'fereastra', 'terasa', 'central', 'vip']
 const STATUS_VALIDE = ['in_asteptare', 'confirmata', 'anulata']
@@ -95,9 +96,10 @@ const anuleazaRezervare = async (req, res, next) => {
 const areRezervareConfirmata = async (req, res, next) => {
   try {
     const userId = req.user.id
+    const azi = new Date().toISOString().split('T')[0]
     const [confirmata, inAsteptare] = await Promise.all([
-      db.Rezervare.findOne({ where: { userId, status: 'confirmata' } }),
-      db.Rezervare.findOne({ where: { userId, status: 'in_asteptare' } })
+      db.Rezervare.findOne({ where: { userId, status: 'confirmata', data: { [Op.gte]: azi } } }),
+      db.Rezervare.findOne({ where: { userId, status: 'in_asteptare', data: { [Op.gte]: azi } } })
     ])
     res.json({ areRezervare: !!confirmata, areRezervareInAsteptare: !!inAsteptare })
   } catch (err) {

@@ -21,6 +21,7 @@ app.use('/luna', routers.luna)
 app.use('/meniu-lunar', routers.preparateLunare)
 app.use('/comanda', routers.comanda)
 app.use('/rezervare', routers.rezervare)
+app.use('/mesaj', routers.mesaj)
 
 
 export default app
