@@ -49,6 +49,7 @@ const login = async (req, res, next) => {
 
     const passwordCorect = await bcrypt.compare(password, user.passwordHash)
     if (!passwordCorect) return res.status(401).json({ error: 'Parola incorecta!' })
+    if (user.tip !== 'client') return res.status(403).json({ error: 'Folosește pagina de Admin Login pentru contul de administrator!' })
 
     const token = jwt.sign({ id: user.id, email: user.email, tip: user.tip }, SECRET, { expiresIn: '7d' })
     await user.update({ token })
