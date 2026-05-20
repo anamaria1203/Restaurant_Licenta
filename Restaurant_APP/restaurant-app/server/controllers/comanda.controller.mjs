@@ -209,7 +209,7 @@ const getMenuEvolution = async (req, res, next) => {
   try {
     const preparate = await db.sequelize.query(
       `SELECT
-        p.id, p.nume, p.categorie, p.subcategorie, p.imagine, p.disponibil,
+        p.id, p.nume, p.categorie, p.subcategorie, p.imagine, p.disponibil, p.tip_vreme,
         COALESCE(SUM(CASE WHEN c.createdAt >= date('now', '-30 days') THEN ci.cantitate ELSE 0 END), 0) AS totalUltimele30Zile,
         MAX(c.createdAt) AS ultimaComanda
        FROM Preparats p

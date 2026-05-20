@@ -22,7 +22,8 @@ const WeatherBanner = ({ onAdauga, adaugat }) => {
     const cheie = process.env.REACT_APP_WEATHER_API_KEY
     if (!cheie || cheie === 'PUNE_CHEIA_TA_AICI') return
 
-    fetch(`https://api.openweathermap.org/data/2.5/weather?q=Bucuresti,ro&appid=${cheie}&units=metric&lang=ro`)
+    fetch(`https://api.openweathermap.org/data/2.5/weather?lat=44.4268&lon=26.1025&appid=${cheie}&units=metric&lang=ro`)
+
       .then(r => {
         if (!r.ok) throw new Error('API key inactiva')
         return r.json()
@@ -40,13 +41,7 @@ const WeatherBanner = ({ onAdauga, adaugat }) => {
         const rec = await getRecomandateMeteo(tip)
         if (rec.length > 0) setPreparate(rec)
       })
-      .catch(async () => {
-        // Fallback: simulare pentru testare vizuala
-        const tip = 'cald'
-        setVreme({ temp: 14, conditie: 'Rain', descriere: 'ploaie moderată', emoji: '🌧️', tip })
-        const rec = await getRecomandateMeteo(tip)
-        if (rec.length > 0) setPreparate(rec)
-      })
+      .catch(() => {})
   }, [])
 
   if (!vreme || !vreme.tip || preparate.length === 0 || !vizibil) return null
