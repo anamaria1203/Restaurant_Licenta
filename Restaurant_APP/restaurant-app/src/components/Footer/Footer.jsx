@@ -17,7 +17,7 @@ const Footer = () => {
           <h4>Navigare</h4>
           <a href="/">Home</a>
           <a href="/meniu">Meniu</a>
-          <a href="/rezervari">Rezervări</a>
+          <a href="/rezervare">Rezervări</a>
           <a href="/despre">Despre noi</a>
           <a href="/contact">Contact</a>
         </div>

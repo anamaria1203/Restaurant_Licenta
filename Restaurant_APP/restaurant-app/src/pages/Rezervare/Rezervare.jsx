@@ -115,7 +115,7 @@ const Rezervare = () => {
   const [trimitand, setTrimitand] = useState(false)
   const [rezervareFinala, setRezervareFinala] = useState(null)
 
-  if (!userLogat || userLogat.tip !== 'client') return <GatePage />
+  if (!userLogat) return <GatePage />
 
   const handleCalculeazaZona = () => {
     const rec = recomandaZona(nrPersoane, ocazie, atmosfera, locatie)
