@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { getUseri, authLogout, getMesaje, getMesajeNecititeCount, marcheazaMesajCitit, raspundeMesaj } from '../../services/api'
+ximport { getUseri, authLogout, getMesaje, getMesajeNecititeCount, marcheazaMesajCitit, raspundeMesaj, getAnulateNenotificate, marcheazaAnulateVazute } from '../../services/api'
 import './AdminNavbar.css'
 
 const AdminNavbar = ({ title }) => {
@@ -9,6 +9,9 @@ const AdminNavbar = ({ title }) => {
   const [showManageri, setShowManageri] = useState(false)
   const [showConfirmare, setShowConfirmare] = useState(false)
   const [necitite, setNecitite] = useState(0)
+  const [nrAnulate, setNrAnulate] = useState(0)
+  const [anulateDetalii, setAnulateDetalii] = useState([])
+  const [showAnulate, setShowAnulate] = useState(false)
   const [showMesaje, setShowMesaje] = useState(false)
   const [mesaje, setMesaje] = useState([])
   const [raspunsuri, setRaspunsuri] = useState({})
@@ -21,6 +24,9 @@ const AdminNavbar = ({ title }) => {
       .catch(() => {})
     getMesajeNecititeCount()
       .then(data => setNecitite(data.count || 0))
+      .catch(() => {})
+    getAnulateNenotificate()
+      .then(data => { setNrAnulate(data.count || 0); setAnulateDetalii(data.rezervari || []) })
       .catch(() => {})
   }, [])
 
@@ -68,6 +74,56 @@ const AdminNavbar = ({ title }) => {
         <span className="admin-navbar-tag">{title}</span>
       </div>
       <div className="admin-navbar-right">
+
+        {nrAnulate > 0 && (
+          <div style={{ position: 'relative' }}>
+            <button
+              className="admin-nav-btn admin-bell-btn"
+              onClick={() => {
+                const nou = !showAnulate
+                setShowAnulate(nou)
+                setShowMesaje(false)
+                setShowManageri(false)
+                setShowConfirmare(false)
+                if (nou) {
+                  marcheazaAnulateVazute().catch(() => {})
+                  setNrAnulate(0)
+                }
+              }}
+              title="Rezervări anulate de clienți"
+            >
+              <span className="admin-bell-icon">❌</span>
+              <span className="admin-bell-badge">{nrAnulate}</span>
+            </button>
+            {showAnulate && (
+              <div className="admin-mesaje-dropdown">
+                <p className="admin-manageri-titlu">Rezervări anulate de clienți</p>
+                {anulateDetalii.length === 0 ? (
+                  <p className="admin-manageri-gol">Nicio rezervare anulată.</p>
+                ) : (
+                  anulateDetalii.map(r => (
+                    <div key={r.id} className="admin-mesaj-row citit">
+                      <div className="admin-mesaj-header">
+                        <span className="admin-mesaj-nume">{r.User?.nume || '—'}</span>
+                        <span className="admin-mesaj-email">{r.User?.email || ''}</span>
+                      </div>
+                      <p className="admin-mesaj-text">
+                        Rezervare #{r.id} — {new Date(r.data + 'T12:00:00').toLocaleDateString('ro-RO', { day: 'numeric', month: 'long', year: 'numeric' })} ora {r.ora}
+                      </p>
+                    </div>
+                  ))
+                )}
+                <button
+                  className="admin-mesaj-reply-btn"
+                  style={{ marginTop: '8px', width: '100%' }}
+                  onClick={() => { setShowAnulate(false); navigate('/admin-activitate') }}
+                >
+                  Vezi în activitate
+                </button>
+              </div>
+            )}
+          </div>
+        )}
 
         <div style={{ position: 'relative' }}>
           <button className="admin-nav-btn admin-bell-btn" onClick={handleDeschideMesaje}>

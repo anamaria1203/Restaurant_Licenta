@@ -2,7 +2,7 @@ import './RezervariMele.css'
 import { useState, useEffect } from 'react'
 import Navbar from '../../components/Navbar/Navbar'
 import Footer from '../../components/Footer/Footer'
-import { getRezervariMele, anuleazaRezervare, getComenziMele } from '../../services/api'
+import { getRezervariMele, anuleazaRezervare, getComenziMele, marcheazaConfirmateVazute } from '../../services/api'
 
 const STATUS_CULORI = {
   in_asteptare: 'status-asteptare',
@@ -57,6 +57,7 @@ const RezervariMele = () => {
       window.location.href = '/login?mod=login'
       return
     }
+    marcheazaConfirmateVazute().catch(() => {})
     Promise.all([getRezervariMele(), getComenziMele()])
       .then(([rez, com]) => { setRezervari(rez); setComenzi(com) })
       .catch(console.error)
@@ -133,7 +134,7 @@ const RezervariMele = () => {
                       {r.status === 'confirmata' && (
                         <a href="/comanda" className="rezme-btn-comanda">Comandă acum</a>
                       )}
-                      {r.status === 'in_asteptare' && (
+                      {(r.status === 'in_asteptare' || r.status === 'confirmata') && (
                         <div className="rezme-anulare-wrapper">
                           <button
                             className="rezme-btn-anuleaza"

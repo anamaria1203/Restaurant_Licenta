@@ -179,6 +179,18 @@ export const anuleazaRezervare = (id) =>
 export const areRezervareConfirmata = () =>
   apiFetch('/rezervare/are-rezervare-confirmata').then(r => r.json())
 
+export const getAnulateNenotificate = () =>
+  apiFetch('/rezervare/anulate-nenotificate').then(r => r.json())
+
+export const marcheazaAnulateVazute = () =>
+  apiFetch('/rezervare/anulate-vazute', { method: 'PUT' }).then(r => r.json())
+
+export const getConfirmateNevazute = () =>
+  apiFetch('/rezervare/confirmate-nevazute').then(r => r.json())
+
+export const marcheazaConfirmateVazute = () =>
+  apiFetch('/rezervare/confirmate-vazute', { method: 'PUT' }).then(r => r.json())
+
 // ─── MESAJE CONTACT ──────────────────────────────────
 export const trimiteMesaj = (intrebare) =>
   apiFetch('/mesaj', {

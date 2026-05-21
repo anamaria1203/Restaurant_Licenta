@@ -28,6 +28,32 @@ async function start() {
     console.log('Coloana tip_vreme adaugata in Preparats')
   }
 
+  const colsRezervare = await qi.describeTable('Rezervares')
+  if (!colsRezervare.anulataNotificat) {
+    await qi.addColumn('Rezervares', 'anulataNotificat', {
+      type: db.sequelize.Sequelize.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
+    })
+    console.log('Coloana anulataNotificat adaugata in Rezervares')
+  }
+  if (!colsRezervare.anulataDe) {
+    await qi.addColumn('Rezervares', 'anulataDe', {
+      type: db.sequelize.Sequelize.STRING,
+      allowNull: true,
+      defaultValue: null
+    })
+    console.log('Coloana anulataDe adaugata in Rezervares')
+  }
+  if (!colsRezervare.confirmatVazut) {
+    await qi.addColumn('Rezervares', 'confirmatVazut', {
+      type: db.sequelize.Sequelize.BOOLEAN,
+      allowNull: false,
+      defaultValue: true
+    })
+    console.log('Coloana confirmatVazut adaugata in Rezervares')
+  }
+
   console.log('Baza de date sincronizata!')
   app.listen(PORT, () => console.log(`Server ruleaza pe portul ${PORT}`))
 }

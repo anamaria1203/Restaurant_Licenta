@@ -10,5 +10,9 @@ router.get('/are-rezervare-confirmata', authMiddleware, controllers.rezervare.ar
 router.get('/toate', authManager, controllers.rezervare.getRezervariAdmin)
 router.put('/:id/status', authManager, controllers.rezervare.updateStatusRezervare)
 router.put('/:id/anuleaza', authMiddleware, controllers.rezervare.anuleazaRezervare)
+router.get('/anulate-nenotificate', authManager, controllers.rezervare.getAnulateNenotificate)
+router.put('/anulate-vazute', authManager, controllers.rezervare.marcheazaAnulateVazute)
+router.get('/confirmate-nevazute', authMiddleware, controllers.rezervare.getConfirmateNevazute)
+router.put('/confirmate-vazute', authMiddleware, controllers.rezervare.marcheazaConfirmateVazute)
 
 export default router
