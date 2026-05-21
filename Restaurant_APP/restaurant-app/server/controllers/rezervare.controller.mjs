@@ -152,6 +152,22 @@ const areRezervareConfirmata = async (req, res, next) => {
   }
 }
 
+const restaureazaRezervareClient = async (req, res, next) => {
+  try {
+    const { id } = req.params
+    const userId = req.user.id
+    const rezervare = await db.Rezervare.findOne({ where: { id, userId } })
+    if (!rezervare) return res.status(404).json({ error: 'Rezervarea nu a fost găsită' })
+    if (rezervare.status !== 'anulata' || rezervare.anulataDe !== 'client') {
+      return res.status(400).json({ error: 'Rezervarea nu poate fi restaurată' })
+    }
+    await rezervare.update({ status: 'in_asteptare', anulataDe: null, confirmatVazut: true })
+    res.json(rezervare)
+  } catch (err) {
+    next(err)
+  }
+}
+
 const getConfirmateNevazute = async (req, res, next) => {
   try {
     const userId = req.user.id
@@ -172,4 +188,4 @@ const marcheazaConfirmateVazute = async (req, res, next) => {
   }
 }
 
-export default { creeazaRezervare, getRezervariMele, getRezervariAdmin, updateStatusRezervare, anuleazaRezervare, areRezervareConfirmata, getAnulateNenotificate, marcheazaAnulateVazute, getConfirmateNevazute, marcheazaConfirmateVazute }
+export default { creeazaRezervare, getRezervariMele, getRezervariAdmin, updateStatusRezervare, anuleazaRezervare, restaureazaRezervareClient, areRezervareConfirmata, getAnulateNenotificate, marcheazaAnulateVazute, getConfirmateNevazute, marcheazaConfirmateVazute }

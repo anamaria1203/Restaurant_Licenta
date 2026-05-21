@@ -1,7 +1,7 @@
 import './AdminActivitate.css'
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { getComenziAdmin, getRezervariAdmin, updateStatusRezervare, updateStatusComanda } from '../../../services/api'
+import { getComenziAdmin, getRezervariAdmin, updateStatusRezervare, updateStatusComanda, getAnulateNenotificate, marcheazaAnulateVazute } from '../../../services/api'
 import AdminNavbar from '../../../components/AdminNavbar/AdminNavbar'
 
 const STATUS_COM = {
@@ -34,11 +34,13 @@ const AdminActivitate = () => {
   const [confirmareAnulare, setConfirmareAnulare] = useState(null)
   const [showAnulateManager, setShowAnulateManager] = useState(false)
   const [showAnulateClient, setShowAnulateClient] = useState(false)
+  const [nrAnulateNoi, setNrAnulateNoi] = useState(0)
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'))
     if (!user || user.tip !== 'manager') { navigate('/'); return }
     fetchDate()
+    getAnulateNenotificate().then(d => setNrAnulateNoi(d.count || 0)).catch(() => {})
   }, [navigate])
 
   const fetchDate = async () => {
@@ -205,8 +207,7 @@ const AdminActivitate = () => {
             <div className="act-layout">
 
               {/* ─── SIDEBAR ANULATE ─── */}
-              {(anulateManager.length > 0 || anulateClient.length > 0) && (
-                <div className="act-sidebar">
+              <div className="act-sidebar">
 
                   {anulateManager.length > 0 && (
                     <div className="act-sidebar-sectiune">
@@ -235,29 +236,42 @@ const AdminActivitate = () => {
                     </div>
                   )}
 
-                  {anulateClient.length > 0 && (
-                    <div className="act-sidebar-sectiune">
-                      <div className="act-sidebar-header" onClick={() => setShowAnulateClient(v => !v)}>
-                        <span>Anulate de clienți ({anulateClient.length})</span>
-                        <span className="act-sidebar-arrow">{showAnulateClient ? '▲' : '▼'}</span>
-                      </div>
-                      {showAnulateClient && (
-                        <div className="act-sidebar-lista">
-                          {anulateClient.map(r => (
+                  <div className="act-sidebar-sectiune">
+                    <div className="act-sidebar-header" onClick={() => {
+                      setShowAnulateClient(v => !v)
+                      if (nrAnulateNoi > 0) {
+                        marcheazaAnulateVazute().catch(() => {})
+                        setNrAnulateNoi(0)
+                        window.dispatchEvent(new Event('anulate-update'))
+                      }
+                    }}>
+                      <span>
+                        Anulate de clienți ({anulateClient.length})
+                        {nrAnulateNoi > 0 && <span className="act-sidebar-badge">❌ {nrAnulateNoi}</span>}
+                      </span>
+                      <span className="act-sidebar-arrow">{showAnulateClient ? '▲' : '▼'}</span>
+                    </div>
+                    {showAnulateClient && (
+                      <div className="act-sidebar-lista">
+                        {anulateClient.length === 0 ? (
+                          <div className="act-sidebar-card" style={{ color: 'rgba(245,240,232,0.35)', fontSize: '0.78rem' }}>
+                            Nicio rezervare anulată de clienți.
+                          </div>
+                        ) : (
+                          anulateClient.map(r => (
                             <div key={r.id} className="act-sidebar-card">
                               <div className="act-sidebar-nr">#{r.id}</div>
                               <div className="act-sidebar-client">{r.user?.nume}</div>
                               <div className="act-sidebar-data">{formatDataScurt(r.data)}, {r.ora}</div>
                               <div className="act-anulata-client-label">Anulată de client</div>
                             </div>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  )}
+                          ))
+                        )}
+                      </div>
+                    )}
+                  </div>
 
                 </div>
-              )}
 
               {/* ─── MAIN: CONFIRMATE ─── */}
               <div className="act-main">

@@ -2,7 +2,7 @@ import './RezervariMele.css'
 import { useState, useEffect } from 'react'
 import Navbar from '../../components/Navbar/Navbar'
 import Footer from '../../components/Footer/Footer'
-import { getRezervariMele, anuleazaRezervare, getComenziMele, marcheazaConfirmateVazute } from '../../services/api'
+import { getRezervariMele, anuleazaRezervare, getComenziMele, marcheazaConfirmateVazute, restaureazaRezervareClient } from '../../services/api'
 
 const STATUS_CULORI = {
   in_asteptare: 'status-asteptare',
@@ -48,6 +48,7 @@ const RezervariMele = () => {
   const [comenzi, setComenzi] = useState([])
   const [loading, setLoading] = useState(true)
   const [anulandId, setAnulandId] = useState(null)
+  const [restaurandId, setRestaurandId] = useState(null)
   const [confirmareId, setConfirmareId] = useState(null)
   const [showAnulate, setShowAnulate] = useState(false)
   const [eroare, setEroare] = useState('')
@@ -62,7 +63,18 @@ const RezervariMele = () => {
       .then(([rez, com]) => { setRezervari(rez); setComenzi(com) })
       .catch(console.error)
       .finally(() => setLoading(false))
-  }, [])
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+
+  const handleRestaureaza = async (id) => {
+    setRestaurandId(id)
+    try {
+      const rez = await restaureazaRezervareClient(id)
+      const data = await rez.json()
+      if (rez.ok) setRezervari(prev => prev.map(r => r.id === id ? data : r))
+    } finally {
+      setRestaurandId(null)
+    }
+  }
 
   const handleAnuleaza = async (id) => {
     setAnulandId(id)
@@ -133,6 +145,15 @@ const RezervariMele = () => {
                       </span>
                       {r.status === 'confirmata' && (
                         <a href="/comanda" className="rezme-btn-comanda">Comandă acum</a>
+                      )}
+                      {r.status === 'anulata' && r.anulataDe === 'client' && (
+                        <button
+                          className="rezme-btn-restaureaza"
+                          onClick={() => handleRestaureaza(r.id)}
+                          disabled={restaurandId === r.id}
+                        >
+                          {restaurandId === r.id ? '...' : 'Restaurează'}
+                        </button>
                       )}
                       {(r.status === 'in_asteptare' || r.status === 'confirmata') && (
                         <div className="rezme-anulare-wrapper">

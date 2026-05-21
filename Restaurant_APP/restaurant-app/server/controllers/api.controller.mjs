@@ -22,8 +22,34 @@ const getUseriStersi = async (req, res, next) => {
 
 const stergeUser = async (req, res, next) => {
   try {
-    const user = await db.User.findByPk(req.params.id)
+    const { Op } = db.sequelize.Sequelize
+    const userId = req.params.id
+
+    const user = await db.User.findByPk(userId)
     if (!user) return res.status(404).json({ error: 'Userul nu a fost gasit' })
+
+    const rezervari = await db.Rezervare.findAll({
+      where: { userId, status: { [Op.in]: ['in_asteptare', 'confirmata'] } },
+      attributes: ['id']
+    })
+    const rezervareIds = rezervari.map(r => r.id)
+
+    if (rezervareIds.length > 0) {
+      await db.Rezervare.update(
+        { status: 'anulata', anulataDe: 'manager', anulataNotificat: true },
+        { where: { id: { [Op.in]: rezervareIds } } }
+      )
+      await db.Comanda.update(
+        { status: 'anulata' },
+        { where: { rezervareId: { [Op.in]: rezervareIds }, status: { [Op.in]: ['in_asteptare', 'confirmata', 'in_preparare'] } } }
+      )
+    }
+
+    await db.Comanda.update(
+      { status: 'anulata' },
+      { where: { userId, rezervareId: null, status: { [Op.in]: ['in_asteptare', 'confirmata', 'in_preparare'] } } }
+    )
+
     await user.update({ deletedAt: new Date() })
     res.json({ message: 'Client sters cu succes' })
   } catch (err) { next(err) }

@@ -553,6 +553,19 @@
   margin-bottom: 0.4rem;
 }
 
+.act-sidebar-badge {
+  margin-left: 0.4rem;
+  background: rgba(224,82,82,0.15);
+  border: 1px solid rgba(224,82,82,0.35);
+  color: #e05252;
+  font-size: 0.6rem;
+  border-radius: 8px;
+  padding: 1px 5px;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
 @media (max-width: 768px) {
   .act-layout { flex-direction: column; }
   .act-sidebar { width: 100%; }

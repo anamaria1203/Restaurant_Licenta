@@ -175,6 +175,29 @@
   cursor: not-allowed;
 }
 
+.rezme-btn-restaureaza {
+  background: transparent;
+  border: 1px solid rgba(201,168,76,0.35);
+  color: #c9a84c;
+  padding: 0.4rem 1rem;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.78rem;
+  letter-spacing: 1px;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.rezme-btn-restaureaza:hover:not(:disabled) {
+  background: rgba(201,168,76,0.1);
+  border-color: rgba(201,168,76,0.6);
+}
+
+.rezme-btn-restaureaza:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .rezme-anulare-wrapper {
   position: relative;
 }

@@ -214,7 +214,7 @@ const getMenuEvolution = async (req, res, next) => {
         MAX(c.createdAt) AS ultimaComanda
        FROM Preparats p
        LEFT JOIN ComandaItems ci ON ci.preparatId = p.id
-       LEFT JOIN Comandas c ON ci.comandaId = c.id
+       LEFT JOIN Comandas c ON ci.comandaId = c.id AND c.status != 'anulata'
        GROUP BY p.id
        ORDER BY totalUltimele30Zile DESC`,
       { type: db.sequelize.QueryTypes.SELECT }

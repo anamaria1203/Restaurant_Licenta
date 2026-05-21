@@ -176,6 +176,9 @@ export const updateStatusRezervare = (id, status) =>
 export const anuleazaRezervare = (id) =>
   apiFetch(`/rezervare/${id}/anuleaza`, { method: 'PUT' })
 
+export const restaureazaRezervareClient = (id) =>
+  apiFetch(`/rezervare/${id}/restaureaza-client`, { method: 'PUT' })
+
 export const areRezervareConfirmata = () =>
   apiFetch('/rezervare/are-rezervare-confirmata').then(r => r.json())
 
