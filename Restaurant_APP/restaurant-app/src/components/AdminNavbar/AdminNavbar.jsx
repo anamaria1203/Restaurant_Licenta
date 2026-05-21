@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { getUseri, authLogout, getMesaje, getMesajeNecititeCount, marcheazaMesajCitit, raspundeMesaj, getAnulateNenotificate, marcheazaAnulateVazute } from '../../services/api'
+import { getUseri, authLogout, getMesaje, getMesajeNecititeCount, raspundeMesaj, getAnulateNenotificate, marcheazaAnulateVazute } from '../../services/api'
 import './AdminNavbar.css'
 
 const AdminNavbar = ({ title }) => {
@@ -39,12 +39,6 @@ const AdminNavbar = ({ title }) => {
       const data = await getMesaje().catch(() => [])
       setMesaje(Array.isArray(data) ? data : [])
     }
-  }
-
-  const handleCitit = async (id) => {
-    await marcheazaMesajCitit(id).catch(() => {})
-    setMesaje(prev => prev.map(m => m.id === id ? { ...m, citit: true } : m))
-    setNecitite(prev => Math.max(0, prev - 1))
   }
 
   const handleRaspunde = async (id) => {
