@@ -68,7 +68,26 @@ const updateStatusRezervare = async (req, res, next) => {
     const rezervare = await db.Rezervare.findByPk(id)
     if (!rezervare) return res.status(404).json({ error: 'Rezervarea nu a fost găsită' })
 
-    await rezervare.update({ status })
+    const updates = { status }
+    if (status === 'anulata') {
+      updates.anulataDe = 'manager'
+      updates.anulataNotificat = true
+    } else {
+      updates.anulataDe = null
+    }
+    if (status === 'confirmata') {
+      updates.confirmatVazut = false
+    }
+
+    await rezervare.update(updates)
+
+    if (status === 'anulata') {
+      await db.Comanda.update(
+        { status: 'anulata' },
+        { where: { rezervareId: id, status: ['in_asteptare', 'confirmata'] } }
+      )
+    }
+
     res.json(rezervare)
   } catch (err) {
     next(err)
@@ -82,12 +101,38 @@ const anuleazaRezervare = async (req, res, next) => {
 
     const rezervare = await db.Rezervare.findOne({ where: { id, userId } })
     if (!rezervare) return res.status(404).json({ error: 'Rezervarea nu a fost găsită' })
-    if (rezervare.status !== 'in_asteptare') {
-      return res.status(400).json({ error: 'Doar rezervările în așteptare pot fi anulate' })
+    if (!['in_asteptare', 'confirmata'].includes(rezervare.status)) {
+      return res.status(400).json({ error: 'Rezervarea nu mai poate fi anulată' })
     }
 
-    await rezervare.update({ status: 'anulata' })
+    await rezervare.update({ status: 'anulata', anulataNotificat: false, anulataDe: 'client' })
+    await db.Comanda.update(
+      { status: 'anulata' },
+      { where: { rezervareId: id, status: ['in_asteptare', 'confirmata'] } }
+    )
     res.json(rezervare)
+  } catch (err) {
+    next(err)
+  }
+}
+
+const getAnulateNenotificate = async (req, res, next) => {
+  try {
+    const rezervari = await db.Rezervare.findAll({
+      where: { status: 'anulata', anulataNotificat: false },
+      include: [{ model: db.User, attributes: ['id', 'nume', 'email'] }],
+      order: [['updatedAt', 'DESC']]
+    })
+    res.json({ count: rezervari.length, rezervari })
+  } catch (err) {
+    next(err)
+  }
+}
+
+const marcheazaAnulateVazute = async (req, res, next) => {
+  try {
+    await db.Rezervare.update({ anulataNotificat: true }, { where: { status: 'anulata', anulataNotificat: false } })
+    res.json({ ok: true })
   } catch (err) {
     next(err)
   }
@@ -107,4 +152,24 @@ const areRezervareConfirmata = async (req, res, next) => {
   }
 }
 
-export default { creeazaRezervare, getRezervariMele, getRezervariAdmin, updateStatusRezervare, anuleazaRezervare, areRezervareConfirmata }
+const getConfirmateNevazute = async (req, res, next) => {
+  try {
+    const userId = req.user.id
+    const count = await db.Rezervare.count({ where: { userId, status: 'confirmata', confirmatVazut: false } })
+    res.json({ count })
+  } catch (err) {
+    next(err)
+  }
+}
+
+const marcheazaConfirmateVazute = async (req, res, next) => {
+  try {
+    const userId = req.user.id
+    await db.Rezervare.update({ confirmatVazut: true }, { where: { userId, status: 'confirmata', confirmatVazut: false } })
+    res.json({ ok: true })
+  } catch (err) {
+    next(err)
+  }
+}
+
+export default { creeazaRezervare, getRezervariMele, getRezervariAdmin, updateStatusRezervare, anuleazaRezervare, areRezervareConfirmata, getAnulateNenotificate, marcheazaAnulateVazute, getConfirmateNevazute, marcheazaConfirmateVazute }

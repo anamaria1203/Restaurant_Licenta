@@ -38,7 +38,7 @@ const AdminDashboard = () => {
     try {
       const [rez, com] = await Promise.all([getRezervariAdmin(), getComenziAdmin()])
       setNrRezervariActive(rez.filter(r => r.status === 'in_asteptare').length)
-      setNrComenziActive(com.filter(c => c.status === 'in_asteptare' && c.rezervareId).length)
+      setNrComenziActive(com.filter(c => c.status === 'in_asteptare').length)
     } catch {}
   }
 

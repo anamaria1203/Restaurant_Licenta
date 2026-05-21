@@ -467,6 +467,11 @@
   color: white;
 }
 
+.cont-item-badge.verde {
+  background: #38a169;
+  color: white;
+}
+
 .nav-link-comenzi {
   color: #c9a84c !important;
   opacity: 1 !important;

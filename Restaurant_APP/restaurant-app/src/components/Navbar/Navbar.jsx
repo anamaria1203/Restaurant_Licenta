@@ -1,6 +1,6 @@
 import './Navbar.css'
 import { useState, useEffect, useRef } from 'react'
-import { getMesajeleMele } from '../../services/api'
+import { getMesajeleMele, getConfirmateNevazute } from '../../services/api'
 
 const Navbar = () => {
   const [showDropdown, setShowDropdown] = useState(false)
@@ -10,6 +10,7 @@ const Navbar = () => {
   const [showConfirmare, setShowConfirmare] = useState(false)
   const [nrCos, setNrCos] = useState(0)
   const [nrMesajeNoi, setNrMesajeNoi] = useState(0)
+  const [nrRezervariConfirmate, setNrRezervariConfirmate] = useState(0)
   const contMeuRef = useRef(null)
 
   useEffect(() => {
@@ -48,6 +49,12 @@ const Navbar = () => {
   }, [])
 
   useEffect(() => {
+    const user = (() => { try { return JSON.parse(localStorage.getItem('user')) } catch { return null } })()
+    if (!user || user.tip !== 'client') return
+    getConfirmateNevazute().then(data => setNrRezervariConfirmate(data.count || 0)).catch(() => {})
+  }, [])
+
+  useEffect(() => {
     const handleClickOutside = (e) => {
       if (contMeuRef.current && !contMeuRef.current.contains(e.target)) {
         setShowContMeu(false)
@@ -63,7 +70,7 @@ const Navbar = () => {
     window.location.href = '/'
   }
 
-  const totalBadge = nrCos + nrMesajeNoi
+  const totalBadge = nrCos + nrMesajeNoi + nrRezervariConfirmate
 
   return (
     <nav className="navbar">
@@ -112,6 +119,7 @@ const Navbar = () => {
                     <a href="/rezervarile-mele" className="cont-item" onClick={() => setShowContMeu(false)}>
                       <span className="cont-item-icon">📋</span>
                       <span>Rezervări & Comenzi</span>
+                      {nrRezervariConfirmate > 0 && <span className="cont-item-badge verde">{nrRezervariConfirmate}</span>}
                     </a>
                     <a href="/cos" className="cont-item" onClick={() => setShowContMeu(false)}>
                       <span className="cont-item-icon">🛒</span>

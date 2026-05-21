@@ -8,7 +8,10 @@ const rezervareModel = (sequelize, DataTypes) => {
     zona: { type: DataTypes.STRING, allowNull: false },
     ocazie: { type: DataTypes.STRING, allowNull: true, defaultValue: null },
     status: { type: DataTypes.STRING, defaultValue: 'in_asteptare' },
-    observatii: { type: DataTypes.TEXT, allowNull: true, defaultValue: null }
+    observatii: { type: DataTypes.TEXT, allowNull: true, defaultValue: null },
+    anulataNotificat: { type: DataTypes.BOOLEAN, defaultValue: false },
+    anulataDe: { type: DataTypes.STRING, allowNull: true, defaultValue: null },
+    confirmatVazut: { type: DataTypes.BOOLEAN, defaultValue: true }
   }, { timestamps: true })
 }
 
