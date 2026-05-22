@@ -64,4 +64,14 @@ const restaureazaUser = async (req, res, next) => {
   } catch (err) { next(err) }
 }
 
-export default { getUseri, getUseriStersi, stergeUser, restaureazaUser }
+const getAsteptareCounts = async (req, res, next) => {
+  try {
+    const [nrRezervari, nrComenzi] = await Promise.all([
+      db.Rezervare.count({ where: { status: 'in_asteptare' } }),
+      db.Comanda.count({ where: { status: 'in_asteptare' } })
+    ])
+    res.json({ nrRezervari, nrComenzi })
+  } catch (err) { next(err) }
+}
+
+export default { getUseri, getUseriStersi, stergeUser, restaureazaUser, getAsteptareCounts }

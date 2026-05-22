@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { getUseri, authLogout, getMesaje, getMesajeNecititeCount, raspundeMesaj, getAnulateNenotificate } from '../../services/api'
+import { getUseri, authLogout, getMesaje, getMesajeNecititeCount, raspundeMesaj, getAnulateNenotificate, getAsteptareCounts } from '../../services/api'
 import './AdminNavbar.css'
 
 const AdminNavbar = ({ title }) => {
@@ -10,6 +10,7 @@ const AdminNavbar = ({ title }) => {
   const [showConfirmare, setShowConfirmare] = useState(false)
   const [necitite, setNecitite] = useState(0)
   const [nrAnulate, setNrAnulate] = useState(0)
+  const [nrAsteptare, setNrAsteptare] = useState(0)
   const [showMesaje, setShowMesaje] = useState(false)
   const [mesaje, setMesaje] = useState([])
   const [raspunsuri, setRaspunsuri] = useState({})
@@ -25,6 +26,9 @@ const AdminNavbar = ({ title }) => {
       .catch(() => {})
     getAnulateNenotificate()
       .then(data => setNrAnulate(data.count || 0))
+      .catch(() => {})
+    getAsteptareCounts()
+      .then(data => setNrAsteptare((data.nrRezervari || 0) + (data.nrComenzi || 0)))
       .catch(() => {})
 
     const resetAnulate = () => setNrAnulate(0)
@@ -123,6 +127,7 @@ const AdminNavbar = ({ title }) => {
         <button className="admin-nav-btn" onClick={() => navigate('/')}>← Pagina Principala</button>
         <button className="admin-nav-btn admin-nav-btn-badge-wrapper" onClick={() => navigate('/admin-activitate')}>
           Comenzi &amp; Rezervări
+          {nrAsteptare > 0 && <span className="admin-nav-badge admin-nav-badge-rosu">{nrAsteptare}</span>}
           {nrAnulate > 0 && <span className="admin-nav-badge">❌ {nrAnulate}</span>}
         </button>
         <button className="admin-nav-btn" onClick={() => navigate('/admin-meniu')}>Meniu Țări</button>

@@ -8,5 +8,6 @@ router.get('/useri', authManager, controllers.api.getUseri)
 router.get('/useri/stersi', authManager, controllers.api.getUseriStersi)
 router.delete('/useri/:id', authManager, controllers.api.stergeUser)
 router.post('/useri/:id/restaurare', authManager, controllers.api.restaureazaUser)
+router.get('/asteptare-counts', authManager, controllers.api.getAsteptareCounts)
 
 export default router

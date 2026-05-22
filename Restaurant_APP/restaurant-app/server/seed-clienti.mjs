@@ -37,12 +37,16 @@ for (const entry of seed) {
   const existent = await db.User.findOne({ where: { email: entry.client.email } })
   if (existent) { console.log(`Skip: ${entry.client.email}`); continue }
   const user = await db.User.create({ ...entry.client, passwordHash, tip: 'client' })
+  const rezervariCreate = []
   for (const rez of (entry.rezervari || [])) {
-    await db.Rezervare.create({ ...rez, userId: user.id })
+    const r = await db.Rezervare.create({ ...rez, userId: user.id })
+    rezervariCreate.push(r)
   }
-  for (const cmd of entry.comenzi) {
-    const total = cmd.items.reduce((sum, i) => sum + i.pretSnapshot * i.cantitate, 0)
-    const comanda = await db.Comanda.create({ userId: user.id, status: cmd.status, total, createdAt: cmd.createdAt, updatedAt: cmd.createdAt })
+  for (let i = 0; i < entry.comenzi.length; i++) {
+    const cmd = entry.comenzi[i]
+    const total = cmd.items.reduce((sum, j) => sum + j.pretSnapshot * j.cantitate, 0)
+    const rezervareId = rezervariCreate[i]?.id || null
+    const comanda = await db.Comanda.create({ userId: user.id, status: cmd.status, total, rezervareId, createdAt: cmd.createdAt, updatedAt: cmd.createdAt })
     for (const item of cmd.items) {
       await db.ComandaItem.create({ ...item, comandaId: comanda.id })
     }

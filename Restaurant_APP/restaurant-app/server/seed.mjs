@@ -279,5 +279,92 @@ await db.Preparat.bulkCreate([
 
 ])
 
-console.log('Seed complet! 220 preparate inserate.')
+// ── Luna Activa ──
+await db.LunaActiva.destroy({ where: {} })
+await db.LunaActiva.create({ tara: 'spaniola' })
+
+// ── Preparate Lunare ──
+await db.PreparatLunar.destroy({ where: {} })
+await db.PreparatLunar.bulkCreate([
+
+  // SPANIOLA — 5 feluri + 5 deserturi
+  { tara: 'spaniola', nume: 'Paella Valenciana', descriere: 'Orez Bomba cu pui, iepure, fasole verde, rosafran si boia afumata, gatita in paellera la foc viu', pret: 145, imagine: '/images/meniu/peste_paella.jpg', este_desert: false },
+  { tara: 'spaniola', nume: 'Gazpacho Andaluz', descriere: 'Supa rece de rosii coapte, ardei, castraveti si usturoi, cu ulei de masline extravirgin', pret: 48, imagine: '/images/meniu/supa_andaluz.jpg', este_desert: false },
+  { tara: 'spaniola', nume: 'Cochinillo Asado', descriere: 'Purcel de lapte copt lent 4 ore pana devine crocant, cu cartofi segovieni', pret: 185, imagine: '/images/meniu/carne_porc.jpg', este_desert: false },
+  { tara: 'spaniola', nume: 'Patatas Bravas cu Aioli', descriere: 'Cartofi prajiti crocanti cu sos brava picant si aioli de usturoi', pret: 52, imagine: '/images/meniu/polenta.jpg', este_desert: false },
+  { tara: 'spaniola', nume: 'Tortilla Española', descriere: 'Omletă groasă spaniolă cu cartofi si ceapă caramelizată, servita calda sau rece', pret: 58, imagine: '/images/meniu/insalatta.jpg', este_desert: false },
+  { tara: 'spaniola', nume: 'Churros cu Ciocolata Calda', descriere: 'Churros aurii prajiti cu scortisoara, sos de ciocolata neagra pentru dipping', pret: 42, imagine: '/images/meniu/desert_canoli.jpg', este_desert: true },
+  { tara: 'spaniola', nume: 'Crema Catalana', descriere: 'Crema de lamaie cu scortisoara si crusta de zahar ars — versiunea spaniola a cremei brulee', pret: 38, imagine: '/images/meniu/desert_cremeBrulle.jpg', este_desert: true },
+  { tara: 'spaniola', nume: 'Tarta de Santiago', descriere: 'Tarta traditionala galiciana cu migdale macinate, lamaie si zahar pudra in cruce', pret: 45, imagine: '/images/meniu/desert_torta.jpg', este_desert: true },
+  { tara: 'spaniola', nume: 'Flan de Huevo', descriere: 'Flan clasic de oua cu caramel lichid, fin si catifelat — desert de casa spaniol', pret: 35, imagine: '/images/meniu/desert_Catalana.jpg', este_desert: true },
+  { tara: 'spaniola', nume: 'Polvorones cu Scortisoara', descriere: 'Fursecuri spaniole sfararitoare cu migdale, scortisoara si zahar pudra', pret: 32, imagine: '/images/meniu/desert_Sfogliatella.jpg', este_desert: true },
+
+  // TURCEASCA — 5 feluri + 5 deserturi
+  { tara: 'turceasca', nume: 'Iskender Kebab', descriere: 'Carne de miel si vita la gratar peste paine pita, cu unt topit, sos de rosii si iaurt', pret: 125, imagine: '/images/meniu/carne_cotlet.jpg', este_desert: false },
+  { tara: 'turceasca', nume: 'Meze Platter', descriere: 'Hummus, babaganoush, dolma, cacik si paine pita calda — intrare traditionala turceasca', pret: 78, imagine: '/images/meniu/antipasto.jpg', este_desert: false },
+  { tara: 'turceasca', nume: 'Balik Ekmek', descriere: 'Macrou la gratar cu salata de varza, rosii, ceapa si lamaie in paine artizanala', pret: 88, imagine: '/images/meniu/gravlex.jpg', este_desert: false },
+  { tara: 'turceasca', nume: 'Imam Bayildi', descriere: 'Vinete coapte umplute cu ceapa, usturoi, rosii si ierburi aromatice', pret: 62, imagine: '/images/meniu/tapenade.jpg', este_desert: false },
+  { tara: 'turceasca', nume: 'Lahmacun', descriere: 'Pizza turceasca subtire cu carne tocata condimentata, patrunjel si lamaie', pret: 55, imagine: '/images/meniu/bruschete.jpg', este_desert: false },
+  { tara: 'turceasca', nume: 'Baklava cu Fistic', descriere: 'Straturi subtiri de aluat filo cu fistic de Gaziantep si sirop de apa de trandafiri', pret: 48, imagine: '/images/meniu/desert_Sfogliatella.jpg', este_desert: true },
+  { tara: 'turceasca', nume: 'Sutlac', descriere: 'Budinca de orez cu lapte si vanilie, gratinata la cuptor — desert clasic turcesc', pret: 38, imagine: '/images/meniu/desert_panna.jpg', este_desert: true },
+  { tara: 'turceasca', nume: 'Lokum cu Trandafir', descriere: 'Rahat turcesc cu apa de trandafiri, fistic si zahar pudra — dulciuri orientale fine', pret: 35, imagine: '/images/meniu/desert_parfait.jpg', este_desert: true },
+  { tara: 'turceasca', nume: 'Kadayif cu Kaymak', descriere: 'Tort de paste subtiri coapte cu sirop de miere si kaymak (smantana grasa)', pret: 42, imagine: '/images/meniu/desert_Millefeuille.jpg', este_desert: true },
+  { tara: 'turceasca', nume: 'Muhallebi', descriere: 'Budinca de lapte turceasca cu apa de trandafiri, nuca de cocos si migdale', pret: 32, imagine: '/images/meniu/desert_Piemontez.jpg', este_desert: true },
+
+  // MOLDOVENEASCA — 5 feluri + 5 deserturi
+  { tara: 'moldoveneasca', nume: 'Sarmale in Foi de Vita', descriere: 'Rulouri de carne de porc si vita cu orez, gatite lent in foi de vita murate cu smantana', pret: 88, imagine: '/images/meniu/carne_gulas.jpg', este_desert: false },
+  { tara: 'moldoveneasca', nume: 'Mamaliga cu Branza si Smantana', descriere: 'Mamaliga traditionala cu branza de burduf si smantana groasa de ferma', pret: 52, imagine: '/images/meniu/polenta.jpg', este_desert: false },
+  { tara: 'moldoveneasca', nume: 'Ciorba de Perisoare', descriere: 'Ciorba acrisoara cu perisoare de carne, legume de sezon si smantana', pret: 45, imagine: '/images/meniu/supa_vacuta.jpg', este_desert: false },
+  { tara: 'moldoveneasca', nume: 'Placinte cu Branza', descriere: 'Placinte prajite in untura cu branza de vaci sarata si marar proaspat', pret: 38, imagine: '/images/meniu/crostini.jpg', este_desert: false },
+  { tara: 'moldoveneasca', nume: 'Varza Acra cu Carne de Porc', descriere: 'Varza murata inabusita cu costita afumata, boia si smantana — mancare de suflet moldoveneasca', pret: 72, imagine: '/images/meniu/carne_gulas.jpg', este_desert: false },
+  { tara: 'moldoveneasca', nume: 'Cozonac Moldovenesc', descriere: 'Cozonac pufos cu nuca, cacao si stafide, copt in cuptor cu lemne', pret: 42, imagine: '/images/meniu/desert_placintaInghetata.jpg', este_desert: true },
+  { tara: 'moldoveneasca', nume: 'Papanasi Prajiti', descriere: 'Gogosi de branza de vaci prajite, cu smantana groasa si dulceata de afine', pret: 38, imagine: '/images/meniu/desert_panna.jpg', este_desert: true },
+  { tara: 'moldoveneasca', nume: 'Tarta cu Visine', descriere: 'Tarta frageda cu crema de vanilie si visine acre din livada, acoperita cu jeleu', pret: 40, imagine: '/images/meniu/desert_Bavarois.jpg', este_desert: true },
+  { tara: 'moldoveneasca', nume: 'Baba Neagra', descriere: 'Prajitura traditionala moldoveneasca cu miere, nuca si stafide, densa si aromate', pret: 35, imagine: '/images/meniu/desert_Opera.jpg', este_desert: true },
+  { tara: 'moldoveneasca', nume: 'Amandine Moldovenesti', descriere: 'Prajitura cu blat de cacao, crema de cafea si glazura de ciocolata — clasic de cofetarie', pret: 38, imagine: '/images/meniu/desert_fondant.jpg', este_desert: true },
+
+  // JAPONEZA — 5 feluri + 5 deserturi
+  { tara: 'japoneza', nume: 'Ramen Tonkotsu', descriere: 'Supa de os de porc gatita 12 ore, cu fidea ramen, chashu, ou moale si nori', pret: 95, imagine: '/images/meniu/supa_ketoThai.jpg', este_desert: false },
+  { tara: 'japoneza', nume: 'Wagyu Teriyaki Don', descriere: 'Vita Wagyu A5 glazurata cu sos teriyaki, servita pe orez japonez cu sesame si nori', pret: 225, imagine: '/images/meniu/carne_ribeye.jpg', este_desert: false },
+  { tara: 'japoneza', nume: 'Tempura de Creveti', descriere: 'Creveti tigru in aluat tempura croccant, cu sos dashi si daikon ras', pret: 115, imagine: '/images/meniu/calamari.jpg', este_desert: false },
+  { tara: 'japoneza', nume: 'Miso Glazed Cod', descriere: 'Cod Patagonia marinat in miso alb si sake, gatit la cuptor cu castraveti marinati', pret: 145, imagine: '/images/meniu/peste_branzino.jpg', este_desert: false },
+  { tara: 'japoneza', nume: 'Yakitori cu Sos Tare', descriere: 'Frigarui de pui la gratar japonez cu sos tare (soia, mirin, sake), cu orez si salata de castraveti', pret: 88, imagine: '/images/meniu/carne_kiev.jpg', este_desert: false },
+  { tara: 'japoneza', nume: 'Matcha Panna Cotta', descriere: 'Panna cotta cu matcha ceremonial, sos de anko si fulgi de aur', pret: 52, imagine: '/images/meniu/desert_panna.jpg', este_desert: true },
+  { tara: 'japoneza', nume: 'Mochi cu Inghetata', descriere: 'Bile de mochi cu inghetata de ciocolata neagra si vanilie, cu praf de matcha', pret: 45, imagine: '/images/meniu/desert_inghetata.jpg', este_desert: true },
+  { tara: 'japoneza', nume: 'Dorayaki cu Anko', descriere: 'Pancakes japoneze mici umplute cu pasta dulce de fasole rosie azuki', pret: 38, imagine: '/images/meniu/desert_Cheesecake.jpg', este_desert: true },
+  { tara: 'japoneza', nume: 'Taiyaki cu Crema', descriere: 'Vafe in forma de peste umplute cu crema patiserie de vanilie si pasta de matcha', pret: 40, imagine: '/images/meniu/desert_ecler.jpg', este_desert: true },
+  { tara: 'japoneza', nume: 'Yokan de Ciocolata', descriere: 'Jeleu japonez dens de ciocolata neagra si agar-agar, servit rece cu ceai verde', pret: 35, imagine: '/images/meniu/desert_Mousse.jpg', este_desert: true },
+
+  // NORVEGIANA — 5 feluri + 5 deserturi
+  { tara: 'norvegiana', nume: 'Gravlax de Somon Nordic', descriere: 'Somon Atlantic curat cu anason si marar, cu crème fraîche, icre de stiuca si blini', pret: 125, imagine: '/images/meniu/gravlex.jpg', este_desert: false },
+  { tara: 'norvegiana', nume: 'Bacalao Tradisjonell', descriere: 'Cod uscat reconstituit cu rosii, masline, ardei si cartofi — reteta norvegiena clasica', pret: 115, imagine: '/images/meniu/peste_Bacalhau.jpg', este_desert: false },
+  { tara: 'norvegiana', nume: 'Frikadeller cu Lingonberry', descriere: 'Chiftele nordice de porc si vita cu cartofi gatiti in unt si sos de lingonberry', pret: 95, imagine: '/images/meniu/carne_gulas.jpg', este_desert: false },
+  { tara: 'norvegiana', nume: 'Reindeer Steak', descriere: 'Muschi de ren servit rar, cu jus de afine salbatice, ciuperci chanterelle si piure de radacini', pret: 185, imagine: '/images/meniu/carne_lamb.jpg', este_desert: false },
+  { tara: 'norvegiana', nume: 'Fiskesuppe', descriere: 'Supa cremoasa norvegiena de peste cu somon, cod, morcovi, praz si smantana', pret: 78, imagine: '/images/meniu/supa_bouillabaisse.jpg', este_desert: false },
+  { tara: 'norvegiana', nume: 'Krumkake cu Frisca', descriere: 'Vafe crocante subtiri rulou cu frisca batuta si fructe de padure nordice', pret: 42, imagine: '/images/meniu/desert_Millefeuille.jpg', este_desert: true },
+  { tara: 'norvegiana', nume: 'Cloudberry Tart', descriere: 'Tarta cu fructe cloudberry (afine galbene) si crema de mascarpone', pret: 52, imagine: '/images/meniu/desert_Bavarois.jpg', este_desert: true },
+  { tara: 'norvegiana', nume: 'Bløtkake', descriere: 'Tort norvegian stratificat cu frisca, capsuni proaspete si blat pufos de vanilie', pret: 48, imagine: '/images/meniu/desert_Opera.jpg', este_desert: true },
+  { tara: 'norvegiana', nume: 'Multekrem', descriere: 'Desert nordic cu fructe cloudberry proaspete batute in frisca grasa — simplu si rafinat', pret: 45, imagine: '/images/meniu/desert_parfait.jpg', este_desert: true },
+  { tara: 'norvegiana', nume: 'Fyrstekake', descriere: 'Tarta norvegiana cu crema de cardamom si migdale, invelita in aluat nisipos crocant', pret: 42, imagine: '/images/meniu/desert_torta.jpg', este_desert: true },
+])
+
+// ── tip_vreme pentru recomandari meteo ──
+const CALDE = [
+  'Bisque de Homar', 'Cremă de Ciuperci Porcini', 'French Onion Soup',
+  'Zuppa Toscana', 'Supă de Coadă de Bou', 'Supă Cremă de Trufe',
+  'Wellington de Vită', 'Boeuf Bourguignon', 'Osso Buco Milanese',
+  'Coasta de Vită Gătită 12h', 'Rack of Lamb', 'Duck Confit',
+  'Soufflé au Chocolat', 'Fondant de Ciocolată', 'Mont Blanc cu Castane'
+]
+const RECI = [
+  'Gazpacho Andaluz', 'Insalata Caprese', 'Carpaccio di Manzo',
+  'Vitello Tonnato', 'Gravlax de Somon', 'Tartare de Ton cu Avocado',
+  'Ton Tataki', 'Sashimi Platter Premium', 'Ceviche de Doradă',
+  'Panna Cotta', 'Mousse de Ciocolată 70%', 'Parfait de Fistic',
+  'Carpaccio de Ananas', 'Îngheţată Artizanală (3 bile)'
+]
+await db.Preparat.update({ tip_vreme: 'cald' }, { where: { nume: CALDE } })
+await db.Preparat.update({ tip_vreme: 'rece' }, { where: { nume: RECI } })
+
+console.log('Seed complet! 220 preparate, luna activa si preparate lunare inserate.')
 process.exit(0)

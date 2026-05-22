@@ -89,6 +89,16 @@
   letter-spacing: 0;
 }
 
+.admin-nav-badge-rosu {
+  background: #c0392b;
+  border: 1px solid #e74c3c;
+  color: #fff;
+  font-size: 0.7rem;
+  border-radius: 10px;
+  padding: 1px 7px;
+  font-weight: 700;
+}
+
 .admin-nav-btn-logout {
   border-color: rgba(255,80,80,0.3);
   color: rgba(255,120,120,0.8);

@@ -211,6 +211,9 @@ export const getMesaje = () =>
 export const getMesajeNecititeCount = () =>
   apiFetch('/mesaj/necitite-count').then(r => r.json())
 
+export const getAsteptareCounts = () =>
+  apiFetch('/api/asteptare-counts').then(r => r.json())
+
 export const marcheazaMesajCitit = (id) =>
   apiFetch(`/mesaj/${id}/citit`, { method: 'PUT' }).then(r => r.json())
 
