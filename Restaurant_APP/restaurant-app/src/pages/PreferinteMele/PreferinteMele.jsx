@@ -44,12 +44,13 @@ const PreferinteMele = () => {
   }, [])
 
   const adaugaInCos = (preparat) => {
-    const cos = (() => { try { return JSON.parse(localStorage.getItem('cos')) || [] } catch { return [] } })()
+    const cosKey = `cos_${userLogat.id}`
+    const cos = (() => { try { return JSON.parse(localStorage.getItem(cosKey)) || [] } catch { return [] } })()
     const existent = cos.find(i => i.preparatId === preparat.id)
     const nouCos = existent
       ? cos.map(i => i.preparatId === preparat.id ? { ...i, cantitate: i.cantitate + 1 } : i)
       : [...cos, { preparatId: preparat.id, numeSnapshot: preparat.nume, pretSnapshot: preparat.pret, cantitate: 1 }]
-    localStorage.setItem('cos', JSON.stringify(nouCos))
+    localStorage.setItem(cosKey, JSON.stringify(nouCos))
     window.dispatchEvent(new Event('cos-update'))
     setAdaugat(preparat.id)
     setTimeout(() => setAdaugat(null), 1500)

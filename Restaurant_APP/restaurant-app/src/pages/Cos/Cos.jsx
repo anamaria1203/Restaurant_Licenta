@@ -63,7 +63,10 @@ const AsteptareGatePage = () => (
 )
 
 const getCosLocal = () => {
-  try { return JSON.parse(localStorage.getItem('cos')) || [] } catch { return [] }
+  try {
+    const userId = JSON.parse(localStorage.getItem('user'))?.id
+    return JSON.parse(localStorage.getItem(userId ? `cos_${userId}` : 'cos')) || []
+  } catch { return [] }
 }
 
 const Cos = () => {
@@ -102,7 +105,7 @@ const Cos = () => {
 
   const saveCos = (nouCos) => {
     setCos(nouCos)
-    localStorage.setItem('cos', JSON.stringify(nouCos))
+    localStorage.setItem(`cos_${userLogat.id}`, JSON.stringify(nouCos))
     window.dispatchEvent(new Event('cos-update'))
   }
 
@@ -135,7 +138,7 @@ const Cos = () => {
       if (!response.ok) {
         setEroare(data.error || 'Eroare la plasarea comenzii')
       } else {
-        localStorage.removeItem('cos')
+        localStorage.removeItem(`cos_${userLogat.id}`)
         window.dispatchEvent(new Event('cos-update'))
         setCos([])
         setObservatii('')

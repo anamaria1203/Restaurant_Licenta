@@ -21,7 +21,8 @@ const Navbar = () => {
   useEffect(() => {
     const updateNrCos = () => {
       try {
-        const cos = JSON.parse(localStorage.getItem('cos')) || []
+        const userId = JSON.parse(localStorage.getItem('user'))?.id
+        const cos = JSON.parse(localStorage.getItem(userId ? `cos_${userId}` : 'cos')) || []
         setNrCos(cos.reduce((s, i) => s + i.cantitate, 0))
       } catch { setNrCos(0) }
     }

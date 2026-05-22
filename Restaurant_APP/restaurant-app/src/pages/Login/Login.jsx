@@ -82,6 +82,13 @@ const Login = () => {
         return
       }
 
+      const userId = data.user.id
+      const userKey = `cos_${userId}`
+      if (!localStorage.getItem(userKey)) {
+        const oldCos = localStorage.getItem('cos')
+        if (oldCos) localStorage.setItem(userKey, oldCos)
+      }
+      localStorage.removeItem('cos')
       localStorage.setItem('user', JSON.stringify(data.user))
 
       if (mod === 'signup') {
