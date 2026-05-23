@@ -209,15 +209,19 @@ const AdminActivitate = () => {
               {/* ─── SIDEBAR ANULATE ─── */}
               <div className="act-sidebar">
 
-                  {anulateManager.length > 0 && (
-                    <div className="act-sidebar-sectiune">
-                      <div className="act-sidebar-header" onClick={() => setShowAnulateManager(v => !v)}>
-                        <span>Anulate de mine ({anulateManager.length})</span>
-                        <span className="act-sidebar-arrow">{showAnulateManager ? '▲' : '▼'}</span>
-                      </div>
-                      {showAnulateManager && (
-                        <div className="act-sidebar-lista">
-                          {anulateManager.map(r => (
+                  <div className="act-sidebar-sectiune">
+                    <div className="act-sidebar-header" onClick={() => setShowAnulateManager(v => !v)}>
+                      <span>Anulate de mine ({anulateManager.length})</span>
+                      <span className="act-sidebar-arrow">{showAnulateManager ? '▲' : '▼'}</span>
+                    </div>
+                    {showAnulateManager && (
+                      <div className="act-sidebar-lista">
+                        {anulateManager.length === 0 ? (
+                          <div className="act-sidebar-card" style={{ color: 'rgba(245,240,232,0.35)', fontSize: '0.78rem' }}>
+                            Nicio rezervare anulată de tine.
+                          </div>
+                        ) : (
+                          anulateManager.map(r => (
                             <div key={r.id} className="act-sidebar-card">
                               <div className="act-sidebar-nr">#{r.id}</div>
                               <div className="act-sidebar-client">{r.user?.nume}</div>
@@ -230,11 +234,11 @@ const AdminActivitate = () => {
                                 Restaurează
                               </button>
                             </div>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  )}
+                          ))
+                        )}
+                      </div>
+                    )}
+                  </div>
 
                   <div className="act-sidebar-sectiune">
                     <div className="act-sidebar-header" onClick={() => {
