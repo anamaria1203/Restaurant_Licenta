@@ -57,8 +57,27 @@ const stergeUser = async (req, res, next) => {
 
 const restaureazaUser = async (req, res, next) => {
   try {
+    const { Op } = db.sequelize.Sequelize
     const user = await db.User.findByPk(req.params.id)
     if (!user) return res.status(404).json({ error: 'Userul nu a fost gasit' })
+
+    const rezervari = await db.Rezervare.findAll({
+      where: { userId: user.id, status: 'anulata', anulataDe: 'manager' },
+      attributes: ['id']
+    })
+    const rezervareIds = rezervari.map(r => r.id)
+
+    if (rezervareIds.length > 0) {
+      await db.Rezervare.update(
+        { status: 'in_asteptare', anulataDe: null, anulataNotificat: false },
+        { where: { id: { [Op.in]: rezervareIds } } }
+      )
+      await db.Comanda.update(
+        { status: 'in_asteptare' },
+        { where: { rezervareId: { [Op.in]: rezervareIds }, status: 'anulata' } }
+      )
+    }
+
     await user.update({ deletedAt: null })
     res.json({ message: 'Client restaurat cu succes' })
   } catch (err) { next(err) }

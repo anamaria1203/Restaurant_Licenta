@@ -8,6 +8,13 @@ const creeazaComanda = async (req, res, next) => {
     if (!items || items.length === 0) {
       return res.status(400).json({ error: 'Comanda trebuie sa contina cel putin un produs' })
     }
+    if (!rezervareId) {
+      return res.status(400).json({ error: 'Este necesara o rezervare confirmata' })
+    }
+    const rezervare = await db.Rezervare.findOne({ where: { id: rezervareId, userId } })
+    if (!rezervare || rezervare.status !== 'confirmata') {
+      return res.status(400).json({ error: 'Rezervarea nu este valida sau nu este confirmata' })
+    }
 
     const total = items.reduce((sum, item) => sum + item.pretSnapshot * item.cantitate, 0)
 
