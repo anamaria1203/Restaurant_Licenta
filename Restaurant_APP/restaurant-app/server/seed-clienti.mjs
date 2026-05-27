@@ -35,8 +35,7 @@ const seed = [
 let created = 0
 for (const entry of seed) {
   const existent = await db.User.findOne({ where: { email: entry.client.email } })
-  if (existent) { console.log(`Skip: ${entry.client.email}`); continue }
-  const user = await db.User.create({ ...entry.client, passwordHash, tip: 'client' })
+  const user = existent || await db.User.create({ ...entry.client, passwordHash, tip: 'client' })
   const rezervariCreate = []
   for (const rez of (entry.rezervari || [])) {
     const r = await db.Rezervare.create({ ...rez, userId: user.id })
