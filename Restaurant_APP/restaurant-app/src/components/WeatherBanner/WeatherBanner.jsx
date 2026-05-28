@@ -8,8 +8,8 @@ const WEATHER_EMOJI = {
 }
 
 const determineazaTip = (temp, conditie) => {
-  if (['Rain', 'Drizzle', 'Thunderstorm', 'Snow'].includes(conditie) || temp < 18) return 'cald'
-  if (temp > 22) return 'rece'
+  if (['Rain', 'Drizzle', 'Thunderstorm', 'Snow'].includes(conditie) || temp < 17) return 'cald'
+  if (temp > 19) return 'rece'
   return null
 }
 
