@@ -2,12 +2,8 @@ import { useState, useEffect } from 'react'
 import { getRecomandateMeteo } from '../../services/api'
 import './WeatherBanner.css'
 
-const WEATHER_EMOJI = {
-  Clear: '☀️', Clouds: '⛅', Rain: '🌧️', Drizzle: '🌦️',
-  Thunderstorm: '⛈️', Snow: '❄️', Mist: '🌫️', Fog: '🌫️', Haze: '🌫️'
-}
 
-const determineazaTip = (temp, conditie) => {
+const determinaTip= (temp, conditie) => {
   if (['Rain', 'Drizzle', 'Thunderstorm', 'Snow'].includes(conditie) || temp < 17) return 'cald'
   if (temp > 19) return 'rece'
   return null
@@ -33,9 +29,9 @@ const WeatherBanner = ({ onAdauga, adaugat }) => {
         const temp = Math.round(data.main.temp)
         const conditie = data.weather?.[0]?.main || 'Clear'
         const descriere = data.weather?.[0]?.description || ''
-        const tip = determineazaTip(temp, conditie)
+        const tip = determinaTip(temp, conditie)
 
-        setVreme({ temp, conditie, descriere, emoji: WEATHER_EMOJI[conditie] || '🌡️', tip })
+        setVreme({ temp, conditie, descriere, tip })
 
         if (!tip) return
         const rec = await getRecomandateMeteo(tip)
@@ -55,8 +51,7 @@ const WeatherBanner = ({ onAdauga, adaugat }) => {
       <button className="wb-close" onClick={() => setVizibil(false)}>✕</button>
 
       <div className="wb-stanga">
-        <div className="wb-emoji">{vreme.emoji}</div>
-        <div className="wb-info">
+<div className="wb-info">
           <div className="wb-temp">{vreme.temp}°C</div>
           <div className="wb-descriere">{vreme.descriere}</div>
           <div className="wb-mesaj">{mesaj}</div>

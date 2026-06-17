@@ -105,13 +105,13 @@ const AdminStatistici = () => {
                 <p>Distribuția rezervărilor cu pre-comandă în funcție de ora rezervării</p>
               </div>
               <ResponsiveContainer width="100%" height={320}>
-                <BarChart data={date.peOre} margin={{ top: 10, right: 20, left: 0, bottom: 5 }}>
+                <BarChart data={date.peOre.filter(r => parseInt(r.ora) >= 9)} margin={{ top: 10, right: 20, left: 0, bottom: 5 }}>
                   <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
                   <XAxis dataKey="ora" tick={{ fill: 'rgba(245,240,232,0.5)', fontSize: 11 }} axisLine={{ stroke: 'rgba(255,255,255,0.1)' }} tickLine={false} />
                   <YAxis allowDecimals={false} tick={{ fill: 'rgba(245,240,232,0.5)', fontSize: 11 }} axisLine={false} tickLine={false} />
                   <Tooltip content={<TooltipCustom />} cursor={{ fill: 'rgba(201,168,76,0.06)' }} />
                   <Bar dataKey="nrRezervari" radius={[3, 3, 0, 0]}>
-                    {date.peOre.map((entry, index) => (
+                    {date.peOre.filter(r => parseInt(r.ora) >= 9).map((entry, index) => (
                       <Cell key={index} fill={entry.ora === oraVarf.ora ? CULOARE_PRIMARA : CULOARE_SECUNDARA} opacity={entry.nrRezervari === 0 ? 0.25 : 1} />
                     ))}
                   </Bar>
