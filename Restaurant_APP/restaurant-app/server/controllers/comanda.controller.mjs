@@ -2,23 +2,23 @@ import db from '../models/index.mjs'
 
 const creeazaComanda = async (req, res, next) => {
   try {
-    const { items, observatii, rezervareId } = req.body
+    const { items, notes, reservationId } = req.body
     const userId = req.user.id
 
     if (!items || items.length === 0) {
       return res.status(400).json({ error: 'Comanda trebuie sa contina cel putin un produs' })
     }
-    if (!rezervareId) {
+    if (!reservationId) {
       return res.status(400).json({ error: 'Este necesara o rezervare confirmata' })
     }
-    const rezervare = await db.Rezervare.findOne({ where: { id: rezervareId, userId } })
+    const rezervare = await db.Rezervare.findOne({ where: { id: reservationId, userId } })
     if (!rezervare || rezervare.status !== 'confirmata') {
       return res.status(400).json({ error: 'Rezervarea nu este valida sau nu este confirmata' })
     }
 
     const total = items.reduce((sum, item) => sum + item.pretSnapshot * item.cantitate, 0)
 
-    const comanda = await db.Comanda.create({ userId, total, notes: observatii, reservationId: rezervareId || null })
+    const comanda = await db.Comanda.create({ userId, total, notes, reservationId: reservationId || null })
 
     const itemsDeCreat = items.map(item => ({
       orderId: comanda.id,
