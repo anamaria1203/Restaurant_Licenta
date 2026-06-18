@@ -48,7 +48,7 @@ const Meniu = () => {
     const existent = cos.find(i => i.preparatId === preparat.id)
     const nouCos = existent
       ? cos.map(i => i.preparatId === preparat.id ? { ...i, cantitate: i.cantitate + 1 } : i)
-      : [...cos, { preparatId: preparat.id, numeSnapshot: preparat.nume, pretSnapshot: preparat.pret, cantitate: 1 }]
+      : [...cos, { preparatId: preparat.id, numeSnapshot: preparat.name, pretSnapshot: preparat.price, cantitate: 1 }]
     localStorage.setItem(cosKey, JSON.stringify(nouCos))
     window.dispatchEvent(new Event('cos-update'))
     setAdaugat(preparat.id)
@@ -87,10 +87,10 @@ const Meniu = () => {
 
   const preparateFiltrate = useMemo(() => {
     let result = preparate.filter(p =>
-      p.nume.toLowerCase().includes(searchQuery.toLowerCase())
+      p.name.toLowerCase().includes(searchQuery.toLowerCase())
     )
-    if (sortPret === 'asc') result = [...result].sort((a, b) => a.pret - b.pret)
-    if (sortPret === 'desc') result = [...result].sort((a, b) => b.pret - a.pret)
+    if (sortPret === 'asc') result = [...result].sort((a, b) => a.price - b.price)
+    if (sortPret === 'desc') result = [...result].sort((a, b) => b.price - a.price)
     return result
   }, [preparate, searchQuery, sortPret])
 
@@ -185,17 +185,17 @@ const Meniu = () => {
                   {recomandate.map(p => (
                     <div key={p.id} className="recomandat-card">
                       <div className="recomandat-imagine">
-                        {p.imagine ? (
-                          <img src={`/images/meniu/${p.imagine}`} alt={p.nume} onError={e => { e.target.style.display = 'none' }} />
+                        {p.image ? (
+                          <img src={`/images/meniu/${p.image}`} alt={p.name} onError={e => { e.target.style.display = 'none' }} />
                         ) : null}
                         <div className="imagine-icon-sm">🍽</div>
                       </div>
                       <div className="recomandat-info">
                         <span className="recomandat-badge-tag">Chef's Choice</span>
-                        <h4>{p.nume}</h4>
-                        <p>{p.descriere}</p>
+                        <h4>{p.name}</h4>
+                        <p>{p.description}</p>
                         <div className="recomandat-footer">
-                          <span className="recomandat-pret">{p.pret} RON</span>
+                          <span className="recomandat-pret">{p.price} RON</span>
                           <button className="btn-adauga" onClick={() => handleAdauga(p)}>
                             {adaugat === p.id ? '✓ Adăugat' : 'Adaugă'}
                           </button>
@@ -214,10 +214,10 @@ const Meniu = () => {
                 preparateFiltrate.map(p => (
                   <div key={p.id} className="preparat-card">
                     <div className="preparat-imagine-wrapper">
-                      {p.imagine ? (
+                      {p.image ? (
                         <img
-                          src={`/images/meniu/${p.imagine}`}
-                          alt={p.nume}
+                          src={`/images/meniu/${p.image}`}
+                          alt={p.name}
                           onError={e => { e.target.style.display = 'none' }}
                         />
                       ) : (
@@ -233,15 +233,15 @@ const Meniu = () => {
                       )}
                     </div>
                     <div className="preparat-info">
-                      <h3>{p.nume}</h3>
-                      <p className="preparat-descriere">{p.descriere}</p>
-                      {p.alergeni && (
+                      <h3>{p.name}</h3>
+                      <p className="preparat-descriere">{p.description}</p>
+                      {p.allergens && (
                         <p className="preparat-alergeni">
-                          <span>Alergeni:</span> {p.alergeni}
+                          <span>Alergeni:</span> {p.allergens}
                         </p>
                       )}
                       <div className="preparat-footer">
-                        <span className="preparat-pret">{p.pret} RON</span>
+                        <span className="preparat-pret">{p.price} RON</span>
                         <button className="btn-adauga" onClick={() => handleAdauga(p)}>
                           {adaugat === p.id ? '✓ Adăugat' : 'Adaugă la comandă'}
                         </button>

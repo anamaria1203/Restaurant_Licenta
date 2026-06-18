@@ -15,7 +15,7 @@ const AdminDashboard = () => {
   const [nrComenziActive, setNrComenziActive] = useState(0)
   const navigate = useNavigate()
 
-  const clienti = useri.filter(u => u.tip === 'client')
+  const clienti = useri.filter(u => u.type === 'client')
 
   const fetchUseri = async () => {
     try {
@@ -141,7 +141,7 @@ const AdminDashboard = () => {
                 {clienti.map(user => (
                   <tr key={user.id}>
                     <td>{user.id}</td>
-                    <td>{user.nume}</td>
+                    <td>{user.name}</td>
                     <td>{user.email}</td>
                     <td>{new Date(user.createdAt).toLocaleDateString('ro-RO')}</td>
                     <td>
@@ -181,7 +181,7 @@ const AdminDashboard = () => {
                   {useriStersi.map(user => (
                     <tr key={user.id} className="rand-sters">
                       <td>{user.id}</td>
-                      <td>{user.nume}</td>
+                      <td>{user.name}</td>
                       <td>{user.email}</td>
                       <td>{new Date(user.deletedAt).toLocaleDateString('ro-RO')}</td>
                       <td>
@@ -205,7 +205,7 @@ const AdminDashboard = () => {
             <div className="modal-icon">⚠</div>
             <h3>Confirmare stergere</h3>
             <p>Esti sigur ca doriti sa stergeti clientul</p>
-            <p className="modal-nume">"{userDesters?.nume}"?</p>
+            <p className="modal-nume">"{userDesters?.name}"?</p>
             <p className="modal-sub">Clientul va putea fi restaurat ulterior.</p>
             <div className="modal-butoane">
               <button className="btn-da" onClick={handleConfirmaStergere}>Da, sterge</button>

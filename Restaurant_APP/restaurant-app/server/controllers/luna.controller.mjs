@@ -3,8 +3,8 @@ import db from '../models/index.mjs'
 const getLunaActiva = async (req, res, next) => {
   try {
     let luna = await db.LunaActiva.findOne()
-    if (!luna) luna = await db.LunaActiva.create({ tara: 'spaniola' })
-    res.json({ tara: luna.tara })
+    if (!luna) luna = await db.LunaActiva.create({ country: 'spaniola' })
+    res.json({ tara: luna.country })
   } catch (err) { next(err) }
 }
 
@@ -13,11 +13,11 @@ const setLunaActiva = async (req, res, next) => {
     const { tara } = req.body
     let luna = await db.LunaActiva.findOne()
     if (!luna) {
-      luna = await db.LunaActiva.create({ tara })
+      luna = await db.LunaActiva.create({ country: tara })
     } else {
-      await luna.update({ tara })
+      await luna.update({ country: tara })
     }
-    res.json({ tara: luna.tara })
+    res.json({ tara: luna.country })
   } catch (err) { next(err) }
 }
 

@@ -4,7 +4,7 @@ const getUseri = async (req, res, next) => {
   try {
     const useri = await db.User.findAll({
       where: { deletedAt: null },
-      attributes: ['id', 'nume', 'email', 'tip', 'createdAt']
+      attributes: ['id', 'name', 'email', 'type', 'createdAt']
     })
     res.json(useri)
   } catch (err) { next(err) }
@@ -14,7 +14,7 @@ const getUseriStersi = async (req, res, next) => {
   try {
     const stersi = await db.User.findAll({
       where: { deletedAt: { [db.sequelize.Sequelize.Op.ne]: null } },
-      attributes: ['id', 'nume', 'email', 'tip', 'createdAt', 'deletedAt']
+      attributes: ['id', 'name', 'email', 'type', 'createdAt', 'deletedAt']
     })
     res.json(stersi)
   } catch (err) { next(err) }
@@ -36,18 +36,18 @@ const stergeUser = async (req, res, next) => {
 
     if (rezervareIds.length > 0) {
       await db.Rezervare.update(
-        { status: 'anulata', anulataDe: 'manager', anulataNotificat: true },
+        { status: 'anulata', cancelledBy: 'manager', cancellationNotified: true },
         { where: { id: { [Op.in]: rezervareIds } } }
       )
       await db.Comanda.update(
         { status: 'anulata' },
-        { where: { rezervareId: { [Op.in]: rezervareIds }, status: { [Op.in]: ['in_asteptare', 'confirmata', 'in_preparare'] } } }
+        { where: { reservationId: { [Op.in]: rezervareIds }, status: { [Op.in]: ['in_asteptare', 'confirmata', 'in_preparare'] } } }
       )
     }
 
     await db.Comanda.update(
       { status: 'anulata' },
-      { where: { userId, rezervareId: null, status: { [Op.in]: ['in_asteptare', 'confirmata', 'in_preparare'] } } }
+      { where: { userId, reservationId: null, status: { [Op.in]: ['in_asteptare', 'confirmata', 'in_preparare'] } } }
     )
 
     await user.update({ deletedAt: new Date() })
@@ -62,19 +62,19 @@ const restaureazaUser = async (req, res, next) => {
     if (!user) return res.status(404).json({ error: 'Userul nu a fost gasit' })
 
     const rezervari = await db.Rezervare.findAll({
-      where: { userId: user.id, status: 'anulata', anulataDe: 'manager' },
+      where: { userId: user.id, status: 'anulata', cancelledBy: 'manager' },
       attributes: ['id']
     })
     const rezervareIds = rezervari.map(r => r.id)
 
     if (rezervareIds.length > 0) {
       await db.Rezervare.update(
-        { status: 'in_asteptare', anulataDe: null, anulataNotificat: false },
+        { status: 'in_asteptare', cancelledBy: null, cancellationNotified: false },
         { where: { id: { [Op.in]: rezervareIds } } }
       )
       await db.Comanda.update(
         { status: 'in_asteptare' },
-        { where: { rezervareId: { [Op.in]: rezervareIds }, status: 'anulata' } }
+        { where: { reservationId: { [Op.in]: rezervareIds }, status: 'anulata' } }
       )
     }
 

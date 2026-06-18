@@ -26,16 +26,16 @@ const Mesaj = mesajModel(sequelize, DataTypes)
 Comanda.belongsTo(User, { foreignKey: 'userId' })
 User.hasMany(Comanda, { foreignKey: 'userId' })
 
-Comanda.hasMany(ComandaItem, { foreignKey: 'comandaId' })
-ComandaItem.belongsTo(Comanda, { foreignKey: 'comandaId' })
+Comanda.hasMany(ComandaItem, { foreignKey: 'orderId' })
+ComandaItem.belongsTo(Comanda, { foreignKey: 'orderId' })
 
-ComandaItem.belongsTo(Preparat, { foreignKey: 'preparatId' })
+ComandaItem.belongsTo(Preparat, { foreignKey: 'dishId' })
 
 Rezervare.belongsTo(User, { foreignKey: 'userId' })
 User.hasMany(Rezervare, { foreignKey: 'userId' })
 
-Comanda.belongsTo(Rezervare, { foreignKey: 'rezervareId' })
-Rezervare.hasMany(Comanda, { foreignKey: 'rezervareId' })
+Comanda.belongsTo(Rezervare, { foreignKey: 'reservationId' })
+Rezervare.hasMany(Comanda, { foreignKey: 'reservationId' })
 
 const db = {
   sequelize,

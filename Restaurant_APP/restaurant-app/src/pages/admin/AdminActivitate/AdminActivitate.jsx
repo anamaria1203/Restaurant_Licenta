@@ -49,7 +49,7 @@ const AdminActivitate = () => {
       const [rez, com] = await Promise.all([getRezervariAdmin(), getComenziAdmin()])
       const rezervariCuComanda = rez.map(r => ({
         ...r,
-        comanda: com.find(c => c.rezervareId === r.id) || null
+        comanda: com.find(c => c.reservationId === r.id) || null
       }))
       setToate(rezervariCuComanda)
     } catch (err) {
@@ -86,11 +86,11 @@ const AdminActivitate = () => {
   const confirmate = toate
     .filter(r => r.status === 'confirmata')
     .sort((a, b) => {
-      if (a.data !== b.data) return a.data.localeCompare(b.data)
-      return a.ora.localeCompare(b.ora)
+      if (a.reservationDate !== b.reservationDate) return a.reservationDate.localeCompare(b.reservationDate)
+      return a.hour.localeCompare(b.hour)
     })
-  const anulateManager = toate.filter(r => r.status === 'anulata' && r.anulataDe !== 'client')
-  const anulateClient  = toate.filter(r => r.status === 'anulata' && r.anulataDe === 'client')
+  const anulateManager = toate.filter(r => r.status === 'anulata' && r.cancelledBy !== 'client')
+  const anulateClient  = toate.filter(r => r.status === 'anulata' && r.cancelledBy === 'client')
 
   const RandComanda = ({ comanda }) => {
     if (!comanda) return <div className="act-fara-comanda">Nicio pre-comandă asociată</div>
@@ -121,9 +121,9 @@ const AdminActivitate = () => {
         <div className="act-precomanda-items">
           {comanda.ComandaItems?.map(item => (
             <div key={item.id} className="act-precomanda-item">
-              <span className="act-ci-nume">{item.numeSnapshot}</span>
-              <span className="act-ci-cant">× {item.cantitate}</span>
-              <span className="act-ci-pret">{(item.pretSnapshot * item.cantitate).toFixed(2)} RON</span>
+              <span className="act-ci-nume">{item.nameSnapshot}</span>
+              <span className="act-ci-cant">× {item.quantity}</span>
+              <span className="act-ci-pret">{(item.priceSnapshot * item.quantity).toFixed(2)} RON</span>
             </div>
           ))}
         </div>
@@ -159,23 +159,23 @@ const AdminActivitate = () => {
                     <div className="act-banner-titlu">
                       <span className="act-banner-tag">Rezervare nouă</span>
                       <span className="act-banner-nr">#{r.id}</span>
-                      <span className="act-banner-client">{r.user?.nume}</span>
+                      <span className="act-banner-client">{r.user?.name}</span>
                       <span className="act-banner-email">{r.user?.email}</span>
                     </div>
 
                     <div className="act-rez-detalii">
-                      <span>{formatData(r.data)}</span>
+                      <span>{formatData(r.reservationDate)}</span>
                       <span className="act-rez-sep">·</span>
-                      <span>{r.ora}</span>
+                      <span>{r.hour}</span>
                       <span className="act-rez-sep">·</span>
-                      <span>{ZONA_LABEL[r.zona]}</span>
+                      <span>{ZONA_LABEL[r.zone]}</span>
                       <span className="act-rez-sep">·</span>
-                      <span>{r.nrPersoane} pers.</span>
-                      {r.ocazie && <><span className="act-rez-sep">·</span><span className="act-ocazie">{r.ocazie}</span></>}
+                      <span>{r.guestCount} pers.</span>
+                      {r.occasion && <><span className="act-rez-sep">·</span><span className="act-ocazie">{r.occasion}</span></>}
                     </div>
 
-                    {r.observatii && (
-                      <div className="act-obs">Observații: {r.observatii}</div>
+                    {r.notes && (
+                      <div className="act-obs">Observații: {r.notes}</div>
                     )}
 
                     <RandComanda comanda={r.comanda} />
@@ -224,8 +224,8 @@ const AdminActivitate = () => {
                           anulateManager.map(r => (
                             <div key={r.id} className="act-sidebar-card">
                               <div className="act-sidebar-nr">#{r.id}</div>
-                              <div className="act-sidebar-client">{r.user?.nume}</div>
-                              <div className="act-sidebar-data">{formatDataScurt(r.data)}, {r.ora}</div>
+                              <div className="act-sidebar-client">{r.user?.name}</div>
+                              <div className="act-sidebar-data">{formatDataScurt(r.reservationDate)}, {r.hour}</div>
                               <button
                                 className="act-btn-restaureaza"
                                 onClick={() => handleRezervare(r.id, 'in_asteptare')}
@@ -265,8 +265,8 @@ const AdminActivitate = () => {
                           anulateClient.map(r => (
                             <div key={r.id} className="act-sidebar-card">
                               <div className="act-sidebar-nr">#{r.id}</div>
-                              <div className="act-sidebar-client">{r.user?.nume}</div>
-                              <div className="act-sidebar-data">{formatDataScurt(r.data)}, {r.ora}</div>
+                              <div className="act-sidebar-client">{r.user?.name}</div>
+                              <div className="act-sidebar-data">{formatDataScurt(r.reservationDate)}, {r.hour}</div>
                               <div className="act-anulata-client-label">Anulată de client</div>
                             </div>
                           ))
@@ -294,7 +294,7 @@ const AdminActivitate = () => {
                           <div className="act-rez-header-stanga">
                             <span className="act-rez-nr">Rezervare #{r.id}</span>
                             <span className="act-rez-client">
-                              {r.user?.nume}
+                              {r.user?.name}
                               <span className="act-rez-email">{r.user?.email}</span>
                             </span>
                           </div>
@@ -313,17 +313,17 @@ const AdminActivitate = () => {
                         </div>
 
                         <div className="act-rez-detalii">
-                          <span>{formatData(r.data)}</span>
+                          <span>{formatData(r.reservationDate)}</span>
                           <span className="act-rez-sep">·</span>
-                          <span>{r.ora}</span>
+                          <span>{r.hour}</span>
                           <span className="act-rez-sep">·</span>
-                          <span>{ZONA_LABEL[r.zona]}</span>
+                          <span>{ZONA_LABEL[r.zone]}</span>
                           <span className="act-rez-sep">·</span>
-                          <span>{r.nrPersoane} pers.</span>
-                          {r.ocazie && <><span className="act-rez-sep">·</span><span className="act-ocazie">{r.ocazie}</span></>}
+                          <span>{r.guestCount} pers.</span>
+                          {r.occasion && <><span className="act-rez-sep">·</span><span className="act-ocazie">{r.occasion}</span></>}
                         </div>
 
-                        {r.observatii && <div className="act-obs">Observații: {r.observatii}</div>}
+                        {r.notes && <div className="act-obs">Observații: {r.notes}</div>}
 
                         <RandComanda comanda={r.comanda} />
                       </div>

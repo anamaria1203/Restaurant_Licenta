@@ -1,4 +1,4 @@
-import './Comanda.css'
+﻿import './Comanda.css'
 import { useState, useEffect, useMemo } from 'react'
 import Navbar from '../../components/Navbar/Navbar'
 import Footer from '../../components/Footer/Footer'
@@ -197,9 +197,9 @@ const Comanda = () => {
             ) : preparate.map(p => (
               <div key={p.id} className={`comanda-card ${adaugat === p.id ? 'in-cos' : ''}`}>
                 <div className="comanda-card-img">
-                  {p.imagine ? (
+                  {p.image ? (
                     <img
-                      src={`/images/meniu/${p.imagine}`}
+                      src={`/images/meniu/${p.image}`}
                       alt={p.nume}
                       onError={e => { e.target.style.display = 'none' }}
                     />
@@ -209,9 +209,9 @@ const Comanda = () => {
                 </div>
                 <div className="comanda-card-info">
                   <h3>{p.nume}</h3>
-                  <p>{p.descriere}</p>
+                  <p>{p.description}</p>
                   <div className="comanda-card-footer">
-                    <span className="comanda-card-pret">{p.pret} RON</span>
+                    <span className="comanda-card-pret">{p.price} RON</span>
                     <button
                       className={`btn-adauga-cos ${adaugat === p.id ? 'adaugat' : ''}`}
                       onClick={() => adaugaInCos(p)}

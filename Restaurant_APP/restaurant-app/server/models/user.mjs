@@ -1,6 +1,6 @@
 export default (sequelize, DataTypes) => {
   return sequelize.define('user', {
-    nume: {
+    name: {
       type: DataTypes.STRING,
       allowNull: false
     },
@@ -16,15 +16,17 @@ export default (sequelize, DataTypes) => {
     token: {
       type: DataTypes.STRING
     },
-    tip: {
+    type: {
       type: DataTypes.ENUM('client', 'manager'),
       allowNull: false,
       defaultValue: 'client'
     },
     deletedAt: {
-    type: DataTypes.DATE,
-    allowNull: true,
-    defaultValue: null
+      type: DataTypes.DATE,
+      allowNull: true,
+      defaultValue: null
     }
+  }, {
+    tableName: 'users'
   })
 }

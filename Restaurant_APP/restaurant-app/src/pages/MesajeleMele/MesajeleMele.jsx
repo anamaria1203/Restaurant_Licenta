@@ -18,7 +18,7 @@ const MesajeleMele = () => {
   const handleExpandat = (m) => {
     const nouId = expandat === m.id ? null : m.id
     setExpandat(nouId)
-    if (nouId && m.raspuns) {
+    if (nouId && m.response) {
       const vazute = JSON.parse(localStorage.getItem('mesaje_vazute') || '[]')
       if (!vazute.includes(m.id)) {
         localStorage.setItem('mesaje_vazute', JSON.stringify([...vazute, m.id]))
@@ -132,21 +132,21 @@ const MesajeleMele = () => {
             {mesaje.map(m => (
               <div
                 key={m.id}
-                className={`mm-card ${m.raspuns ? 'raspuns' : 'asteptare'} ${expandat === m.id ? 'expandat' : ''}`}
+                className={`mm-card ${m.response ? 'raspuns' : 'asteptare'} ${expandat === m.id ? 'expandat' : ''}`}
                 onClick={() => handleExpandat(m)}
               >
                 <div className="mm-card-header">
                   <div className="mm-card-meta">
-                    <span className={`mm-status-dot ${m.raspuns ? 'verde' : 'galben'}`} />
+                    <span className={`mm-status-dot ${m.response ? 'verde' : 'galben'}`} />
                     <span className="mm-card-preview">
-                      {m.intrebare.length > 60 && expandat !== m.id
-                        ? m.intrebare.slice(0, 60) + '...'
-                        : m.intrebare}
+                      {m.question.length > 60 && expandat !== m.id
+                        ? m.question.slice(0, 60) + '...'
+                        : m.question}
                     </span>
                   </div>
                   <div className="mm-card-right">
-                    <span className={`mm-status-label ${m.raspuns ? 'verde' : 'galben'}`}>
-                      {m.raspuns ? 'Răspuns primit' : 'În așteptare'}
+                    <span className={`mm-status-label ${m.response ? 'verde' : 'galben'}`}>
+                      {m.response ? 'Răspuns primit' : 'În așteptare'}
                     </span>
                     <span className="mm-card-data">{formatData(m.createdAt)}</span>
                     <span className="mm-chevron">{expandat === m.id ? '▲' : '▼'}</span>
@@ -157,13 +157,13 @@ const MesajeleMele = () => {
                   <div className="mm-card-body">
                     <div className="mm-bloc intrebare">
                       <div className="mm-bloc-label">Întrebarea ta</div>
-                      <p>{m.intrebare}</p>
+                      <p>{m.question}</p>
                     </div>
-                    {m.raspuns ? (
+                    {m.response ? (
                       <div className="mm-bloc raspuns-bloc">
                         <div className="mm-bloc-label">Răspuns de la restaurant</div>
-                        <p>{m.raspuns}</p>
-                        <span className="mm-raspuns-data">{formatData(m.raspunsAt)}</span>
+                        <p>{m.response}</p>
+                        <span className="mm-raspuns-data">{formatData(m.respondedAt)}</span>
                       </div>
                     ) : (
                       <div className="mm-asteptare-info">

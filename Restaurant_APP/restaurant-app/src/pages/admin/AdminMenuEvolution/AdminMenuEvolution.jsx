@@ -46,7 +46,7 @@ const AdminMenuEvolution = () => {
     setProcesand(id)
     try {
       const result = await toggleDisponibil(id)
-      setPreparate(prev => prev.map(p => p.id === id ? { ...p, disponibil: result.disponibil } : p))
+      setPreparate(prev => prev.map(p => p.id === id ? { ...p, available: result.available } : p))
     } finally {
       setProcesand(null)
     }
@@ -56,7 +56,7 @@ const AdminMenuEvolution = () => {
     setProcesandVreme(id)
     try {
       const result = await setTipVreme(id, tip)
-      setPreparate(prev => prev.map(p => p.id === id ? { ...p, tip_vreme: result.tip_vreme } : p))
+      setPreparate(prev => prev.map(p => p.id === id ? { ...p, weatherType: result.weatherType } : p))
     } finally {
       setProcesandVreme(null)
     }
@@ -71,7 +71,7 @@ const AdminMenuEvolution = () => {
   })
 
   const grouped = preparateFiltrate.reduce((acc, p) => {
-    const cat = p.categorie || 'altele'
+    const cat = p.category || 'altele'
     if (!acc[cat]) acc[cat] = []
     acc[cat].push(p)
     return acc
@@ -116,19 +116,19 @@ const AdminMenuEvolution = () => {
                   const zile = daysSince(p.ultimaComanda)
                   const avertisment = p.totalUltimele30Zile === 0 && p.ultimaComanda !== null
                   return (
-                    <div key={p.id} className={`mevo-card${avertisment ? ' cu-avertisment' : ''}${!p.disponibil ? ' indisponibil' : ''}`}>
-                      {p.imagine && (
+                    <div key={p.id} className={`mevo-card${avertisment ? ' cu-avertisment' : ''}${!p.available ? ' indisponibil' : ''}`}>
+                      {p.image && (
                         <div className="mevo-card-img">
-                          <img src={`/images/meniu/${p.imagine}`} alt={p.nume} onError={e => { e.target.style.display = 'none' }} />
-                          {!p.disponibil && <div className="mevo-card-img-overlay">Indisponibil</div>}
+                          <img src={`/images/meniu/${p.image}`} alt={p.name} onError={e => { e.target.style.display = 'none' }} />
+                          {!p.available && <div className="mevo-card-img-overlay">Indisponibil</div>}
                         </div>
                       )}
                       <div className="mevo-card-body">
                         <div className="mevo-card-top">
-                          <span className="mevo-card-nume">{p.nume}</span>
+                          <span className="mevo-card-nume">{p.name}</span>
                           <span className={`mevo-badge ${status.cls}`}>{status.label}</span>
                         </div>
-                        {p.subcategorie && <span className="mevo-card-sub">{p.subcategorie}</span>}
+                        {p.subcategory && <span className="mevo-card-sub">{p.subcategory}</span>}
                         <div className="mevo-card-stats">
                           <span className="mevo-stat-val">{p.totalUltimele30Zile}</span>
                           <span className="mevo-stat-label">vândute (30 zile)</span>
@@ -149,7 +149,7 @@ const AdminMenuEvolution = () => {
                           ].map(({ val, label }) => (
                             <button
                               key={val}
-                              className={`mevo-tip-btn${(p.tip_vreme || 'neutru') === val ? ` activ-${val}` : ''}`}
+                              className={`mevo-tip-btn${(p.weatherType || 'neutru') === val ? ` activ-${val}` : ''}`}
                               onClick={() => handleTipVreme(p.id, val)}
                               disabled={procesandVreme === p.id}
                             >
@@ -158,11 +158,11 @@ const AdminMenuEvolution = () => {
                           ))}
                         </div>
                         <button
-                          className={`mevo-toggle-btn ${p.disponibil ? 'dezactiveaza' : 'activeaza'}`}
+                          className={`mevo-toggle-btn ${p.available ? 'dezactiveaza' : 'activeaza'}`}
                           onClick={() => handleToggle(p.id)}
                           disabled={procesand === p.id}
                         >
-                          {procesand === p.id ? '...' : p.disponibil ? 'Dezactivează' : 'Activează'}
+                          {procesand === p.id ? '...' : p.available ? 'Dezactivează' : 'Activează'}
                         </button>
                       </div>
                     </div>

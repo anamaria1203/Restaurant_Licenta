@@ -1,4 +1,4 @@
-import './MeniulLunii.css'
+﻿import './MeniulLunii.css'
 import { useState, useEffect } from 'react'
 import Navbar from '../../components/Navbar/Navbar'
 import Footer from '../../components/Footer/Footer'
@@ -57,8 +57,8 @@ const MeniulLunii = () => {
     getPreparateLunare(lunaActiva)
       .then(data => {
         const lista = Array.isArray(data) ? data : []
-        setPreparate(lista.filter(p => !p.este_desert))
-        setDeserturi(lista.filter(p => p.este_desert))
+        setPreparate(lista.filter(p => !p.isDessert))
+        setDeserturi(lista.filter(p => p.isDessert))
       })
       .catch(() => { setPreparate([]); setDeserturi([]) })
       .finally(() => setLoadingPreparate(false))
@@ -101,16 +101,16 @@ const MeniulLunii = () => {
             <div className="ml-grid">
               {preparate.map(p => (
                 <div key={p.id} className="ml-card">
-                  {p.imagine && (
+                  {p.image && (
                     <div className="ml-card-img">
-                      <img src={p.imagine} alt={p.nume} />
+                      <img src={p.image} alt={p.nume} />
                     </div>
                   )}
                   <div className="ml-card-body">
                     <h3>{p.nume}</h3>
-                    <p>{p.descriere}</p>
+                    <p>{p.description}</p>
                     <div className="ml-card-footer">
-                      <span className="ml-pret">{p.pret} RON</span>
+                      <span className="ml-pret">{p.price} RON</span>
                       <button className="ml-btn-adauga" onClick={() => handleAdauga(p)}>
                         {adaugat === p.id ? '✓ Adăugat' : 'Adaugă la comandă'}
                       </button>
@@ -133,16 +133,16 @@ const MeniulLunii = () => {
             <div className="ml-grid">
               {deserturi.map(p => (
                 <div key={p.id} className="ml-card ml-card-desert">
-                  {p.imagine && (
+                  {p.image && (
                     <div className="ml-card-img">
-                      <img src={p.imagine} alt={p.nume} />
+                      <img src={p.image} alt={p.nume} />
                     </div>
                   )}
                   <div className="ml-card-body">
                     <h3>{p.nume}</h3>
-                    <p>{p.descriere}</p>
+                    <p>{p.description}</p>
                     <div className="ml-card-footer">
-                      <span className="ml-pret">{p.pret} RON</span>
+                      <span className="ml-pret">{p.price} RON</span>
                       <button className="ml-btn-adauga" onClick={() => handleAdauga(p)}>
                         {adaugat === p.id ? '✓ Adăugat' : 'Adaugă la comandă'}
                       </button>
@@ -176,16 +176,16 @@ const MeniulLunii = () => {
             <div className="ml-grid ml-grid-bauturi">
               {bauturi.map(b => (
                 <div key={b.id} className="ml-card ml-card-bautura">
-                  {b.imagine && (
+                  {b.image && (
                     <div className="ml-card-img">
-                      <img src={`/images/meniu/${b.imagine}`} alt={b.nume} />
+                      <img src={`/images/meniu/${b.image}`} alt={b.nume} />
                     </div>
                   )}
                   <div className="ml-card-body">
                     <h3>{b.nume}</h3>
-                    <p>{b.descriere}</p>
+                    <p>{b.description}</p>
                     <div className="ml-card-footer">
-                      <span className="ml-pret">{b.pret} RON</span>
+                      <span className="ml-pret">{b.price} RON</span>
                       <button className="ml-btn-adauga" onClick={() => handleAdauga(b)}>
                         {adaugat === b.id ? '✓ Adăugat' : 'Adaugă la comandă'}
                       </button>

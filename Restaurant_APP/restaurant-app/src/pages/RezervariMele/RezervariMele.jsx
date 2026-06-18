@@ -127,7 +127,7 @@ const RezervariMele = () => {
               const anulate = rezervari.filter(r => r.status === 'anulata')
 
               const RandRezervare = ({ r }) => {
-                const comandaAsociata = comenzi.find(c => c.rezervareId === r.id)
+                const comandaAsociata = comenzi.find(c => c.reservationId === r.id)
                 return (
                 <div key={r.id} className="rezme-sectiune">
                   <div className="rezme-header">
@@ -146,7 +146,7 @@ const RezervariMele = () => {
                       {r.status === 'confirmata' && (
                         <a href="/comanda" className="rezme-btn-comanda">Comandă acum</a>
                       )}
-                      {r.status === 'anulata' && r.anulataDe === 'client' && (
+                      {r.status === 'anulata' && r.cancelledBy === 'client' && (
                         <button
                           className="rezme-btn-restaureaza"
                           onClick={() => handleRestaureaza(r.id)}
@@ -183,36 +183,36 @@ const RezervariMele = () => {
                       <div>
                         <div className="rezme-detaliu-label">Data & Ora</div>
                         <div className="rezme-detaliu-val">
-                          {new Date(r.data + 'T12:00:00').toLocaleDateString('ro-RO', {
+                          {new Date(r.reservationDate + 'T12:00:00').toLocaleDateString('ro-RO', {
                             weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
-                          })}, {r.ora}
+                          })}, {r.hour}
                         </div>
                       </div>
                     </div>
                     <div className="rezme-detaliu-item">
                       <div>
                         <div className="rezme-detaliu-label">Persoane</div>
-                        <div className="rezme-detaliu-val">{r.nrPersoane} {r.nrPersoane === 1 ? 'persoană' : 'persoane'}</div>
+                        <div className="rezme-detaliu-val">{r.guestCount} {r.guestCount === 1 ? 'persoană' : 'persoane'}</div>
                       </div>
                     </div>
                     <div className="rezme-detaliu-item">
                       <div>
                         <div className="rezme-detaliu-label">Zona</div>
-                        <div className="rezme-detaliu-val">{ZONA_INFO[r.zona]?.label}</div>
+                        <div className="rezme-detaliu-val">{ZONA_INFO[r.zone]?.label}</div>
                       </div>
                     </div>
-                    {r.ocazie && (
+                    {r.occasion && (
                       <div className="rezme-detaliu-item">
                         <div>
                           <div className="rezme-detaliu-label">Ocazie</div>
-                          <div className="rezme-detaliu-val">{OCAZIE_LABEL[r.ocazie] || r.ocazie}</div>
+                          <div className="rezme-detaliu-val">{OCAZIE_LABEL[r.occasion] || r.occasion}</div>
                         </div>
                       </div>
                     )}
                   </div>
 
-                  {r.observatii && (
-                    <div className="rezme-observatii">Observații: {r.observatii}</div>
+                  {r.notes && (
+                    <div className="rezme-observatii">Observații: {r.notes}</div>
                   )}
 
                   {comandaAsociata && (
@@ -226,9 +226,9 @@ const RezervariMele = () => {
                       <div className="rezme-comanda-items">
                         {comandaAsociata.ComandaItems?.map(item => (
                           <div key={item.id} className="rezme-comanda-item">
-                            <span className="rezme-ci-nume">{item.numeSnapshot}</span>
-                            <span className="rezme-ci-cant">× {item.cantitate}</span>
-                            <span className="rezme-ci-pret">{(item.pretSnapshot * item.cantitate).toFixed(2)} RON</span>
+                            <span className="rezme-ci-nume">{item.nameSnapshot}</span>
+                            <span className="rezme-ci-cant">× {item.quantity}</span>
+                            <span className="rezme-ci-pret">{(item.priceSnapshot * item.quantity).toFixed(2)} RON</span>
                           </div>
                         ))}
                       </div>

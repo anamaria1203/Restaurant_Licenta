@@ -19,7 +19,7 @@ const AdminNavbar = ({ title }) => {
   useEffect(() => {
     getUseri()
       .then(res => res.json())
-      .then(data => setManageri((Array.isArray(data) ? data : []).filter(u => u.tip === 'manager')))
+      .then(data => setManageri((Array.isArray(data) ? data : []).filter(u => u.type === 'manager')))
       .catch(() => {})
     getMesajeNecititeCount()
       .then(data => setNecitite(data.count || 0))
@@ -88,16 +88,16 @@ const AdminNavbar = ({ title }) => {
                 <p className="admin-manageri-gol">Nu există mesaje.</p>
               ) : (
                 mesaje.map(m => (
-                  <div key={m.id} className={`admin-mesaj-row${m.citit ? ' citit' : ''}`}>
+                  <div key={m.id} className={`admin-mesaj-row${m.isRead ? ' citit' : ''}`}>
                     <div className="admin-mesaj-header">
-                      <span className="admin-mesaj-nume">{m.nume}</span>
+                      <span className="admin-mesaj-nume">{m.name}</span>
                       <span className="admin-mesaj-email">{m.email}</span>
                     </div>
-                    <p className="admin-mesaj-text">{m.intrebare}</p>
-                    {m.raspuns ? (
+                    <p className="admin-mesaj-text">{m.question}</p>
+                    {m.response ? (
                       <div className="admin-mesaj-raspuns-existent">
                         <span className="admin-mesaj-raspuns-label">Răspuns trimis:</span>
-                        <p>{m.raspuns}</p>
+                        <p>{m.response}</p>
                       </div>
                     ) : (
                       <div className="admin-mesaj-reply">
@@ -149,7 +149,7 @@ const AdminNavbar = ({ title }) => {
               ) : (
                 manageri.map(m => (
                   <div key={m.id} className="admin-manager-row">
-                    <span className="admin-manager-nume">{m.nume}</span>
+                    <span className="admin-manager-nume">{m.name}</span>
                     <span className="admin-manager-email">{m.email}</span>
                   </div>
                 ))

@@ -1,4 +1,4 @@
-import './AdminMeniu.css'
+﻿import './AdminMeniu.css'
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { getLunaActiva, setLunaActiva as apiSetLunaActiva, getPreparateLunare, getMeniu, adaugaPreparatLunar, editeazaPreparatLunar, stergePreparatLunar } from '../../../services/api'
@@ -46,8 +46,8 @@ const AdminMeniu = () => {
     getPreparateLunare(taraSelectata)
       .then(data => {
         const lista = Array.isArray(data) ? data : []
-        setPreparate(lista.filter(p => !p.este_desert))
-        setDeserturi(lista.filter(p => p.este_desert))
+        setPreparate(lista.filter(p => !p.isDessert))
+        setDeserturi(lista.filter(p => p.isDessert))
       })
       .catch(() => { setPreparate([]); setDeserturi([]) })
       .finally(() => setLoadingPreparate(false))
@@ -73,8 +73,8 @@ const AdminMeniu = () => {
     getPreparateLunare(taraSelectata)
       .then(data => {
         const lista = Array.isArray(data) ? data : []
-        setPreparate(lista.filter(p => !p.este_desert))
-        setDeserturi(lista.filter(p => p.este_desert))
+        setPreparate(lista.filter(p => !p.isDessert))
+        setDeserturi(lista.filter(p => p.isDessert))
       })
       .catch(() => {})
   }
@@ -86,7 +86,7 @@ const AdminMeniu = () => {
   }
 
   const deschideEditare = (p) => {
-    setModalDate({ nume: p.nume, descriere: p.descriere || '', pret: p.pret, imagine: p.imagine || '', este_desert: p.este_desert })
+    setModalDate({ nume: p.name, descriere: p.description || '', pret: p.price, imagine: p.image || '', este_desert: p.isDessert })
     setEditId(p.id)
     setShowModal(true)
   }
@@ -193,11 +193,11 @@ const AdminMeniu = () => {
                     <div className="am-grid">
                       {preparate.map(p => (
                         <div key={p.id} className="am-card">
-                          {p.imagine && <div className="am-card-img"><img src={p.imagine} alt={p.nume} /></div>}
+                          {p.image && <div className="am-card-img"><img src={p.image} alt={p.name} /></div>}
                           <div className="am-card-body">
-                            <h4>{p.nume}</h4>
-                            <p>{p.descriere}</p>
-                            <span className="am-pret">{p.pret} RON</span>
+                            <h4>{p.name}</h4>
+                            <p>{p.description}</p>
+                            <span className="am-pret">{p.price} RON</span>
                             <div className="am-card-actiuni">
                               <button className="am-btn-edit" onClick={() => deschideEditare(p)}>Editează</button>
                               <button className="am-btn-sterge" onClick={() => cerConfirmareStergere(p.id)}>Șterge</button>
@@ -222,11 +222,11 @@ const AdminMeniu = () => {
                     <div className="am-grid">
                       {deserturi.map(p => (
                         <div key={p.id} className="am-card am-card-desert">
-                          {p.imagine && <div className="am-card-img"><img src={p.imagine} alt={p.nume} /></div>}
+                          {p.image && <div className="am-card-img"><img src={p.image} alt={p.name} /></div>}
                           <div className="am-card-body">
-                            <h4>{p.nume}</h4>
-                            <p>{p.descriere}</p>
-                            <span className="am-pret">{p.pret} RON</span>
+                            <h4>{p.name}</h4>
+                            <p>{p.description}</p>
+                            <span className="am-pret">{p.price} RON</span>
                             <div className="am-card-actiuni">
                               <button className="am-btn-edit" onClick={() => deschideEditare(p)}>Editează</button>
                               <button className="am-btn-sterge" onClick={() => cerConfirmareStergere(p.id)}>Șterge</button>
@@ -254,11 +254,11 @@ const AdminMeniu = () => {
                   <div className="am-grid">
                     {bauturi.map(b => (
                       <div key={b.id} className="am-card am-card-bautura">
-                        {b.imagine && <div className="am-card-img"><img src={`/images/meniu/${b.imagine}`} alt={b.nume} /></div>}
+                        {b.image && <div className="am-card-img"><img src={`/images/meniu/${b.image}`} alt={b.nume} /></div>}
                         <div className="am-card-body">
                           <h4>{b.nume}</h4>
-                          <p>{b.descriere}</p>
-                          <span className="am-pret">{b.pret} RON</span>
+                          <p>{b.description}</p>
+                          <span className="am-pret">{b.price} RON</span>
                         </div>
                       </div>
                     ))}

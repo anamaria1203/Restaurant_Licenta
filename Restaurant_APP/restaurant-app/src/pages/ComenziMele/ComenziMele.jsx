@@ -52,10 +52,10 @@ const ComenziMele = () => {
     setEditandId(comanda.id)
     setEroareEdit('')
     setItemsEdit(comanda.ComandaItems.map(item => ({
-      preparatId: item.preparatId,
-      numeSnapshot: item.numeSnapshot,
-      pretSnapshot: item.pretSnapshot,
-      cantitate: item.cantitate
+      preparatId: item.dishId,
+      numeSnapshot: item.nameSnapshot,
+      pretSnapshot: item.priceSnapshot,
+      cantitate: item.quantity
     })))
     setCategorieAdd('Aperitive')
     fetchPreparateAdd('Aperitive')
@@ -95,8 +95,8 @@ const ComenziMele = () => {
       }
       return [...prev, {
         preparatId: preparat.id,
-        numeSnapshot: preparat.nume,
-        pretSnapshot: preparat.pret,
+        numeSnapshot: preparat.name,
+        pretSnapshot: preparat.price,
         cantitate: 1
       }]
     })
@@ -180,8 +180,8 @@ const ComenziMele = () => {
                       year: 'numeric', month: 'long', day: 'numeric',
                       hour: '2-digit', minute: '2-digit'
                     })}
-                    {c.rezervareId && (
-                      <span className="comanda-rez-badge">Rezervare #{c.rezervareId}</span>
+                    {c.reservationId && (
+                      <span className="comanda-rez-badge">Rezervare #{c.reservationId}</span>
                     )}
                   </div>
                   <div className="comanda-sectiune-dreapta">
@@ -235,8 +235,8 @@ const ComenziMele = () => {
                           <div className="edit-loading">Se încarcă...</div>
                         ) : preparateAdd.map(p => (
                           <div key={p.id} className="edit-preparat-row">
-                            <span className="edit-preparat-nume">{p.nume}</span>
-                            <span className="edit-preparat-pret">{p.pret} RON</span>
+                            <span className="edit-preparat-nume">{p.name}</span>
+                            <span className="edit-preparat-pret">{p.price} RON</span>
                             <button className="btn-add-mic" onClick={() => adaugaInEdit(p)}>+ Adaugă</button>
                           </div>
                         ))}
@@ -258,14 +258,14 @@ const ComenziMele = () => {
                   <div className="comanda-items-list">
                     {c.ComandaItems?.map(item => (
                       <div key={item.id} className="comanda-item-row">
-                        <span>{item.numeSnapshot}</span>
-                        <span>× {item.cantitate}</span>
-                        <span>{(item.pretSnapshot * item.cantitate).toFixed(2)} RON</span>
+                        <span>{item.nameSnapshot}</span>
+                        <span>× {item.quantity}</span>
+                        <span>{(item.priceSnapshot * item.quantity).toFixed(2)} RON</span>
                       </div>
                     ))}
-                    {c.observatii && (
+                    {c.notes && (
                       <div className="comanda-observatii-text">
-                        Observații: {c.observatii}
+                        Observații: {c.notes}
                       </div>
                     )}
                     <div className="comanda-total-row">Total: {Number(c.total).toFixed(2)} RON</div>

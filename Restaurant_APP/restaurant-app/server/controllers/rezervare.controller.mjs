@@ -20,9 +20,13 @@ const creeazaRezervare = async (req, res, next) => {
     }
 
     const rezervare = await db.Rezervare.create({
-      userId, data, ora, nrPersoane, zona,
-      ocazie: ocazie || null,
-      observatii: observatii || null
+      userId,
+      reservationDate: data,
+      hour: ora,
+      guestCount: nrPersoane,
+      zone: zona,
+      occasion: ocazie || null,
+      notes: observatii || null
     })
 
     res.status(201).json(rezervare)
@@ -36,7 +40,7 @@ const getRezervariMele = async (req, res, next) => {
     const userId = req.user.id
     const rezervari = await db.Rezervare.findAll({
       where: { userId },
-      order: [['data', 'DESC'], ['ora', 'DESC']]
+      order: [['reservationDate', 'DESC'], ['hour', 'DESC']]
     })
     res.json(rezervari)
   } catch (err) {
@@ -47,8 +51,8 @@ const getRezervariMele = async (req, res, next) => {
 const getRezervariAdmin = async (req, res, next) => {
   try {
     const rezervari = await db.Rezervare.findAll({
-      include: [{ model: db.User, attributes: ['id', 'nume', 'email'], where: { deletedAt: null } }],
-      order: [['data', 'DESC'], ['ora', 'DESC']]
+      include: [{ model: db.User, attributes: ['id', 'name', 'email'], where: { deletedAt: null } }],
+      order: [['reservationDate', 'DESC'], ['hour', 'DESC']]
     })
     res.json(rezervari)
   } catch (err) {
@@ -70,13 +74,13 @@ const updateStatusRezervare = async (req, res, next) => {
 
     const updates = { status }
     if (status === 'anulata') {
-      updates.anulataDe = 'manager'
-      updates.anulataNotificat = true
+      updates.cancelledBy = 'manager'
+      updates.cancellationNotified = true
     } else {
-      updates.anulataDe = null
+      updates.cancelledBy = null
     }
     if (status === 'confirmata') {
-      updates.confirmatVazut = false
+      updates.confirmationSeen = false
     }
 
     await rezervare.update(updates)
@@ -84,7 +88,7 @@ const updateStatusRezervare = async (req, res, next) => {
     if (status === 'anulata') {
       await db.Comanda.update(
         { status: 'anulata' },
-        { where: { rezervareId: id, status: ['in_asteptare', 'confirmata'] } }
+        { where: { reservationId: id, status: ['in_asteptare', 'confirmata'] } }
       )
     }
 
@@ -105,10 +109,10 @@ const anuleazaRezervare = async (req, res, next) => {
       return res.status(400).json({ error: 'Rezervarea nu mai poate fi anulată' })
     }
 
-    await rezervare.update({ status: 'anulata', anulataNotificat: false, anulataDe: 'client' })
+    await rezervare.update({ status: 'anulata', cancellationNotified: false, cancelledBy: 'client' })
     await db.Comanda.update(
       { status: 'anulata' },
-      { where: { rezervareId: id, status: ['in_asteptare', 'confirmata'] } }
+      { where: { reservationId: id, status: ['in_asteptare', 'confirmata'] } }
     )
     res.json(rezervare)
   } catch (err) {
@@ -119,8 +123,8 @@ const anuleazaRezervare = async (req, res, next) => {
 const getAnulateNenotificate = async (req, res, next) => {
   try {
     const rezervari = await db.Rezervare.findAll({
-      where: { status: 'anulata', anulataNotificat: false },
-      include: [{ model: db.User, attributes: ['id', 'nume', 'email'] }],
+      where: { status: 'anulata', cancellationNotified: false },
+      include: [{ model: db.User, attributes: ['id', 'name', 'email'] }],
       order: [['updatedAt', 'DESC']]
     })
     res.json({ count: rezervari.length, rezervari })
@@ -131,7 +135,10 @@ const getAnulateNenotificate = async (req, res, next) => {
 
 const marcheazaAnulateVazute = async (req, res, next) => {
   try {
-    await db.Rezervare.update({ anulataNotificat: true }, { where: { status: 'anulata', anulataNotificat: false } })
+    await db.Rezervare.update(
+      { cancellationNotified: true },
+      { where: { status: 'anulata', cancellationNotified: false } }
+    )
     res.json({ ok: true })
   } catch (err) {
     next(err)
@@ -143,8 +150,8 @@ const areRezervareConfirmata = async (req, res, next) => {
     const userId = req.user.id
     const azi = new Date().toISOString().split('T')[0]
     const [confirmata, inAsteptare] = await Promise.all([
-      db.Rezervare.findOne({ where: { userId, status: 'confirmata', data: { [Op.gte]: azi } } }),
-      db.Rezervare.findOne({ where: { userId, status: 'in_asteptare', data: { [Op.gte]: azi } } })
+      db.Rezervare.findOne({ where: { userId, status: 'confirmata', reservationDate: { [Op.gte]: azi } } }),
+      db.Rezervare.findOne({ where: { userId, status: 'in_asteptare', reservationDate: { [Op.gte]: azi } } })
     ])
     res.json({ areRezervare: !!confirmata, areRezervareInAsteptare: !!inAsteptare })
   } catch (err) {
@@ -158,10 +165,10 @@ const restaureazaRezervareClient = async (req, res, next) => {
     const userId = req.user.id
     const rezervare = await db.Rezervare.findOne({ where: { id, userId } })
     if (!rezervare) return res.status(404).json({ error: 'Rezervarea nu a fost găsită' })
-    if (rezervare.status !== 'anulata' || rezervare.anulataDe !== 'client') {
+    if (rezervare.status !== 'anulata' || rezervare.cancelledBy !== 'client') {
       return res.status(400).json({ error: 'Rezervarea nu poate fi restaurată' })
     }
-    await rezervare.update({ status: 'in_asteptare', anulataDe: null, confirmatVazut: true })
+    await rezervare.update({ status: 'in_asteptare', cancelledBy: null, confirmationSeen: true })
     res.json(rezervare)
   } catch (err) {
     next(err)
@@ -171,7 +178,7 @@ const restaureazaRezervareClient = async (req, res, next) => {
 const getConfirmateNevazute = async (req, res, next) => {
   try {
     const userId = req.user.id
-    const count = await db.Rezervare.count({ where: { userId, status: 'confirmata', confirmatVazut: false } })
+    const count = await db.Rezervare.count({ where: { userId, status: 'confirmata', confirmationSeen: false } })
     res.json({ count })
   } catch (err) {
     next(err)
@@ -181,7 +188,10 @@ const getConfirmateNevazute = async (req, res, next) => {
 const marcheazaConfirmateVazute = async (req, res, next) => {
   try {
     const userId = req.user.id
-    await db.Rezervare.update({ confirmatVazut: true }, { where: { userId, status: 'confirmata', confirmatVazut: false } })
+    await db.Rezervare.update(
+      { confirmationSeen: true },
+      { where: { userId, status: 'confirmata', confirmationSeen: false } }
+    )
     res.json({ ok: true })
   } catch (err) {
     next(err)

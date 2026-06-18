@@ -2,9 +2,9 @@ import db from '../models/index.mjs'
 
 const getPreparate = async (req, res, next) => {
   try {
-    const where = { disponibil: true }
-    if (req.query.categorie) where.categorie = req.query.categorie
-    if (req.query.subcategorie) where.subcategorie = req.query.subcategorie
+    const where = { available: true }
+    if (req.query.categorie) where.category = req.query.categorie
+    if (req.query.subcategorie) where.subcategory = req.query.subcategorie
     const preparate = await db.Preparat.findAll({ where })
     res.json(preparate)
   } catch (err) { next(err) }
@@ -15,8 +15,8 @@ const toggleDisponibil = async (req, res, next) => {
     const { id } = req.params
     const preparat = await db.Preparat.findByPk(id)
     if (!preparat) return res.status(404).json({ error: 'Preparatul nu a fost găsit' })
-    await preparat.update({ disponibil: !preparat.disponibil })
-    res.json({ id: preparat.id, disponibil: preparat.disponibil })
+    await preparat.update({ available: !preparat.available })
+    res.json({ id: preparat.id, available: preparat.available })
   } catch (err) { next(err) }
 }
 
@@ -25,7 +25,7 @@ const getRecomandateMeteo = async (req, res, next) => {
     const { tip } = req.query
     if (!tip || !['cald', 'rece'].includes(tip)) return res.json([])
     const preparate = await db.Preparat.findAll({
-      where: { tip_vreme: tip, disponibil: true },
+      where: { weatherType: tip, available: true },
       limit: 4
     })
     res.json(preparate)
@@ -41,8 +41,8 @@ const setTipVreme = async (req, res, next) => {
     }
     const preparat = await db.Preparat.findByPk(id)
     if (!preparat) return res.status(404).json({ error: 'Preparatul nu a fost găsit' })
-    await preparat.update({ tip_vreme })
-    res.json({ id: preparat.id, tip_vreme: preparat.tip_vreme })
+    await preparat.update({ weatherType: tip_vreme })
+    res.json({ id: preparat.id, weatherType: preparat.weatherType })
   } catch (err) { next(err) }
 }
 

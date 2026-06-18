@@ -41,7 +41,7 @@ const Navbar = () => {
     const calculeazaNoi = () => {
       getMesajeleMele().then(mesaje => {
         const vazute = JSON.parse(localStorage.getItem('mesaje_vazute') || '[]')
-        setNrMesajeNoi(mesaje.filter(m => m.raspuns && !vazute.includes(m.id)).length)
+        setNrMesajeNoi(mesaje.filter(m => m.response && !vazute.includes(m.id)).length)
       }).catch(() => {})
     }
     calculeazaNoi()
@@ -94,7 +94,7 @@ const Navbar = () => {
         {userLogat ? (
           <div className="user-logat">
             <div className="user-hello">
-              Hello, <strong>{userLogat.nume}</strong>
+              Hello, <strong>{userLogat.name}</strong>
             </div>
 
             {userLogat.tip === 'client' && (

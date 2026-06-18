@@ -7,7 +7,7 @@ const trimiteMesaj = async (req, res, next) => {
     const user = await db.User.findByPk(userId)
     if (!user) return res.status(404).json({ error: 'Utilizatorul nu există' })
     if (!intrebare) return res.status(400).json({ error: 'Întrebarea este obligatorie' })
-    const mesaj = await db.Mesaj.create({ userId, nume: user.nume, email: user.email, intrebare })
+    const mesaj = await db.Mesaj.create({ userId, name: user.name, email: user.email, question: intrebare })
     res.status(201).json(mesaj)
   } catch (err) { next(err) }
 }
@@ -33,14 +33,14 @@ const marcheazaCitit = async (req, res, next) => {
   try {
     const mesaj = await db.Mesaj.findByPk(req.params.id)
     if (!mesaj) return res.status(404).json({ error: 'Mesajul nu există' })
-    await mesaj.update({ citit: true })
+    await mesaj.update({ isRead: true })
     res.json(mesaj)
   } catch (err) { next(err) }
 }
 
 const getNecititeCount = async (req, res, next) => {
   try {
-    const count = await db.Mesaj.count({ where: { citit: false } })
+    const count = await db.Mesaj.count({ where: { isRead: false } })
     res.json({ count })
   } catch (err) { next(err) }
 }
@@ -51,7 +51,7 @@ const raspundeMesaj = async (req, res, next) => {
     if (!raspuns) return res.status(400).json({ error: 'Răspunsul este obligatoriu' })
     const mesaj = await db.Mesaj.findByPk(req.params.id)
     if (!mesaj) return res.status(404).json({ error: 'Mesajul nu există' })
-    await mesaj.update({ raspuns, raspunsAt: new Date(), citit: true })
+    await mesaj.update({ response: raspuns, respondedAt: new Date(), isRead: true })
     res.json(mesaj)
   } catch (err) { next(err) }
 }

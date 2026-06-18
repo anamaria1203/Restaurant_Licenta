@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+﻿import { useState, useEffect } from 'react'
 import { getRecomandateMeteo } from '../../services/api'
 import './WeatherBanner.css'
 
@@ -63,9 +63,9 @@ const WeatherBanner = ({ onAdauga, adaugat }) => {
       <div className="wb-preparate">
         {preparate.map(p => (
           <div key={p.id} className="wb-card">
-            {p.imagine && (
+            {p.image && (
               <img
-                src={`/images/meniu/${p.imagine}`}
+                src={`/images/meniu/${p.image}`}
                 alt={p.nume}
                 className="wb-card-img"
                 onError={e => { e.target.style.display = 'none' }}
@@ -73,7 +73,7 @@ const WeatherBanner = ({ onAdauga, adaugat }) => {
             )}
             <div className="wb-card-body">
               <span className="wb-card-nume">{p.nume}</span>
-              <span className="wb-card-pret">{p.pret} RON</span>
+              <span className="wb-card-pret">{p.price} RON</span>
               <button className="wb-card-btn" onClick={() => onAdauga(p)}>
                 {adaugat === p.id ? '✓' : '+'}
               </button>

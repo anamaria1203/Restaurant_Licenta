@@ -18,14 +18,14 @@ const creeazaComanda = async (req, res, next) => {
 
     const total = items.reduce((sum, item) => sum + item.pretSnapshot * item.cantitate, 0)
 
-    const comanda = await db.Comanda.create({ userId, total, observatii, rezervareId: rezervareId || null })
+    const comanda = await db.Comanda.create({ userId, total, notes: observatii, reservationId: rezervareId || null })
 
     const itemsDeCreat = items.map(item => ({
-      comandaId: comanda.id,
-      preparatId: item.preparatId,
-      numeSnapshot: item.numeSnapshot,
-      pretSnapshot: item.pretSnapshot,
-      cantitate: item.cantitate
+      orderId: comanda.id,
+      dishId: item.preparatId,
+      nameSnapshot: item.numeSnapshot,
+      priceSnapshot: item.pretSnapshot,
+      quantity: item.cantitate
     }))
 
     await db.ComandaItem.bulkCreate(itemsDeCreat)
@@ -59,7 +59,7 @@ const getComenziAdmin = async (req, res, next) => {
     const comenzi = await db.Comanda.findAll({
       include: [
         { model: db.ComandaItem },
-        { model: db.User, attributes: ['id', 'nume', 'email'], where: { deletedAt: null } }
+        { model: db.User, attributes: ['id', 'name', 'email'], where: { deletedAt: null } }
       ],
       order: [['createdAt', 'DESC']]
     })
@@ -104,14 +104,14 @@ const updateComandaItems = async (req, res, next) => {
       return res.status(400).json({ error: 'Comanda trebuie sa contina cel putin un produs' })
     }
 
-    await db.ComandaItem.destroy({ where: { comandaId: id } })
+    await db.ComandaItem.destroy({ where: { orderId: id } })
 
     const itemsDeCreat = items.map(item => ({
-      comandaId: Number(id),
-      preparatId: item.preparatId,
-      numeSnapshot: item.numeSnapshot,
-      pretSnapshot: item.pretSnapshot,
-      cantitate: item.cantitate
+      orderId: Number(id),
+      dishId: item.preparatId,
+      nameSnapshot: item.numeSnapshot,
+      priceSnapshot: item.pretSnapshot,
+      quantity: item.cantitate
     }))
 
     await db.ComandaItem.bulkCreate(itemsDeCreat)
@@ -133,12 +133,12 @@ const getStatistici = async (req, res, next) => {
   try {
     const peOre = await db.sequelize.query(
       `SELECT
-         CAST(substr(r.ora, 1, 2) AS INTEGER) AS ora,
+         CAST(substr(r.hour, 1, 2) AS INTEGER) AS ora,
          COUNT(DISTINCT r.id) AS nrRezervari,
-         COALESCE(SUM(ci.cantitate), 0) AS totalPreparate
-       FROM Rezervares r
-       INNER JOIN Comandas c ON c.rezervareId = r.id AND c.status != 'anulata'
-       LEFT JOIN ComandaItems ci ON ci.comandaId = c.id
+         COALESCE(SUM(ci.quantity), 0) AS totalPreparate
+       FROM Reservations r
+       INNER JOIN Orders c ON c.reservationId = r.id AND c.status != 'anulata'
+       LEFT JOIN OrderItems ci ON ci.orderId = c.id
        WHERE r.status != 'anulata'
        GROUP BY ora
        ORDER BY ora`,
@@ -147,12 +147,12 @@ const getStatistici = async (req, res, next) => {
 
     const peZile = await db.sequelize.query(
       `SELECT
-         CAST(strftime('%w', r.data) AS INTEGER) AS ziuaIndex,
+         CAST(strftime('%w', r.reservationDate) AS INTEGER) AS ziuaIndex,
          COUNT(DISTINCT r.id) AS nrRezervari,
-         COALESCE(SUM(ci.cantitate), 0) AS totalPreparate
-       FROM Rezervares r
-       INNER JOIN Comandas c ON c.rezervareId = r.id AND c.status != 'anulata'
-       LEFT JOIN ComandaItems ci ON ci.comandaId = c.id
+         COALESCE(SUM(ci.quantity), 0) AS totalPreparate
+       FROM Reservations r
+       INNER JOIN Orders c ON c.reservationId = r.id AND c.status != 'anulata'
+       LEFT JOIN OrderItems ci ON ci.orderId = c.id
        WHERE r.status != 'anulata'
        GROUP BY ziuaIndex
        ORDER BY ziuaIndex`,
@@ -191,16 +191,16 @@ const getPreferinteMele = async (req, res, next) => {
     const preferinte = await db.sequelize.query(
       `SELECT
         p.id,
-        p.nume,
-        p.descriere,
-        p.pret,
-        p.categorie,
-        p.subcategorie,
-        p.imagine,
-        SUM(ci.cantitate) AS totalComandat
-       FROM ComandaItems ci
-       INNER JOIN Comandas c ON ci.comandaId = c.id AND c.userId = :userId
-       INNER JOIN Preparats p ON ci.preparatId = p.id
+        p.name,
+        p.description,
+        p.price,
+        p.category,
+        p.subcategory,
+        p.image,
+        SUM(ci.quantity) AS totalComandat
+       FROM OrderItems ci
+       INNER JOIN Orders c ON ci.orderId = c.id AND c.userId = :userId
+       INNER JOIN Dishes p ON ci.dishId = p.id
        GROUP BY p.id
        ORDER BY totalComandat DESC
        LIMIT 10`,
@@ -216,12 +216,12 @@ const getMenuEvolution = async (req, res, next) => {
   try {
     const preparate = await db.sequelize.query(
       `SELECT
-        p.id, p.nume, p.categorie, p.subcategorie, p.imagine, p.disponibil, p.tip_vreme,
-        COALESCE(SUM(CASE WHEN c.createdAt >= date('now', '-30 days') THEN ci.cantitate ELSE 0 END), 0) AS totalUltimele30Zile,
+        p.id, p.name, p.category, p.subcategory, p.image, p.available, p.weatherType,
+        COALESCE(SUM(CASE WHEN c.createdAt >= date('now', '-30 days') THEN ci.quantity ELSE 0 END), 0) AS totalUltimele30Zile,
         MAX(c.createdAt) AS ultimaComanda
-       FROM Preparats p
-       LEFT JOIN ComandaItems ci ON ci.preparatId = p.id
-       LEFT JOIN Comandas c ON ci.comandaId = c.id AND c.status != 'anulata'
+       FROM Dishes p
+       LEFT JOIN OrderItems ci ON ci.dishId = p.id
+       LEFT JOIN Orders c ON ci.orderId = c.id AND c.status != 'anulata'
        GROUP BY p.id
        ORDER BY totalUltimele30Zile DESC`,
       { type: db.sequelize.QueryTypes.SELECT }

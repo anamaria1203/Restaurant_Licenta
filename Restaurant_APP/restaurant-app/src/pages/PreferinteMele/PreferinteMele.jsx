@@ -1,4 +1,4 @@
-import './PreferinteMele.css'
+﻿import './PreferinteMele.css'
 import { useState, useEffect, useMemo } from 'react'
 import Navbar from '../../components/Navbar/Navbar'
 import Footer from '../../components/Footer/Footer'
@@ -59,8 +59,8 @@ const PreferinteMele = () => {
   const peCategorie = useMemo(() => {
     const map = {}
     preferinte.forEach(p => {
-      if (!map[p.categorie]) map[p.categorie] = []
-      map[p.categorie].push(p)
+      if (!map[p.category]) map[p.category] = []
+      map[p.category].push(p)
     })
     return map
   }, [preferinte])
@@ -104,9 +104,9 @@ const PreferinteMele = () => {
                 {items.map(p => (
                   <div key={p.id} className="preferinte-card">
                     <div className="preferinte-card-img">
-                      {p.imagine ? (
+                      {p.image ? (
                         <img
-                          src={`/images/meniu/${p.imagine}`}
+                          src={`/images/meniu/${p.image}`}
                           alt={p.nume}
                           onError={e => { e.target.style.display = 'none' }}
                         />
@@ -117,9 +117,9 @@ const PreferinteMele = () => {
                     </div>
                     <div className="preferinte-card-info">
                       <h3>{p.nume}</h3>
-                      <p>{p.descriere}</p>
+                      <p>{p.description}</p>
                       <div className="preferinte-card-footer">
-                        <span className="preferinte-pret">{p.pret} RON</span>
+                        <span className="preferinte-pret">{p.price} RON</span>
                         <button
                           className={`preferinte-btn-adauga ${adaugat === p.id ? 'adaugat' : ''}`}
                           onClick={() => adaugaInCos(p)}

@@ -29,11 +29,11 @@ const register = async (req, res, next) => {
     }
 
     const passwordHash = await bcrypt.hash(password, 10)
-    const user = await db.User.create({ nume, email, passwordHash, tip })
-    const token = jwt.sign({ id: user.id, email: user.email, tip: user.tip }, SECRET, { expiresIn: '7d' })
+    const user = await db.User.create({ name: nume, email, passwordHash, type: tip })
+    const token = jwt.sign({ id: user.id, email: user.email, tip: user.type }, SECRET, { expiresIn: '7d' })
     await user.update({ token })
     res.cookie('token', token, COOKIE_OPTIONS)
-    res.status(201).json({ user: { id: user.id, nume: user.nume, email: user.email, tip: user.tip } })
+    res.status(201).json({ user: { id: user.id, name: user.name, email: user.email, tip: user.type } })
   } catch (err) { next(err) }
 }
 
@@ -49,12 +49,12 @@ const login = async (req, res, next) => {
 
     const passwordCorect = await bcrypt.compare(password, user.passwordHash)
     if (!passwordCorect) return res.status(401).json({ error: 'Parola incorecta!' })
-    if (user.tip !== 'client') return res.status(403).json({ error: 'Folosește pagina de Admin Login pentru contul de administrator!' })
+    if (user.type !== 'client') return res.status(403).json({ error: 'Folosește pagina de Admin Login pentru contul de administrator!' })
 
-    const token = jwt.sign({ id: user.id, email: user.email, tip: user.tip }, SECRET, { expiresIn: '7d' })
+    const token = jwt.sign({ id: user.id, email: user.email, tip: user.type }, SECRET, { expiresIn: '7d' })
     await user.update({ token })
     res.cookie('token', token, COOKIE_OPTIONS)
-    res.json({ user: { id: user.id, nume: user.nume, email: user.email, tip: user.tip } })
+    res.json({ user: { id: user.id, name: user.name, email: user.email, tip: user.type } })
   } catch (err) { next(err) }
 }
 
@@ -69,12 +69,12 @@ const adminLogin = async (req, res, next) => {
 
     const passwordCorect = await bcrypt.compare(password, user.passwordHash)
     if (!passwordCorect) return res.status(401).json({ error: 'Parola incorecta!' })
-    if (user.tip !== 'manager') return res.status(403).json({ error: 'Acest cont nu are drepturi de administrator!' })
+    if (user.type !== 'manager') return res.status(403).json({ error: 'Acest cont nu are drepturi de administrator!' })
 
-    const token = jwt.sign({ id: user.id, email: user.email, tip: user.tip }, SECRET, { expiresIn: '7d' })
+    const token = jwt.sign({ id: user.id, email: user.email, tip: user.type }, SECRET, { expiresIn: '7d' })
     await user.update({ token })
     res.cookie('token', token, COOKIE_OPTIONS)
-    res.json({ user: { id: user.id, nume: user.nume, email: user.email, tip: user.tip } })
+    res.json({ user: { id: user.id, name: user.name, email: user.email, tip: user.type } })
   } catch (err) { next(err) }
 }
 

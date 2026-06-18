@@ -1,4 +1,4 @@
-import './Rezervare.css'
+﻿import './Rezervare.css'
 import { useState } from 'react'
 import Navbar from '../../components/Navbar/Navbar'
 import Footer from '../../components/Footer/Footer'
@@ -75,19 +75,19 @@ const SuccesPage = ({ rezervare }) => (
         <div className="rez-succes-detalii">
           <div className="rez-succes-row">
             <span>Data</span>
-            <strong>{new Date(rezervare.data + 'T12:00:00').toLocaleDateString('ro-RO', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</strong>
+            <strong>{new Date(rezervare.reservationDate + 'T12:00:00').toLocaleDateString('ro-RO', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</strong>
           </div>
           <div className="rez-succes-row">
             <span>Ora</span>
-            <strong>{rezervare.ora}</strong>
+            <strong>{rezervare.hour}</strong>
           </div>
           <div className="rez-succes-row">
             <span>Persoane</span>
-            <strong>{rezervare.nrPersoane}</strong>
+            <strong>{rezervare.guestCount}</strong>
           </div>
           <div className="rez-succes-row">
             <span>Zona</span>
-            <strong>{ZONE_INFO[rezervare.zona]?.label}</strong>
+            <strong>{ZONE_INFO[rezervare.zone]?.label}</strong>
           </div>
         </div>
         <div className="rez-succes-actions">

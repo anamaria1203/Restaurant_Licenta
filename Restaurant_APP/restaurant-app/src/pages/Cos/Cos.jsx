@@ -87,7 +87,7 @@ const Cos = () => {
     getRezervariMele()
       .then(data => {
         const azi = new Date().toISOString().split('T')[0]
-        const confirmate = (Array.isArray(data) ? data : []).filter(r => r.status === 'confirmata' && r.data >= azi)
+        const confirmate = (Array.isArray(data) ? data : []).filter(r => r.status === 'confirmata' && r.reservationDate >= azi)
         setRezervariConfirmate(confirmate)
       })
       .catch(() => {})
@@ -225,7 +225,7 @@ const Cos = () => {
                     <option value="">— Alege o rezervare —</option>
                     {rezervariConfirmate.map(r => (
                       <option key={r.id} value={r.id}>
-                        {new Date(r.data + 'T12:00:00').toLocaleDateString('ro-RO', { day: 'numeric', month: 'long' })} · {r.ora} · {r.nrPersoane} pers.
+                        {new Date(r.reservationDate + 'T12:00:00').toLocaleDateString('ro-RO', { day: 'numeric', month: 'long' })} · {r.hour} · {r.guestCount} pers.
                       </option>
                     ))}
                   </select>

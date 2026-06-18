@@ -6,52 +6,52 @@ const PORT = process.env.PORT || 8080
 async function start() {
   await db.sequelize.sync()
 
-  // Adauga coloane noi fara alter: true (evita bug-ul SQLite cu backup tables)
   const qi = db.sequelize.getQueryInterface()
-  const cols = await qi.describeTable('Comandas')
-  if (!cols.rezervareId) {
-    await qi.addColumn('Comandas', 'rezervareId', {
+
+  const colsOrder = await qi.describeTable('Orders')
+  if (!colsOrder.reservationId) {
+    await qi.addColumn('Orders', 'reservationId', {
       type: db.sequelize.Sequelize.INTEGER,
       allowNull: true,
       defaultValue: null
     })
-    console.log('Coloana rezervareId adaugata in Comandas')
+    console.log('Coloana reservationId adaugata in Orders')
   }
 
-  const colsPreparat = await qi.describeTable('Preparats')
-  if (!colsPreparat.tip_vreme) {
-    await qi.addColumn('Preparats', 'tip_vreme', {
+  const colsDish = await qi.describeTable('Dishes')
+  if (!colsDish.weatherType) {
+    await qi.addColumn('Dishes', 'weatherType', {
       type: db.sequelize.Sequelize.STRING,
       allowNull: true,
       defaultValue: 'neutru'
     })
-    console.log('Coloana tip_vreme adaugata in Preparats')
+    console.log('Coloana weatherType adaugata in Dishes')
   }
 
-  const colsRezervare = await qi.describeTable('Rezervares')
-  if (!colsRezervare.anulataNotificat) {
-    await qi.addColumn('Rezervares', 'anulataNotificat', {
+  const colsReservation = await qi.describeTable('Reservations')
+  if (!colsReservation.cancellationNotified) {
+    await qi.addColumn('Reservations', 'cancellationNotified', {
       type: db.sequelize.Sequelize.BOOLEAN,
       allowNull: false,
       defaultValue: false
     })
-    console.log('Coloana anulataNotificat adaugata in Rezervares')
+    console.log('Coloana cancellationNotified adaugata in Reservations')
   }
-  if (!colsRezervare.anulataDe) {
-    await qi.addColumn('Rezervares', 'anulataDe', {
+  if (!colsReservation.cancelledBy) {
+    await qi.addColumn('Reservations', 'cancelledBy', {
       type: db.sequelize.Sequelize.STRING,
       allowNull: true,
       defaultValue: null
     })
-    console.log('Coloana anulataDe adaugata in Rezervares')
+    console.log('Coloana cancelledBy adaugata in Reservations')
   }
-  if (!colsRezervare.confirmatVazut) {
-    await qi.addColumn('Rezervares', 'confirmatVazut', {
+  if (!colsReservation.confirmationSeen) {
+    await qi.addColumn('Reservations', 'confirmationSeen', {
       type: db.sequelize.Sequelize.BOOLEAN,
       allowNull: false,
       defaultValue: true
     })
-    console.log('Coloana confirmatVazut adaugata in Rezervares')
+    console.log('Coloana confirmationSeen adaugata in Reservations')
   }
 
   console.log('Baza de date sincronizata!')
