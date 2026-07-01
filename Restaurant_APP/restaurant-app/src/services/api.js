@@ -15,14 +15,14 @@ const apiFetch = (path, options = {}) =>
       return res
     })
 
-// ─── MENIU ───────────────────────────────────────────
+
 export const getMeniu = (categorie, subcategorie) => {
   let url = `/meniu/preparate?categorie=${encodeURIComponent(categorie)}`
   if (subcategorie) url += `&subcategorie=${encodeURIComponent(subcategorie)}`
   return apiFetch(url).then(r => r.json())
 }
 
-// ─── MENIU LUNAR ─────────────────────────────────────
+
 export const getPreparateLunare = (tara) =>
   apiFetch(`/meniu-lunar/preparate?tara=${tara}`).then(r => r.json())
 
@@ -53,11 +53,11 @@ export const editeazaPreparatLunar = (id, data) =>
 export const stergePreparatLunar = (id) =>
   apiFetch(`/meniu-lunar/preparate/${id}`, { method: 'DELETE' })
 
-// ─── RECENZII ────────────────────────────────────────
+
 export const getRecenzii = () =>
   apiFetch('/recenzii').then(r => r.json())
 
-// ─── AUTH ────────────────────────────────────────────
+
 export const authRegister = (body) =>
   apiFetch('/auth/register', {
     method: 'POST',
@@ -96,13 +96,13 @@ export const resetParola = (email, parolaNoua) =>
     body: JSON.stringify({ email, parolaNoua })
   })
 
-// ─── API ADMIN ───────────────────────────────────────
+
 export const getUseri = () => apiFetch('/api/useri')
 export const getUseriStersi = () => apiFetch('/api/useri/stersi')
 export const stergeUser = (id) => apiFetch(`/api/useri/${id}`, { method: 'DELETE' })
 export const restaureazaUser = (id) => apiFetch(`/api/useri/${id}/restaurare`, { method: 'POST' })
 
-// ─── COMENZI ─────────────────────────────────────────
+
 export const creeazaComanda = (items, notes, reservationId) =>
   apiFetch('/comanda', {
     method: 'POST',
@@ -152,7 +152,7 @@ export const updateComandaItems = (id, items) =>
     body: JSON.stringify({ items })
   })
 
-// ─── REZERVĂRI ───────────────────────────────────────
+
 export const creeazaRezervare = (body) =>
   apiFetch('/rezervare', {
     method: 'POST',
@@ -194,7 +194,7 @@ export const getConfirmateNevazute = () =>
 export const marcheazaConfirmateVazute = () =>
   apiFetch('/rezervare/confirmate-vazute', { method: 'PUT' }).then(r => r.json())
 
-// ─── MESAJE CONTACT ──────────────────────────────────
+
 export const trimiteMesaj = (intrebare) =>
   apiFetch('/mesaj', {
     method: 'POST',
