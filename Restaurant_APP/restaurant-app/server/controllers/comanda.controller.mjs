@@ -16,6 +16,7 @@ const creeazaComanda = async (req, res, next) => {
       return res.status(400).json({ error: 'Rezervarea nu este valida sau nu este confirmata' })
     }
 
+
     const total = items.reduce((sum, item) => sum + item.pretSnapshot * item.cantitate, 0)
 
     const comanda = await db.Comanda.create({ userId, total, notes, reservationId: reservationId || null })
