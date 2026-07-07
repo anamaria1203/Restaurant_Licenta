@@ -16,7 +16,7 @@ const WeatherBanner = ({ onAdauga, adaugat }) => {
 
   useEffect(() => {
     const cheie = process.env.REACT_APP_WEATHER_API_KEY
-    if (!cheie || cheie === 'PUNE_CHEIA_TA_AICI') return
+    if (!cheie || cheie === 'CHEIA') return
 
     fetch(`https://api.openweathermap.org/data/2.5/weather?lat=44.4268&lon=26.1025&appid=${cheie}&units=metric&lang=ro`)
 
