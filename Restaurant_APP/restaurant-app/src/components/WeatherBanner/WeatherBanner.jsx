@@ -72,7 +72,7 @@ const WeatherBanner = ({ onAdauga, adaugat }) => {
               />
             )}
             <div className="wb-card-body">
-              <span className="wb-card-nume">{p.nume}</span>
+              <span className="wb-card-nume">{p.name}</span>
               <span className="wb-card-pret">{p.price} RON</span>
               <button className="wb-card-btn" onClick={() => onAdauga(p)}>
                 {adaugat === p.id ? '✓' : '+'}
