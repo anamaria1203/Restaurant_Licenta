@@ -123,7 +123,7 @@ const Comanda = () => {
     const existent = cos.find(i => i.preparatId === preparat.id)
     const nouCos = existent
       ? cos.map(i => i.preparatId === preparat.id ? { ...i, cantitate: i.cantitate + 1 } : i)
-      : [...cos, { preparatId: preparat.id, numeSnapshot: preparat.nume, pretSnapshot: preparat.pret, cantitate: 1 }]
+      : [...cos, { preparatId: preparat.id, numeSnapshot: preparat.name, pretSnapshot: preparat.price, cantitate: 1 }]
     localStorage.setItem(cosKey, JSON.stringify(nouCos))
     window.dispatchEvent(new Event('cos-update'))
     setAdaugat(preparat.id)
